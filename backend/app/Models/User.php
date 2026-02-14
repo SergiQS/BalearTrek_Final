@@ -1,0 +1,98 @@
+<?php
+
+namespace App\Models;
+
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
+{
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Notifiable, HasApiTokens;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'name',
+        'lastname',
+        'email',
+        'dni',
+        'phone',
+        'password',
+        'role_id',
+    ];
+
+    protected $guarded = ['id'];
+
+    protected $hidden = [
+        'password',
+    
+    ];
+
+     public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
+    }
+
+    public function setLastnameAttribute($value)
+    {
+        $this->attributes['lastname'] = strtoupper($value);
+    }
+    
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+   
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class); //un usuario puede tener muchos comentarios
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class); //un usuario pertenece a un rol
+    }
+    public function meeting()
+    {
+        return $this->hasMany(Meeting::class); //un guia pertenece a una reunion
+    }
+
+    public function meetings()
+    {
+        return $this->belongsToMany(Meeting::class); //un usuario puede tener muchas reuniones
+    }
+    
+    //verificar si el usuario es admin
+    public function isAdmin(): bool
+    {
+        return $this->role_id === Role::where('name', 'admin')->first()?->id;
+    }
+
+}
