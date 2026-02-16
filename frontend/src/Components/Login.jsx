@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login } from "../api"; // ajusta la ruta según tu estructura
+import { login } from "../api"; 
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ export default function Login() {
 
             <form onSubmit={handleSubmit}>
                 <div style={{ marginBottom: "15px" }}>
-                    <label>Email</label>
+                    <label>Emailss</label>
                     <input
                         type="email"
                         value={email}
