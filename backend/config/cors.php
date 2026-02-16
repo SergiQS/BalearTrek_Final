@@ -15,11 +15,13 @@ return [
     |
     */
 
-    'paths' => ['api/*','sanctum/csrf-cookie','login','logout'],
+    'paths' => ['api/*','sanctum/csrf-cookie','login','login-debug',],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [env('FRONTEND_URL') ],
+    // Requiere que FRONTEND_URL esté definida en .env (ej: http://localhost:5173).
+    // Si es null, CORS bloquea todas las peticiones cross-origin del SPA.
+    'allowed_origins' => [env('FRONTEND_URL')],
 
     'allowed_origins_patterns' => [],
 

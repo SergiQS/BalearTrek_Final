@@ -14,7 +14,7 @@ export default function App() {
         
         <Route path="/" element={<Login/>} />
         <Route path="/treks" element={<Treks />} />
-        {/* <Route path="/Landingpage" element={<LandingPage />} /> */}
+        <Route path="/Landingpage" element={<LandingPage />} /> 
           <Route path="/dashboard" element={<Dashboard />} />
         {/* Aquí puedes agregar más rutas, como el dashboard */}
       </Routes>

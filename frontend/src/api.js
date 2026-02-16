@@ -15,6 +15,7 @@ const api = axios.create({
   },
 
 });
+
 // Interceptores para debug
 api.interceptors.request.use(
   (config) => {
@@ -68,7 +69,7 @@ export async function csrf() {
 export async function login(email, password) {
   await csrf();
   try {
-    return await api.post("/login", {
+    return await api.post("api/login", {
       email,
       password,
     });
@@ -77,6 +78,9 @@ export async function login(email, password) {
     throw error; // Re-lanza el error para manejarlo en otros lugares si es necesario
   }
 }
+
+
+
 export async function getUser() {
   return api.get("/api/user");
 }

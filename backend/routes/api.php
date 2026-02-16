@@ -9,17 +9,20 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
 
 
 
+// FIX CSRF: Eliminada la ruta POST /login duplicada que existía aquí.
+// El frontend llama a /login (sin prefijo /api), así que usa la ruta de web.php,
+// que sí tiene middleware de sesión y CSRF. Tener una copia aquí en api.php
+// (que se monta como /api/login) no se usaba y creaba confusión.
+Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
-
 // Protegida pel middleware 'auth:sanctum' 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 //CRUD per a administradors 
 Route::middleware(['multiauth', 'CHECK-ROLEADMIN'])->group(function () {

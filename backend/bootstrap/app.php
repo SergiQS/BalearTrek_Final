@@ -31,9 +31,12 @@ return Application::configure(basePath: dirname(__DIR__))
 
         ]);
 
-        // $middleware->web(prepend: [
-        //     \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-        // ]);
+        // FIX CSRF: Este middleware es IMPRESCINDIBLE para que Sanctum funcione en modo SPA (stateful).
+        // Sin él, Laravel no vincula la sesión a las peticiones del frontend,
+        // y la cookie XSRF-TOKEN que recibe React nunca se valida en el backend.
+        $middleware->web(prepend: [
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        ]);
         
         // Aplicar middleware específic per a API: "app/Providers/RouteServiceProvider.php"
         $middleware->api("throttle:api");  // aplica "rate limiting"

@@ -1,26 +1,18 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 
- Route::get('/', function () {
-    return view('welcome'); });
 
-    Route::post('/login', function (Request $request) {
 
-    // Validar credenciales
-    if (!Auth::attempt($request->only('email', 'password'))) {
-        return response()->json(['message' => 'Credenciales incorrectas'], 401);
-    }
-
-    // Regenerar la sesión para evitar fijación
-    $request->session()->regenerate();
-
-    return response()->json(['message' => 'Login correcto']);
+Route::get('/', function () {
+    return view('welcome');
 });
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+
 // Rutas de autenticación Breeze
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,17 +20,16 @@ Route::get('/dashboard', function () {
 
 
 
-
 // Rutas de perfil Breeze
-Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');//
-Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 // Rutas del BackOffice
 Route::middleware('auth')->prefix('backoffice')->name('backoffice.')->group(function () {
     Route::get('/', function () {
         return redirect()->route('backoffice.users.index');
     })->name('home');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');//
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('users', \App\Http\Controllers\Backoffice\UserController::class);
     Route::resource('municipalities', \App\Http\Controllers\Backoffice\MunicipalityController::class);
     Route::resource('interestingplaces', \App\Http\Controllers\Backoffice\InterestingPlaceController::class);
