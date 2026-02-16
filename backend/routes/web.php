@@ -2,14 +2,31 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
+
+ Route::get('/', function () {
+    return view('welcome'); });
+
+    Route::post('/login', function (Request $request) {
+
+    // Validar credenciales
+    if (!Auth::attempt($request->only('email', 'password'))) {
+        return response()->json(['message' => 'Credenciales incorrectas'], 401);
+    }
+
+    // Regenerar la sesión para evitar fijación
+    $request->session()->regenerate();
+
+    return response()->json(['message' => 'Login correcto']);
 });
 // Rutas de autenticación Breeze
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 
 // Rutas de perfil Breeze

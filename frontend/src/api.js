@@ -1,43 +1,85 @@
+// src/api.js
+import axios from "axios";
+
 const API_URL = "http://localhost:8000";
 
-export async function csrf() {                  // Llamada para obtener la cookie de CSRF
-    await fetch(`${API_URL}/sanctum/csrf-cookie`, {
-        credentials: "include",
+const api = axios.create({
+  baseURL: API_URL,
+  withCredentials: true, //Esto es para enviar las cookies
+  xsrfCookieName: "XSRF-TOKEN",
+  xsrfHeaderName: "X-XSRF-TOKEN",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+
+  },
+
+});
+// Interceptores para debug
+api.interceptors.request.use(
+  (config) => {
+    console.log("📤 REQUEST:", {
+      url: config.url,
+      method: config.method,
+      headers: config.headers,
+      data: config.data,
+      withCredentials: config.withCredentials,
     });
-}
+    return config;
+  },
+  (error) => {
+    console.error("❌ REQUEST ERROR:", error);
+    return Promise.reject(error);
+  },
+);
 
-export async function login(email, password) {    
-    await csrf();
-
-    const response = await fetch(`${API_URL}/login`, {      // Llamada para iniciar sesión
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-        credentials: "include", // Guarda las cookies (incluida la de sesión)
-        body: JSON.stringify({ email, password }),
+api.interceptors.response.use(
+  (response) => {
+    console.log("📥 RESPONSE:", {
+      url: response.config.url,
+      status: response.status,
+      data: response.data,
+      headers: response.headers,
     });
-
-    if (!response.ok) {
-        const error = await response.json();
-        throw error;
+    return response;
+  },
+  (error) => {
+    if (error.response) {
+      console.error("❌ RESPONSE ERROR:", {
+        url: error.config?.url,
+        status: error.response.status,
+        data: error.response.data,
+        headers: error.response.headers,
+      });
+    } else {
+      console.error("❌ NETWORK ERROR:", error);
     }
+    return Promise.reject(error);
+  },
+);
 
-    return await response.json();
+export async function csrf() {
+  await api.get("/sanctum/csrf-cookie",{
+    withCredentials: true
+  }
+  );
 }
 
-export async function getUser() {                   // Llamada para obtener los datos del usuario autenticado   
-    const response = await fetch(`${API_URL}/api/user`, {
-        credentials: "include",
-        headers: {
-            "Accept": "application/json",
-        },
+export async function login(email, password) {
+  await csrf();
+  try {
+    return await api.post("/login", {
+      email,
+      password,
     });
-
-    if (!response.ok) {
-        throw new Error("No autenticado");
-    }
-
-    return await response.json();
+  } catch (error) {
+    console.error("Login error:", error.response.data);
+    throw error; // Re-lanza el error para manejarlo en otros lugares si es necesario
+  }
 }
+export async function getUser() {
+  return api.get("/api/user");
+}
+console.log("Cookies actuales:", document.cookie);
+
+export default api;
