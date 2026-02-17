@@ -1,0 +1,61 @@
+.trek-container {
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.trek-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.trek-guide {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.availability-btn {
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.places-box,
+.meetings-box {
+  border: 1px solid #4f4d4d;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.place-item,
+.meeting-item {
+  background: #bb3434;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.place-name {
+  font-weight: bold;
+  
+}
+
+.place-type {
+  font-size: 14px;
+  color: #666;
+}
+
+.place-gps {
+  font-size: 13px;
+  color: #333;
+}

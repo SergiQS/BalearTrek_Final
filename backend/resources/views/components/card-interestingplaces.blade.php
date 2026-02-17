@@ -7,15 +7,15 @@
        
 
         <a href="{{route('backoffice.interestingplaces.show', ['interestingplace' => $interestingplace->id])}}"
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Show</a>
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Ver</a>
         <a href="{{route('backoffice.interestingplaces.edit', ['interestingplace' => $interestingplace->id])}}"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</a>
         <form action="{{route('backoffice.interestingplaces.destroy', ['interestingplace' => $interestingplace->id])}}" method="POST"
             class="float-right">
             @method('DELETE')
             @csrf
             <button type="submit"
-                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
         </form>
     </div>
 </div>

@@ -8,9 +8,9 @@
         <p class="mb-4 text-sm">Role: {{$user->role->name}}</p>
 
         <a href="{{route('backoffice.users.show', ['user' => $user->id])}}"
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Show</a>
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Ver</a>
         <a href="{{route('backoffice.users.edit', ['user' => $user->id])}}"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</a>
         <form action="{{ route('backoffice.users.destroy', ['user' => $user->id]) }}" method="POST"
             class="inline-block float-right">
             @csrf

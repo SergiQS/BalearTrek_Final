@@ -5,8 +5,6 @@ import Cardtreks from "./Cardtreks";
 import Header from "./Header";
 
 export default function LandingPage() {
-  const [isla, setIsla] = useState("");
-  const [zona, setZona] = useState("");
 
   return (
 

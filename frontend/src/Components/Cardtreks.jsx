@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./LandingPage.css"; // estilos opcionales
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
-
+import { Link } from "react-router-dom";
 
 export default function Cardtreks() {
   const [treks, setTreks] = useState([]);
@@ -12,17 +12,15 @@ export default function Cardtreks() {
     try {
       const res = await fetch("http://localhost:8000/api/treks");
       const json = await res.json();
-      console.log("Respuesta del backend:", json);
-
       setTreks(json.data);
     } catch (error) {
       console.error("Error al obtener datos:", error);
     }
   };
+
   useEffect(() => {
     getTreks();
   }, []);
-  console.log(treks);
 
   const filteredTreks = treks.filter((trek) => {
     const islandName = trek.municipality?.island?.name?.toLowerCase();
@@ -34,24 +32,21 @@ export default function Cardtreks() {
     return matchIsland && matchZona;
   });
 
-  const filteredSortedTreks = [...filteredTreks].sort((a,b) => b.rating - a.rating);
+  const filteredSortedTreks = [...filteredTreks].sort(
+    (a, b) => b.rating - a.rating
+  );
 
   function Stars({ rating }) {
-  return (
-    <span>
-      {[1, 2, 3, 4, 5].map((star) => {
-        if (star <= rating) {
-          return <FaStar key={star} />;
-        }
-        if (star - 0.5 === rating) {
-          return <FaStarHalfAlt key={star} />;
-        }
-        return <FaRegStar key={star} />;
-      })}
-    </span>
-  );
-}
-
+    return (
+      <span>
+        {[1, 2, 3, 4, 5].map((star) => {
+          if (star <= rating) return <FaStar key={star} />;
+          if (star - 0.5 === rating) return <FaStarHalfAlt key={star} />;
+          return <FaRegStar key={star} />;
+        })}
+      </span>
+    );
+  }
 
   return (
     <>
@@ -64,7 +59,6 @@ export default function Cardtreks() {
           <option value="formentera">Formentera</option>
         </select>
 
-
         <select value={zona} onChange={(e) => setZona(e.target.value)}>
           <option value="">Zona</option>
           <option value="norte">Norte</option>
@@ -75,15 +69,18 @@ export default function Cardtreks() {
       </div>
 
       <div className="treks-grid">
-        {filteredSortedTreks.map((trek) => (
-          <div key={trek.id} className="trek-card">
+        {filteredSortedTreks.map(trek =>
+          <Link
+            key={trek.identifier}
+            to={`/treks/${trek.identifier}`}
+            className="trek-card"
+          >
             <h3>{trek.name}</h3>
             <p>{trek.rating}</p>
-            <Stars rating={trek.rating}/>
-            
-          </div>
-        ))}
+            <Stars rating={trek.rating} />
+          </Link>
+        )}
       </div>
     </>
   );
-}
+} 

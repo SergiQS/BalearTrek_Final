@@ -1,4 +1,5 @@
-@extends('layouts.backoffice')
+<x-app-layout>
+    @extends('layouts.backoffice')
 
 @section('content')
     <div class="max-w-3xl mx-auto bg-white shadow sm:rounded-lg p-6">
@@ -53,4 +54,5 @@
 
         </form>
     </div>
+    </x-app-layout>
 @endsection

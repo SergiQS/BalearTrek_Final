@@ -1,3 +1,4 @@
+<x-app-layout>
 @extends('layouts.backoffice')
 
 @section('content')
@@ -86,4 +87,5 @@
 
 
     </div>
+    </x-app-layout>
 @endsection

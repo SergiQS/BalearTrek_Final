@@ -13,7 +13,7 @@
     </x-slot>
 <body class="d-flex">
 
-     @include('layouts.sidebar')
+     <!-- @include('layouts.sidebar') --> 
 
     
 

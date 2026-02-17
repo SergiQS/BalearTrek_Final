@@ -1,5 +1,5 @@
 <x-app-layout>
-
+@extends('layouts.backoffice')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Editar Meeting: {{ $meeting->trek->name }}
@@ -79,7 +79,7 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1">
                                         Añadir Guía
                                     </label>
-                                    <select name="user_id"
+                                    <select name="user_id multiple"
                                             class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
                                         @foreach ($guias as $guia)
                                             <option value="{{ $guia->id }}"

@@ -34,13 +34,13 @@
 
 
         <a href="{{ route('backoffice.treks.show', ['trek' => $trek->id]) }}"
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Show</a>
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Ver</a>
         <a href="{{ route('backoffice.treks.edit', ['trek' => $trek->id]) }}"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</a>
         <form action="{{ route('backoffice.treks.destroy', ['trek' => $trek->id]) }}" method="POST" class="float-right">
             @csrf
             @method('DELETE')
-            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete
+            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar
             </button>
         </form>
 

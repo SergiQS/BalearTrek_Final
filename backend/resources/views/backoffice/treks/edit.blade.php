@@ -1,56 +1,72 @@
-<form action="{{ route('backoffice.meetings.store') }}" method="POST">
-    @csrf
+ <x-app-layout>
 
-    {{-- TREK --}}
-    <div class="mb-4">
-        <label class="block font-semibold mb-1">Trek</label>
-        <select name="trek_id" class="w-full border rounded p-2">
-            <option value="">Selecciona un trek</option>
-            @foreach ($treks as $trek)
-                <option value="{{ $trek->id }}">{{ $trek->name }}</option>
-            @endforeach
-        </select>
-    </div>
+@extends('layouts.backoffice')
 
-    {{-- FECHA INICIAL --}}
-    <div class="mb-4">
-        <label class="block font-semibold mb-1">Fecha inicial</label>
-        <input type="date" name="start_date" class="w-full border rounded p-2">
-    </div>
+@section('content')
+<div class="max-w-3xl mx-auto bg-white shadow sm:rounded-lg p-6">
 
-    {{-- FECHA FINAL --}}
-    <div class="mb-4">
-        <label class="block font-semibold mb-1">Fecha final</label>
-        <input type="date" name="end_date" class="w-full border rounded p-2">
-    </div>
+    <h1 class="text-2xl font-semibold mb-6">Editar Trek</h1>
 
-    {{-- DÍA --}}
-    <div class="mb-4">
-        <label class="block font-semibold mb-1">Día</label>
-        <input type="text" name="day" class="w-full border rounded p-2" placeholder="Ej: Lunes">
-    </div>
+    <form method="POST" action="{{ route('backoffice.treks.update', $trek   ) }}">
+        @csrf
+        @method('PUT')
 
-    {{-- HORA --}}
-    <div class="mb-4">
-        <label class="block font-semibold mb-1">Hora</label>
-        <input type="time" name="time" class="w-full border rounded p-2">
-    </div>
-
-    {{-- GUÍAS --}}
-    <div class="mb-4">
-        <label class="block font-semibold mb-1">Guías</label>
-
-        <div class="grid grid-cols-2 gap-2 mt-2">
-            @foreach ($guides as $guide)
-                <label class="flex items-center gap-2">
-                    <input type="checkbox" name="guides[]" value="{{ $guide->id }}">
-                    {{ $guide->name }}
-                </label>
-            @endforeach
+        {{-- Número de Registro --}}
+        <div class="mb-4">
+            <x-input-label for="regNumber" value="Número de Registro" />
+            <x-text-input id="regNumber" name="regNumber" type="text"
+                class="mt-1 block w-full"
+                value="{{ old('regNumber', $trek->regNumber) }}" />
+            <x-input-error :messages="$errors->get('regNumber')" class="mt-2" />
         </div>
-    </div>
 
-    <button class="bg-blue-600 text-white px-4 py-2 rounded">
-        Crear Meeting
-    </button>
-</form>
+        {{-- Nombre --}}
+        <div class="mb-4">
+            <x-input-label for="name" value="Nombre" />
+            <x-text-input id="name" name="name" type="text"
+                class="mt-1 block w-full"
+                value="{{ old('name', $trek->name) }}" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        {{-- Municipio --}}
+        <div class="mb-4">
+            <x-input-label for="municipality_id" value="Municipio" />
+            <select id="municipality_id" name="municipality_id"
+                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+
+                @foreach ($municipalities as $municipality)
+                    <option value="{{ $municipality->id }}"
+                        {{ $trek->municipality_id == $municipality->id ? 'selected' : '' }}>
+                        {{ $municipality->name }}
+                    </option>
+                @endforeach
+
+            </select>
+            <x-input-error :messages="$errors->get('municipality_id')" class="mt-2" />
+        </div>
+
+        {{-- Lugares de interés --}}
+        <div class="mb-4">
+            <div class="grid grid-cols-2 gap-2 mt-2">
+                @foreach ($interestingPlaces as $place)
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox"
+                            name="interesting_places[]"
+                            value="{{ $place->id }}"
+                            {{ $trek->interestingPlaces->contains($place->id) ? 'checked' : '' }}>
+                        {{ $place->name }}
+                    </label>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- Botón --}}
+        <x-primary-button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Actualizar Trek
+        </x-primary-button>
+
+    </form>
+</div>
+ </x-app-layout>
+ @endsection

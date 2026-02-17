@@ -253,10 +253,12 @@ class TrekController extends Controller
 
     public function edit(Trek $trek)
     {
+                  
         $municipalities = Municipality::all();
         $interestingPlaces = InterestingPlace::orderBy('name','asc')->get();
 
         return view('backoffice.treks.edit', [
+            
             'trek' => $trek,
             'municipalities' => $municipalities,
             'interestingPlaces' => $interestingPlaces,
@@ -269,6 +271,7 @@ class TrekController extends Controller
         $interestingPlaces = InterestingPlace::orderBy('name','asc')->get();
 
         return view('backoffice.treks.create', [
+           
             'municipalities' => $municipalities,
             'interestingPlaces' => $interestingPlaces,
         ]);

@@ -1,3 +1,5 @@
+<x-app-layout>
+
 @extends('layouts.backoffice')
 
 @section('content')
@@ -32,7 +34,7 @@
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
 
                     @foreach ($municipalities as $municipality)
-                        <option value="{{ $municipality->id }}" {{ $trek->municipality_id == $municipality->id ? 'selected' : '' }}>
+                        <option value="{{ $municipality->id }}" >
                             {{ $municipality->name }}
                         </option>
                     @endforeach
@@ -67,4 +69,5 @@
 
     </form>
 </div>
+</x-app-layout>
 @endsection
