@@ -1,50 +1,97 @@
-.landing-container {
-    padding: 20px;
-    font-family: sans-serif;
-}
-
-.landing-header {
-    text-align: center;
-    padding: 30px 0;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.filters {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.filters select {
-    padding: 10px;
-    font-size: 16px;
-}
-
+/* CARD TREKS UNIFICADO */
 .treks-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .trek-card {
-    background: #f5f5f5;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
+  background: #7a6868;
+  padding: 16px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  width: 320px;
+}
+
+.trek-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  border-color: #ccc;
 }
 
 .trek-card img {
-    width: 100%;
-    border-radius: 8px;
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .trek-card h3 {
-    margin: 10px 0 5px;
+  margin: 0;
+  font-size: 18px;
+  color: #222;
 }
 
 .trek-card p {
-    font-size: 14px;
-    color: #555;
+  font-size: 14px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.trek-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-start;
+}
+
+.trek-tag {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background-color: #e0e7ff;
+  color: #3b49df;
+}
+
+.hero-image {
+  width: 100%;
+  height: 400px; /* o la altura que prefieras */
+  object-fit: cover; /* para que la imagen cubra el área sin deformarse */
+  border-radius: 12px; /* opcional, para bordes redondeados */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* opcional, para darle profundidad */
+}
+
+/* ESTILO PARA FILTROS */
+.filters select {
+  padding: 10px 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.filters select:hover {
+  border-color: #7c8cf5;
+  box-shadow: 0 0 8px rgba(124, 140, 245, 0.5);
+}
+
+.filters select:focus {
+  outline: none;
+  border-color: #4a54e1;
+  box-shadow: 0 0 10px rgba(74, 84, 225, 0.7);
 }

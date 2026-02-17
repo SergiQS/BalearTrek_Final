@@ -18,9 +18,8 @@ class MunicipalityResource extends JsonResource
         return [
             'identifier' => $this->id,
             'name' => $this->name,
-            'province' => $this->province,
-            'zones' => ZoneResource::collection($this->whenLoaded('zones')),
-            'islands' => IslandResource::collection($this->whenLoaded('islands')),
+            'zone' => new ZoneResource($this->whenLoaded('zone')),
+            'island' => new IslandResource($this->whenLoaded('island')),
 
 
         ];

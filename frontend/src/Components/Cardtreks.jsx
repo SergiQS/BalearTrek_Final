@@ -1,30 +1,89 @@
 import React, { useState, useEffect } from "react";
 import "./LandingPage.css"; // estilos opcionales
+import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
+
 
 export default function Cardtreks() {
-    const [treks, setTreks] = useState([]);
-     // Datos mock (sin backend)
-        const mockTreks = [
-            { id: 1, name: "Serra", rating: 4.5, img: "https://via.placeholder.com/150" },
-            { id: 2, name: "Torrent de Pareis", rating: 4.8, img: "https://via.placeholder.com/150" },
-            { id: 3, name: "Camí de Cavalls", rating: 4.6, img: "https://via.placeholder.com/150" },
-            { id: 4, name: "Sa Dragonera", rating: 4.4, img: "https://via.placeholder.com/150" },
-            { id: 5, name: "Es Vedrà", rating: 4.7, img: "https://via.placeholder.com/150" },
-            { id: 6, name: "Puig Major", rating: 4.9, img: "https://via.placeholder.com/150" }
-        ];
-    
-        useEffect(() => {
-            setTreks(mockTreks);
-        }, []);
-    return (
-        <div className="treks-grid">
-            {mockTreks.map(trek => (
-                <div key={trek.id} className="trek-card">
-                    <img src={trek.img} alt={trek.name} />
-                    <h3>{trek.name}</h3>
-                    <p>{trek.rating} ★</p> 
-                </div>
-            ))}
-        </div>
-    );
-}       
+  const [treks, setTreks] = useState([]);
+  const [isla, setIsla] = useState("");
+  const [zona, setZona] = useState("");
+
+  const getTreks = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/api/treks");
+      const json = await res.json();
+      console.log("Respuesta del backend:", json);
+
+      setTreks(json.data);
+    } catch (error) {
+      console.error("Error al obtener datos:", error);
+    }
+  };
+  useEffect(() => {
+    getTreks();
+  }, []);
+  console.log(treks);
+
+  const filteredTreks = treks.filter((trek) => {
+    const islandName = trek.municipality?.island?.name?.toLowerCase();
+    const matchIsland = isla ? islandName === isla.toLowerCase() : true;
+    const matchZona = zona
+      ? trek.zone?.some((z) => z.name.toLowerCase() === zona.toLowerCase())
+      : true;
+
+    return matchIsland && matchZona;
+  });
+
+  const filteredSortedTreks = [...filteredTreks].sort((a,b) => b.rating - a.rating);
+
+  function Stars({ rating }) {
+  return (
+    <span>
+      {[1, 2, 3, 4, 5].map((star) => {
+        if (star <= rating) {
+          return <FaStar key={star} />;
+        }
+        if (star - 0.5 === rating) {
+          return <FaStarHalfAlt key={star} />;
+        }
+        return <FaRegStar key={star} />;
+      })}
+    </span>
+  );
+}
+
+
+  return (
+    <>
+      <div className="filters">
+        <select value={isla} onChange={(e) => setIsla(e.target.value)}>
+          <option value="">Isla</option>
+          <option value="mallorca">Mallorca</option>
+          <option value="menorca">Menorca</option>
+          <option value="ibiza">Ibiza</option>
+          <option value="formentera">Formentera</option>
+        </select>
+
+
+        <select value={zona} onChange={(e) => setZona(e.target.value)}>
+          <option value="">Zona</option>
+          <option value="norte">Norte</option>
+          <option value="sur">Sur</option>
+          <option value="este">Este</option>
+          <option value="oeste">Oeste</option>
+        </select>
+      </div>
+
+      <div className="treks-grid">
+        {filteredSortedTreks.map((trek) => (
+          <div key={trek.id} className="trek-card">
+            <h3>{trek.name}</h3>
+            <p>{trek.rating}</p>
+            <Stars rating={trek.rating}/>
+            
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}

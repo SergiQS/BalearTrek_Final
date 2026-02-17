@@ -25,6 +25,9 @@ class TrekResource extends JsonResource
             'totalRating' => $this->totalRating,
             'countRating' => $this->countRating,
             'rating' => $this->rating,
+            'municipality' => new MunicipalityResource(
+                $this->whenLoaded('municipality')
+            ),
             'interestingPlaces' => InterestingPlaceResource::collection(
                 $this->whenLoaded('interestingPlaces')
             ),
