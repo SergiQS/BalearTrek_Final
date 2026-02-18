@@ -6,6 +6,7 @@ import Dashboard from "./Components/Dashboard";
 import LandingPage from "./Components/Landingpage";
 import TrekDetails from "./Components/TrekDetails";
 import Perfil from "./Components/Perfil";
+import Meeting from "./Components/Meeting";
 export default function App() {
   return (
     <>
@@ -16,7 +17,7 @@ export default function App() {
           <Route path="/Landingpage" element={<LandingPage />} />
           <Route path="/Perfil" element={<Perfil />} />
           <Route path="/treks/:identifier" element={<TrekDetails />} />
-          <Route path="/Meeting/:id" element={<Perfil />} />
+          <Route path="/treks/:identifier/meeting/:id" element={<Meeting />} />
           
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           {/* Aquí puedes agregar más rutas, como el dashboard */}

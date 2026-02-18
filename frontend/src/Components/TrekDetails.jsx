@@ -27,7 +27,7 @@ export default function TrekDetail() {
 
   if (!trek) return <p>Cargando...</p>;
 
-  console.log(trek.interestingPlaces);
+  console.log(identifier);
 
   return (
     <>
@@ -58,7 +58,7 @@ export default function TrekDetail() {
                 <div>
                   <strong>Rating:</strong> {meeting.rating}
                 </div>
-              <Link to={`/meeting/${meeting.id}`} key={meeting.id}>Inscribirse</Link>
+              <Link to={`/treks/${identifier}/meeting/${meeting.id}`} key={meeting.id}>Inscribirse</Link>
             </div>
           ))}
         </div>

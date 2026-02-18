@@ -34,14 +34,9 @@
 
                     {{-- Botones --}}
                     <div class="flex justify-between mt-6">
-                        <a href="{{ route('backoffice.interestingplaces.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-gray-300 rounded-md 
-                                              font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300">
-                            Cancelar
-                        </a>
-
-                        <x-primary-button>
-                            Crear Lugar Interesante
-                        </x-primary-button>
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Crear
+                        </button>
                     </div>
 
                 </form>

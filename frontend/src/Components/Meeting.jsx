@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 export default function Meeting() {
   //solo inscribirse en el meeting
   const { identifier,id } = useParams();
@@ -21,7 +24,7 @@ export default function Meeting() {
 
   if (!trek) return <p>Cargando...</p>;
 
-
+ console.log(trek);
   return (
     <>
       {/* MEETINGS */}

@@ -64,6 +64,7 @@ Route::middleware('multiauth')->group(function () {
 
 Route::get('/treks/search/{value}', [TrekController::class, 'search']);
 Route::get('/treks/illa/{illa}', [TrekController::class, 'filterByIsland']);
+Route::get('/treks/{identifier}/meeting/{id}',[TrekController::class]);
 Route::apiResource('treks', TrekController::class);
 
 // Route::bind('user', function ($value) {
