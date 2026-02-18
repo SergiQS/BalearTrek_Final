@@ -4,11 +4,12 @@ import { useParams } from "react-router-dom";
 import LandingPage from "../Components/Landingpage";
 import Header from "./Header";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function TrekDetail() {
   const { identifier } = useParams();
   const [trek, setTrek] = useState([]);
-  console.log(identifier);
+  const navigate = useNavigate();
 
   const getTrek = async () => {
     try {
@@ -20,13 +21,13 @@ export default function TrekDetail() {
     }
   };
 
-   useEffect(() => {
-      getTrek();
-    }, [identifier]);
+  useEffect(() => {
+    getTrek();
+  }, [identifier]);
 
   if (!trek) return <p>Cargando...</p>;
 
-  console.log(trek);
+  console.log(trek.interestingPlaces);
 
   return (
     <>
@@ -41,39 +42,38 @@ export default function TrekDetail() {
           <div className="guide">Guía: </div>
         </div>
 
-        {/* BOTÓN */}
-        <button className="availability-btn">VER DISPONIBILIDAD</button>
+        <button className="availability-btn"></button>
         {/* MEETINGS */}
         <div className="meetings-box">
           <h3>MEETINGS DISPONIBLES</h3>
 
           {trek.meetings?.map((meeting) => (
-            <div key={meeting.id} className="meeting-item">
-              <div>
-                <strong>Día:</strong> {meeting.day}
-              </div>
-              <div>
-                <strong>Hora:</strong> {meeting.hour}
-              </div>
-              <div>
-                <strong>Rating:</strong> {meeting.rating}
-              </div>
+            <div className="meeting-item">
+                 <div>
+                  <strong>Día:</strong> {meeting.day}
+                </div>
+                <div>
+                  <strong>Hora:</strong> {meeting.hour}
+                </div>
+                <div>
+                  <strong>Rating:</strong> {meeting.rating}
+                </div>
+              <Link to={`/meeting/${meeting.id}`} key={meeting.id}>Inscribirse</Link>
             </div>
           ))}
         </div>
 
         {/* LUGARES DE INTERÉS */}
-        {/* <div className="places-box">
-        <h3>LUGARES DE INTERÉS</h3>
+        <div className="places-box">
+          <h3>LUGARES DE INTERÉS</h3>
 
-        {trek.places.map((place) => (
-          <div key={place.id} className="place-item">
-            <div className="place-name">{place.name}</div>
-            <div className="place-type">{place.type}</div>
-            <div className="place-gps">GPSpos: {place.gps}</div>
-          </div>
-        ))}
-      </div> */}
+          {trek.interestingPlaces?.map((place) => (
+            <div key={place.identifier} className="place-item">
+              <div className="place-name">{place.name}</div>
+              <div className="place-gps">GPSpos: {place.gps}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

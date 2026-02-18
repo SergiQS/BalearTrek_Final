@@ -19,7 +19,7 @@ class TrekController extends Controller
     public function index()
     {
         //$trek = Trek::all();
-        $trek = Trek::with(['meetings','municipality.island','municipality.zone'])->get();
+        $trek = Trek::with(['meetings','municipality.island','municipality.zone','interestingPlaces'])->get();
         return TrekResource::collection($trek);
         //
     }

@@ -22,7 +22,7 @@ export default function Perfil() {
   return (
     <>
       {/* USER INFO */}
-      {user.map((u) => (
+      {user?.map((u) => (
         <section className="user-info">
           <div className="info-row">
             <span className="label">Nombre:</span>

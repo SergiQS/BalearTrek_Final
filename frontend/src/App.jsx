@@ -16,6 +16,7 @@ export default function App() {
           <Route path="/Landingpage" element={<LandingPage />} />
           <Route path="/Perfil" element={<Perfil />} />
           <Route path="/treks/:identifier" element={<TrekDetails />} />
+          <Route path="/Meeting/:id" element={<Perfil />} />
           
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           {/* Aquí puedes agregar más rutas, como el dashboard */}
