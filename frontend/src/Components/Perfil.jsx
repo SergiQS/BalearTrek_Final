@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getUser, logout } from "../api";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 
 export default function Perfil() {
@@ -39,7 +40,7 @@ export default function Perfil() {
   if (!user) return <div>No hay usuario autenticado</div>;
   console.log(user);
   return (
-    <>
+    <> <Header></Header>
       <button onClick={handleLogout}>Logout</button>
       {/* USER INFO */}
       <section className="user-info">
