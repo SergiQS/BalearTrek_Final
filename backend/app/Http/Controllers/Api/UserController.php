@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         //
 
-        $users = User::with(['roles']) // Cargar relación role()
+        $users = User::with(['roles,meetings'])
             ->when(
                 $request->name,
                 fn($q, $name) =>
@@ -49,7 +49,9 @@ class UserController extends Controller
             )
             ->get();
 
-        return response()->json($users);
+        return response()->json([
+            'users' => $users
+        ]);
 
     }
 
@@ -174,7 +176,7 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(['error' => 'No autenticado'], 401);
         }
-        
+
         return response()->json([
             'id' => $user->id,
             'name' => $user->name,

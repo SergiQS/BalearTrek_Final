@@ -211,6 +211,31 @@ class TrekController extends Controller
 
         return TrekResource::collection($treks);
     }
+    public function showMeeting($identifier, $id)
+{
+    // 1. Buscar el trek por identifier
+    $trek = Trek::where('id', $identifier)
+                ->with('meetings')
+                ->firstOrFail();
+
+    // 2. Buscar el meeting dentro del trek
+    $meeting = $trek->meetings->where('id', $id)->first();
+
+    if (!$meeting) {
+        return response()->json([
+            'error' => 'Meeting no encontrado'
+        ], 404);
+    }
+
+    // 3. Devolver JSON
+    return response()->json([
+        'data' => [
+            'trek' => $trek,
+            'meeting' => $meeting
+        ]
+    ]);
+}
+
 
     public function search($value)
     {

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import Header from "./Header";
 export default function Meeting() {
   //solo inscribirse en el meeting
-  const { identifier,id } = useParams();
+  const { identifier, id } = useParams();
   const [trek, setTrek] = useState([]);
 
   const getMeeting = async () => {
@@ -20,33 +20,44 @@ export default function Meeting() {
 
   useEffect(() => {
     getMeeting();
-  }, [identifier,id]);
+  }, [identifier, id]);
 
   if (!trek) return <p>Cargando...</p>;
-
- console.log(trek);
+  //Para pasar el formato de la fecha a dd/mm/yy
+  const formatDate = (iso) => {
+    return new Date(iso).toLocaleDateString("es-ES");
+  };
+  console.log(trek);
   return (
     <>
+    <Header></Header>
       {/* MEETINGS */}
       <div className="meetings-box">
-        <h3>MEETINGS DISPONIBLES</h3>
+        <h3>MEETING de {trek.trek?.name}</h3>
 
-        {trek.meetings?.map((meeting) => (
-          <div key={meeting.id} className="meeting-item">
+        {trek.meeting && (
+          <div className="meeting-item">
             <div>
-              <strong>Día:</strong> {meeting.day}
+              <strong>Día:</strong> {formatDate(trek.meeting.dateIni)}
             </div>
             <div>
-              <strong>Hora:</strong> {meeting.hour}
+              <div>
+                <strong>Día:</strong>
+                {formatDate(trek.meeting.dateEnd)}
+              </div>
+              <strong>Hora:</strong> {trek.meeting.hour}
             </div>
             <div>
-              <strong>Rating:</strong> {meeting.rating}
+              <strong>Rating:</strong> {trek.meeting.rating}
             </div>
           </div>
-        ))}
+        )}
       </div>
 
-      <button> Inscribirse </button>
+      <button onClick={() => alert("Te has inscrito en meeting")}>
+        {" "}
+        Inscribirse{" "}
+      </button>
     </>
   );
 }

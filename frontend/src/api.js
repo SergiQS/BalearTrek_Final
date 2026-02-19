@@ -5,26 +5,25 @@ const API_URL = "http://localhost:8000";
 
 const api = axios.create({
   baseURL: API_URL,
-  withCredentials: true, //Esto es para enviar las cookies
-  xsrfCookieName: "XSRF-TOKEN",
-  xsrfHeaderName: "X-XSRF-TOKEN",
+  withCredentials: true,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
-
   },
-
 });
 
-// Interceptores para debug
+// Interceptor para agregar el token a cada petición
 api.interceptors.request.use(
   (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     console.log("📤 REQUEST:", {
       url: config.url,
       method: config.method,
       headers: config.headers,
       data: config.data,
-      withCredentials: config.withCredentials,
     });
     return config;
   },
@@ -40,17 +39,21 @@ api.interceptors.response.use(
       url: response.config.url,
       status: response.status,
       data: response.data,
-      headers: response.headers,
     });
     return response;
   },
   (error) => {
+    if (error.response?.status === 401) {
+      // Token inválido o expirado
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      console.error("Token inválido o expirado");
+    }
     if (error.response) {
       console.error("❌ RESPONSE ERROR:", {
         url: error.config?.url,
         status: error.response.status,
         data: error.response.data,
-        headers: error.response.headers,
       });
     } else {
       console.error("❌ NETWORK ERROR:", error);
@@ -60,30 +63,44 @@ api.interceptors.response.use(
 );
 
 export async function csrf() {
-  await api.get("/sanctum/csrf-cookie",{
-    withCredentials: true
-  }
-  );
+  await api.get("/sanctum/csrf-cookie", {
+    withCredentials: true,
+  });
 }
 
 export async function login(email, password) {
-  await csrf();
   try {
-    return await api.post("api/login", {
+    const res = await api.post("/api/login", {
       email,
       password,
     });
+    
+    // Guardar token y usuario
+    if (res.data.token) {
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+    }
+    
+    return res;
   } catch (error) {
-    console.error("Login error:", error.response.data);
-    throw error; // Re-lanza el error para manejarlo en otros lugares si es necesario
+    console.error("Login error:", error.response?.data);
+    throw error;
   }
 }
-
-
 
 export async function getUser() {
   return api.get("/api/user");
 }
-console.log("Cookies actuales:", document.cookie);
+
+export async function logout() {
+  try {
+    await api.post("/api/logout");
+  } catch (error) {
+    console.error("Logout error:", error);
+  } finally {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  }
+}
 
 export default api;

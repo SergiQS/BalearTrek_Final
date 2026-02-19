@@ -1,27 +1,35 @@
-import { useState, useEffect} from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { login } from "../api";
-
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
-      await login(email, password);
-
-      // Si llega aquí, login correcto
-      window.location.href = "/LandingPage";
+      const res = await login(email, password);
+      
+      // Verificar que el token se guardó
+      const token = localStorage.getItem("token");
+      console.log("✅ Login exitoso. Token guardado:", !!token);
+      
+      // Navegar a LandingPage
+      navigate("/Landingpage");
     } catch (err) {
-      setError(err.message || err.error || "Credenciales incorrectas");
+      console.error("Login error:", err);
+      setError(err.message || "Credenciales incorrectas");
+    } finally {
+      setLoading(false);
     }
   };
-
- 
 
   return (
     <div style={{ maxWidth: "400px", margin: "50px auto" }}>
@@ -29,13 +37,14 @@ export default function Login() {
 
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "15px" }}>
-          <label>Emailss</label>
+          <label>Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             style={{ width: "100%", padding: "8px" }}
+            disabled={loading}
           />
         </div>
 
@@ -47,6 +56,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
             style={{ width: "100%", padding: "8px" }}
+            disabled={loading}
           />
         </div>
 
@@ -54,6 +64,7 @@ export default function Login() {
 
         <button
           type="submit"
+          disabled={loading}
           style={{
             width: "100%",
             padding: "10px",
@@ -61,10 +72,11 @@ export default function Login() {
             color: "white",
             border: "none",
             borderRadius: "5px",
-            cursor: "pointer",
+            cursor: loading ? "not-allowed" : "pointer",
+            opacity: loading ? 0.7 : 1,
           }}
         >
-          Entrar
+          {loading ? "Cargando..." : "Entrar"}
         </button>
       </form>
     </div>

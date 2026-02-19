@@ -7,6 +7,8 @@ import LandingPage from "./Components/Landingpage";
 import TrekDetails from "./Components/TrekDetails";
 import Perfil from "./Components/Perfil";
 import Meeting from "./Components/Meeting";
+import ProtectedRoute from "./Components/ProtectedRoute";
+
 export default function App() {
   return (
     <>
@@ -15,7 +17,14 @@ export default function App() {
           <Route path="/" element={<Login />} />
           <Route path="/TrekDetails" element={<TrekDetails/>} />
           <Route path="/Landingpage" element={<LandingPage />} />
-          <Route path="/Perfil" element={<Perfil />} />
+          <Route 
+            path="/Perfil" 
+            element={
+              <ProtectedRoute>
+                <Perfil />
+              </ProtectedRoute>
+            } 
+          />
           <Route path="/treks/:identifier" element={<TrekDetails />} />
           <Route path="/treks/:identifier/meeting/:id" element={<Meeting />} />
           

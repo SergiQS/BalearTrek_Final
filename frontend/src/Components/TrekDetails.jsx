@@ -1,7 +1,7 @@
 import "./TrekDetails.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import LandingPage from "../Components/Landingpage";
+import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import Header from "./Header";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +24,17 @@ export default function TrekDetail() {
   useEffect(() => {
     getTrek();
   }, [identifier]);
+  function Stars({ rating }) {
+      return (
+        <span>
+          {[1, 2, 3, 4, 5].map((star) => {
+            if (star <= rating) return <FaStar key={star} />;
+            if (star - 0.5 === rating) return <FaStarHalfAlt key={star} />;
+            return <FaRegStar key={star} />;
+          })}
+        </span>
+      );
+    }
 
   if (!trek) return <p>Cargando...</p>;
 
@@ -38,8 +49,11 @@ export default function TrekDetail() {
 
         {/* RATING + GUÍA */}
         <div className="trek-info">
-          <div className="rating">⭐ {trek.rating}</div>
-          <div className="guide">Guía: </div>
+          <div className="rating"> 
+            {trek.rating}
+         
+          </div>
+           <Stars rating={trek.rating} />
         </div>
 
         <button className="availability-btn"></button>
@@ -54,6 +68,9 @@ export default function TrekDetail() {
                 </div>
                 <div>
                   <strong>Hora:</strong> {meeting.hour}
+                </div>
+                <div>
+                  <strong>Hora:</strong> {meeting.user.name}
                 </div>
                 <div>
                   <strong>Rating:</strong> {meeting.rating}

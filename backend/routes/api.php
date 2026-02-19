@@ -19,10 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
-// Protegida pel middleware 'auth:sanctum' 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+// Protegida con Sanctum para el usuario autenticado
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user()->load('meetings');
+});
 
 //CRUD per a administradors 
 Route::middleware(['multiauth', 'CHECK-ROLEADMIN'])->group(function () {
@@ -46,7 +46,7 @@ Route::middleware('multiauth')->group(function () {
 
     });
     // index and show per a usuaris autenticats
-    Route::get('/user', [UserController::class, 'indexUser']);
+    // Route::get('/user', [UserController::class, 'indexUser']);
     Route::get('user/show', [UserController::class, 'showUser']);
     // Rutes per a operacions amb email
 
@@ -64,7 +64,7 @@ Route::middleware('multiauth')->group(function () {
 
 Route::get('/treks/search/{value}', [TrekController::class, 'search']);
 Route::get('/treks/illa/{illa}', [TrekController::class, 'filterByIsland']);
-Route::get('/treks/{identifier}/meeting/{id}',[TrekController::class]);
+Route::get('/treks/{identifier}/meeting/{id}',[TrekController::class, 'showMeeting']);
 Route::apiResource('treks', TrekController::class);
 
 // Route::bind('user', function ($value) {
