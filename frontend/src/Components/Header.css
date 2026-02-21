@@ -1,5 +1,41 @@
+.landing-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line-0);
+  background: rgba(246, 242, 234, 0.86);
+  backdrop-filter: blur(10px);
+}
+
+.landing-header h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 1.5px;
+  color: var(--ink-0);
+}
+
 .link-button {
   text-decoration: none;
-  color: inherit;
+  color: var(--ink-1);
   display: inline-block;
+}
+
+.icon-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line-0);
+  background: var(--card-0);
+  box-shadow: var(--shadow-0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.icon-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(27, 127, 122, 0.35);
+  box-shadow: var(--shadow-1);
 }

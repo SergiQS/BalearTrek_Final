@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         //
 
-        $users = User::with(['roles,meetings'])
+        $users = User::with(['roles,meetings,'])
             ->when(
                 $request->name,
                 fn($q, $name) =>
@@ -180,7 +180,7 @@ class UserController extends Controller
         return response()->json([
             'id' => $user->id,
             'name' => $user->name,
-            'lastname' => $user->lastname,
+            'lastName' => $user->lastName,
             'email' => $user->email,
             'role' => $user->role->name,
         ]);
@@ -194,9 +194,11 @@ class UserController extends Controller
             return response()->json(['error' => 'No autenticado'], 401);
         }
 
-        return response()->json(
-            $user->load(['meetings', 'comments'])
-        );
+        $user->load(['meetings', 'meetings.trek', 'comments']);
+
+        return response()->json([
+            'data' => $user
+        ]);
 
     }
 

@@ -1,15 +1,16 @@
 .trek-container {
-  width: 100%;
-  max-width: 420px;
-  margin: auto;
-  padding: 20px;
-  font-family: sans-serif;
+  width: min(860px, 92vw);
+  margin: 28px auto 60px;
+  padding: 28px clamp(18px, 4vw, 34px);
+  background: var(--card-0);
+  border-radius: var(--radius-1);
+  box-shadow: var(--shadow-1);
+  border: 1px solid rgba(27, 127, 122, 0.12);
 }
 
 .trek-title {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-size: clamp(24px, 4vw, 34px);
+  margin: 0 0 8px;
 }
 
 .trek-guide {
@@ -17,37 +18,70 @@
   margin-bottom: 15px;
 }
 
+.trek-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ink-2);
+  margin-bottom: 16px;
+}
+
+.trek-info svg {
+  color: var(--brand-2);
+  margin-right: 4px;
+}
+
+.rating {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-1);
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(241, 184, 91, 0.2);
+  border: 1px solid rgba(241, 184, 91, 0.45);
+}
+
 .availability-btn {
   width: 100%;
   padding: 12px;
-  background: #007bff;
-  color: white;
+  background: linear-gradient(120deg, var(--brand-0), var(--brand-1));
+  color: #ffffff;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  margin-bottom: 20px;
+  border-radius: 999px;
+  font-size: 15px;
+  margin-bottom: 26px;
   cursor: pointer;
 }
 
 .places-box,
 .meetings-box {
-  border: 1px solid #4f4d4d;
-  padding: 15px;
-  border-radius: 10px;
+  border: 1px solid rgba(27, 127, 122, 0.18);
+  padding: 18px;
+  border-radius: var(--radius-0);
   margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.meetings-box h3,
+.places-box h3 {
+  margin-top: 0;
+  font-size: 16px;
+  letter-spacing: 0.8px;
 }
 
 .place-item,
 .meeting-item {
-  background: #bb3434;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 10px;
+  background: #ffffff;
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(20, 20, 20, 0.08);
+  box-shadow: 0 6px 16px rgba(20, 20, 20, 0.08);
 }
 
 .place-name {
   font-weight: bold;
-  
+  color: var(--ink-1);
 }
 
 .place-type {
@@ -57,5 +91,19 @@
 
 .place-gps {
   font-size: 13px;
-  color: #333;
+  color: var(--ink-2);
+}
+
+.meeting-item a {
+  display: inline-flex;
+  margin-top: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(27, 127, 122, 0.12);
+  color: var(--brand-0);
+  font-weight: 600;
+}
+
+.meeting-item a:hover {
+  background: rgba(27, 127, 122, 0.2);
 }

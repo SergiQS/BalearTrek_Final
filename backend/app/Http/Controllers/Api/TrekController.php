@@ -215,7 +215,7 @@ class TrekController extends Controller
 {
     // 1. Buscar el trek por identifier
     $trek = Trek::where('id', $identifier)
-                ->with('meetings')
+                ->with('meetings','interestingPlaces')
                 ->firstOrFail();
 
     // 2. Buscar el meeting dentro del trek

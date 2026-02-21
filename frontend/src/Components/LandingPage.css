@@ -1,99 +1,118 @@
+.landing-container {
+  padding: 24px clamp(16px, 4vw, 48px) 60px;
+}
+
+.hero-container {
+  position: relative;
+  border-radius: var(--radius-1);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+  margin: 18px auto 36px;
+}
+
+.hero-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(18, 18, 18, 0.05), rgba(18, 18, 18, 0.45));
+}
+
+.hero-image {
+  width: 100%;
+  height: min(420px, 55vh);
+  object-fit: cover;
+  display: block;
+  transform: scale(1.02);
+}
+
 /* CARD TREKS UNIFICADO */
 .treks-grid {
-  display: flex;
-  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
   justify-content: center;
-  flex-wrap: wrap;
 }
 
 .trek-card {
-  background: #7a6868;
-  padding: 16px;
-  border-radius: 10px;
-  text-align: center;
+  background: var(--card-0);
+  padding: 18px 20px 20px;
+  border-radius: var(--radius-0);
+  text-align: left;
   text-decoration: none;
-  color:inherit;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-  border: 1px solid #ddd;
-  display: block;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
-  width: 320px;
+  color: inherit;
+  box-shadow: var(--shadow-0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  border: 1px solid rgba(27, 127, 122, 0.12);
+  display: grid;
+  gap: 10px;
+  animation: fade-up 0.5s ease both;
 }
 
 .trek-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  border-color: #ccc;
-}
-
-.trek-card img {
-  width: 120px;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 8px;
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-1);
+  border-color: rgba(27, 127, 122, 0.3);
 }
 
 .trek-card h3 {
   margin: 0;
   font-size: 18px;
-  color: #222;
+  color: var(--ink-0);
 }
 
 .trek-card p {
   font-size: 14px;
-  color: #ffffff;
+  color: var(--ink-2);
   margin: 0;
 }
 
-.trek-tags {
+.trek-card span svg {
+  color: var(--brand-2);
+  margin-right: 4px;
+}
+
+.filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  justify-content: flex-start;
+  gap: 12px;
+  margin-bottom: 22px;
 }
 
-.trek-tag {
-  font-size: 12px;
-  padding: 4px 10px;
-  border-radius: 9999px;
-  background-color: #e0e7ff;
-  color: #3b49df;
-}
-
-.hero-image {
-  width: 100%;
-  height: 400px; /* o la altura que prefieras */
-  object-fit: cover; /* para que la imagen cubra el área sin deformarse */
-  border-radius: 12px; /* opcional, para bordes redondeados */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* opcional, para darle profundidad */
-}
-
-/* ESTILO PARA FILTROS */
 .filters select {
-  padding: 10px 14px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  color: #333;
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+  padding: 10px 16px;
+  font-size: 15px;
+  border-radius: 999px;
+  border: 1px solid var(--line-0);
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--ink-1);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 }
 
 .filters select:hover {
-  border-color: #7c8cf5;
-  box-shadow: 0 0 8px rgba(124, 140, 245, 0.5);
+  border-color: rgba(27, 127, 122, 0.35);
+  box-shadow: var(--shadow-0);
 }
 
 .filters select:focus {
   outline: none;
-  border-color: #4a54e1;
-  box-shadow: 0 0 10px rgba(74, 84, 225, 0.7);
+  border-color: rgba(27, 127, 122, 0.6);
+  box-shadow: 0 0 0 3px rgba(27, 127, 122, 0.2);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trek-card {
+    animation: none;
+  }
 }

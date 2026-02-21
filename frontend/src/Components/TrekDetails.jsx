@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function TrekDetail() {
   const { identifier } = useParams();
   const [trek, setTrek] = useState([]);
-  const navigate = useNavigate();
+
 
   const getTrek = async () => {
     try {
@@ -47,7 +47,7 @@ export default function TrekDetail() {
         {/* TÍTULO */}
         <h2 className="trek-title">{trek.name}</h2>
 
-        {/* RATING + GUÍA */}
+        {/* RATING  */}
         <div className="trek-info">
           <div className="rating"> 
             {trek.rating}
@@ -56,13 +56,13 @@ export default function TrekDetail() {
            <Stars rating={trek.rating} />
         </div>
 
-        <button className="availability-btn"></button>
+      
         {/* MEETINGS */}
         <div className="meetings-box">
           <h3>MEETINGS DISPONIBLES</h3>
 
           {trek.meetings?.map((meeting) => (
-            <div className="meeting-item">
+            <div key={meeting.id} className="meeting-item">
                  <div>
                   <strong>Día:</strong> {meeting.day}
                 </div>
@@ -70,7 +70,7 @@ export default function TrekDetail() {
                   <strong>Hora:</strong> {meeting.hour}
                 </div>
                 <div>
-                  <strong>Hora:</strong> {meeting.user.name}
+                  <strong>Guia:</strong> {meeting.user.name}
                 </div>
                 <div>
                   <strong>Rating:</strong> {meeting.rating}
@@ -85,9 +85,10 @@ export default function TrekDetail() {
           <h3>LUGARES DE INTERÉS</h3>
 
           {trek.interestingPlaces?.map((place) => (
-            <div key={place.identifier} className="place-item">
+            <div key={place.id} className="place-item">
               <div className="place-name">{place.name}</div>
               <div className="place-gps">GPSpos: {place.gps}</div>
+              <Link to={`/treks/${identifier}/places/${place.id}`} className="place-link">Ver detalles</Link>
             </div>
           ))}
         </div>

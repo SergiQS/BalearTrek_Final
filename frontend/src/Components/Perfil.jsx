@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { getUser, logout } from "../api";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
+import "./Perfil.css";
 
 
 export default function Perfil() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null,
+  JSON.parse(localStorage.getItem("user")) || null,
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,8 +23,8 @@ export default function Perfil() {
       try {
         setLoading(true);
         const res = await getUser();
-        setUser(res.data);
-        localStorage.setItem("user", JSON.stringify(res.data));
+        setUser(res.data.data);
+        localStorage.setItem("user", JSON.stringify(res.data.data));
         setError(null);
       } catch (err) {
         console.error("Error fetching user:", err);
@@ -31,7 +33,7 @@ export default function Perfil() {
         setLoading(false);
       }
     };
-
+    console.log(user);  
     fetchUser();
   }, []);
 
@@ -40,10 +42,20 @@ export default function Perfil() {
   if (!user) return <div>No hay usuario autenticado</div>;
   console.log(user);
   return (
-    <> <Header></Header>
-      <button onClick={handleLogout}>Logout</button>
+    <>
+      <Header></Header>
       {/* USER INFO */}
       <section className="user-info">
+        <div className="profile-header">
+          <div>
+            <h2 className="profile-title">Perfil</h2>
+            <p className="profile-subtitle">Gestiona tu informacion y reservas.</p>
+          </div>
+          <div className="profile-actions">
+            <button className="edit-btn">Editar</button>
+            <button className="logout-btn" onClick={handleLogout}>Logout</button>
+          </div>
+        </div>
         <div className="info-row">
           <span className="label">Nombre:</span>
           <span>{user.name}</span>
@@ -66,16 +78,15 @@ export default function Perfil() {
 
         <div className="info-row">
           <span className="label">Contraseña:</span>
-          <span>********</span>
+          <span>{user.password}*******</span>
         </div>
 
-        <button className="edit-btn">Editar</button>
-
-         <div className="meetings-box">
+        <div className="meetings-box">
           <h3>MEETINGS a los que estas inscrito</h3>
 
           {user.meetings?.map((meeting) => (
             <div  key={meeting.id} className="meeting-item">
+                  <div><strong>Trek:</strong> {meeting.trek?.name}</div>
                  <div>
                   <strong>Día:</strong> {meeting.day}
                 </div>

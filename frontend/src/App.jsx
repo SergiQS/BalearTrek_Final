@@ -8,6 +8,7 @@ import TrekDetails from "./Components/TrekDetails";
 import Perfil from "./Components/Perfil";
 import Meeting from "./Components/Meeting";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import PlacesDetails from "./Components/PlacesDetails";
 
 export default function App() {
   return (
@@ -15,19 +16,21 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/TrekDetails" element={<TrekDetails/>} />
+          <Route path="/TrekDetails" element={<TrekDetails />} />
           <Route path="/Landingpage" element={<LandingPage />} />
-          <Route 
-            path="/Perfil" 
+          <Route
+            path="/Perfil"
             element={
               <ProtectedRoute>
                 <Perfil />
               </ProtectedRoute>
-            } 
+            }
           />
+          
           <Route path="/treks/:identifier" element={<TrekDetails />} />
           <Route path="/treks/:identifier/meeting/:id" element={<Meeting />} />
-          
+          <Route path="/treks/:identifier/places/:id" element={<PlacesDetails />} />
+
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           {/* Aquí puedes agregar más rutas, como el dashboard */}
         </Routes>

@@ -20,9 +20,7 @@ export default function LandingPage() {
       </div>
 
       {/* GRID DE TREKS */}
-      <div className="treks-grid">
-        <Cardtreks />
-      </div>
+      <Cardtreks />
     </div>
   );
 }
