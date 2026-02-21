@@ -9,13 +9,16 @@ import Perfil from "./Components/Perfil";
 import Meeting from "./Components/Meeting";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import PlacesDetails from "./Components/PlacesDetails";
+import Register from "./Components/Register";
 
 export default function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/TrekDetails" element={<TrekDetails />} />
           <Route path="/Landingpage" element={<LandingPage />} />
           <Route

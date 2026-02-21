@@ -62,6 +62,14 @@
   background: rgba(255, 255, 255, 0.75);
 }
 
+.comments-box {
+  border: 1px solid rgba(27, 127, 122, 0.18);
+  padding: 18px;
+  border-radius: var(--radius-0);
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
 .meetings-box h3,
 .places-box h3 {
   margin-top: 0;
@@ -106,4 +114,34 @@
 
 .meeting-item a:hover {
   background: rgba(27, 127, 122, 0.2);
+}
+
+.comment-item {
+  background: #ffffff;
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(20, 20, 20, 0.08);
+  box-shadow: 0 6px 16px rgba(20, 20, 20, 0.08);
+}
+
+.comment-user {
+  font-weight: 600;
+  color: var(--ink-1);
+}
+
+.comment-text {
+  color: var(--ink-2);
+  margin-top: 4px;
+}
+
+.comment-rating {
+  color: var(--ink-2);
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+.comment-empty {
+  color: var(--ink-2);
+  margin: 0;
 }

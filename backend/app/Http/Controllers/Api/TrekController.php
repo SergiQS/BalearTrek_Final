@@ -108,6 +108,7 @@ class TrekController extends Controller
             'municipality',
             'meetings',
             'meetings.comments',
+            'meetings.comments.user',
             'meetings.user',
             'interestingPlaces',
             'interestingPlaces.placeType',
@@ -176,6 +177,7 @@ class TrekController extends Controller
                 'municipality',
                 'meetings.user',
                 'meetings.comments',
+                'meetings.comments.user',
                 'interestingPlaces.placeType'
             ]);
 

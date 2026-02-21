@@ -38,7 +38,7 @@ export default function TrekDetail() {
 
   if (!trek) return <p>Cargando...</p>;
 
-  console.log(identifier);
+  console.log(trek  );
 
   return (
     <>
@@ -91,6 +91,26 @@ export default function TrekDetail() {
               <Link to={`/treks/${identifier}/places/${place.id}`} className="place-link">Ver detalles</Link>
             </div>
           ))}
+        </div>
+        {/* Comentarios */}
+        <div className="comments-box">
+          <h3>COMENTARIOS</h3>
+
+          {trek.meetings?.flatMap((meeting) => meeting.comments || []).length ? (
+            trek.meetings
+              ?.flatMap((meeting) => meeting.comments || [])
+              .map((comment) => (
+                <div key={comment.id} className="comment-item">
+                  <div className="comment-user">
+                    {comment.user?.name || "Usuario"}
+                  </div>
+                  <div className="comment-text">{comment.comment}</div>
+                  <div className="comment-rating">Rating: {comment.score}</div>
+                </div>
+              ))
+          ) : (
+            <p className="comment-empty">Todavia no hay comentarios.</p>
+          )}
         </div>
       </div>
     </>

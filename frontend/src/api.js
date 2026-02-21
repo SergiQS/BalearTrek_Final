@@ -88,6 +88,16 @@ export async function login(email, password) {
   }
 }
 
+export async function register(payload) {
+  try {
+    const res = await api.post("/api/register", payload);
+    return res;
+  } catch (error) {
+    console.error("Register error:", error.response?.data || error.message);
+    throw error;
+  }
+}
+
 export async function getUser() {
   return api.get("/api/user");
 }

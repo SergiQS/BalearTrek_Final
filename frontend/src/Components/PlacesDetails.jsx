@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Header from "./Header";
+import Mapa from "./Mapa";
 
 export default function PlacesDetails() {
   const { identifier, id } = useParams();
   const [trek, setTrek] = useState(null);
-  
+
 
   const getPlace = async () => {
     try {
@@ -21,21 +22,29 @@ export default function PlacesDetails() {
 
   useEffect(() => {
     getPlace();
-  }, [identifier,id]);
+  }, [identifier]);
 
   if (!trek) return <p>Cargando...</p>;
 
-  const place = trek.interestingPlaces?.find(p => p.id === parseInt(id));
+  const placeDetails = trek.interestingPlaces?.find(
+    (place) => String(place.id) === String(id), // Aseguramos que ambos sean strings para la comparación
+  );
+
+   console.log(placeDetails);
+     const [lat,long] =  placeDetails.gps.split(",").map(coord => parseFloat(coord.trim())); // Convertimos el string "lat,lng" a números
 
   return (
     <>
       <Header></Header>
       <div className="trek-container">
-        {place ? (
-          <div  className="place-item">
-            <h2 className="place-name">{place.name}</h2>
-            <div className="place-gps">GPS: {place.gps}</div>
-            <div className="place-type">Tipo: {place.type?.name || 'No especificado'}</div>
+        {placeDetails ? (
+          <div className="place-item">
+            <h2 className="place-name">{placeDetails.name}</h2>
+            <div className="place-gps">GPS: {placeDetails.gps}</div>
+            <Mapa lat={lat} lng={long} />
+            <div className="place-type">
+              Tipo: {placeDetails.placeType?.name || "No especificado"}
+            </div>
           </div>
         ) : (
           <p>Lugar no encontrado</p>
