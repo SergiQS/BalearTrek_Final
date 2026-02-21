@@ -1,0 +1,180 @@
+.contact-container {
+  width: min(860px, 92vw);
+  margin: 40px auto 60px;
+  padding: 0;
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.contact-title {
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 600;
+  margin: 0 0 10px;
+  background: linear-gradient(120deg, var(--brand-0), var(--brand-1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.contact-subtitle {
+  font-size: 16px;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+.contact-form-wrapper {
+  background: var(--card-0);
+  border-radius: var(--radius-1);
+  box-shadow: var(--shadow-1);
+  border: 1px solid rgba(27, 127, 122, 0.12);
+  padding: clamp(24px, 6vw, 40px);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.form-group:last-of-type {
+  margin-bottom: 0;
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--ink-1);
+  font-size: 14px;
+}
+
+.form-input,
+.form-textarea {
+  padding: 12px 14px;
+  border: 1px solid rgba(27, 127, 122, 0.3);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink-0);
+  background: var(--card-1);
+  transition: all 0.2s ease;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--ink-2);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--brand-0);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(27, 127, 122, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 140px;
+  font-family: inherit;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.submit-btn {
+  background: linear-gradient(120deg, var(--brand-0), var(--brand-1));
+  color: white;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(27, 127, 122, 0.25);
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(27, 127, 122, 0.35);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(27, 127, 122, 0.25);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.reset-btn {
+  background: transparent;
+  color: var(--brand-0);
+  border: 1px solid rgba(27, 127, 122, 0.5);
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reset-btn:hover {
+  background: rgba(27, 127, 122, 0.1);
+}
+
+.success-message {
+  padding: 14px 16px;
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 8px;
+  color: #2e7d32;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideIn 0.3s ease;
+}
+
+.error-message {
+  padding: 14px 16px;
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  border-radius: 8px;
+  color: #d32f2f;
+  margin-bottom: 20px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .submit-btn,
+  .reset-btn {
+    width: 100%;
+  }
+}

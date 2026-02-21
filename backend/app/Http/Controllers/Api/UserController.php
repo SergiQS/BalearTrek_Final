@@ -194,7 +194,15 @@ class UserController extends Controller
             return response()->json(['error' => 'No autenticado'], 401);
         }
 
-        $user->load(['meetings', 'meetings.trek', 'comments']);
+        $user->load([
+            'role',
+            'meetings',
+            'meetings.trek',
+            'comments',
+            'meeting',
+            'meeting.users',
+            'meeting.trek'
+        ]);
 
         return response()->json([
             'data' => $user

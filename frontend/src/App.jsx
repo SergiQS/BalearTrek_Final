@@ -10,7 +10,7 @@ import Meeting from "./Components/Meeting";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import PlacesDetails from "./Components/PlacesDetails";
 import Register from "./Components/Register";
-
+import Contacto from "./Components/Contacto";
 export default function App() {
   return (
     <>
@@ -19,6 +19,7 @@ export default function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/Contacto" element={<Contacto />} />
           <Route path="/TrekDetails" element={<TrekDetails />} />
           <Route path="/Landingpage" element={<LandingPage />} />
           <Route

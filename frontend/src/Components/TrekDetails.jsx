@@ -10,7 +10,6 @@ export default function TrekDetail() {
   const { identifier } = useParams();
   const [trek, setTrek] = useState([]);
 
-
   const getTrek = async () => {
     try {
       const res = await fetch(`http://localhost:8000/api/treks/${identifier}`);
@@ -25,20 +24,20 @@ export default function TrekDetail() {
     getTrek();
   }, [identifier]);
   function Stars({ rating }) {
-      return (
-        <span>
-          {[1, 2, 3, 4, 5].map((star) => {
-            if (star <= rating) return <FaStar key={star} />;
-            if (star - 0.5 === rating) return <FaStarHalfAlt key={star} />;
-            return <FaRegStar key={star} />;
-          })}
-        </span>
-      );
-    }
+    return (
+      <span>
+        {[1, 2, 3, 4, 5].map((star) => {
+          if (star <= rating) return <FaStar key={star} />;
+          if (star - 0.5 === rating) return <FaStarHalfAlt key={star} />;
+          return <FaRegStar key={star} />;
+        })}
+      </span>
+    );
+  }
 
   if (!trek) return <p>Cargando...</p>;
-
-  console.log(trek  );
+  
+  console.log(trek);
 
   return (
     <>
@@ -49,33 +48,34 @@ export default function TrekDetail() {
 
         {/* RATING  */}
         <div className="trek-info">
-          <div className="rating"> 
-            {trek.rating}
-         
-          </div>
-           <Stars rating={trek.rating} />
+          <div className="rating">{trek.rating}</div>
+          <Stars rating={trek.rating} />
         </div>
 
-      
         {/* MEETINGS */}
         <div className="meetings-box">
           <h3>MEETINGS DISPONIBLES</h3>
 
           {trek.meetings?.map((meeting) => (
             <div key={meeting.id} className="meeting-item">
-                 <div>
-                  <strong>Día:</strong> {meeting.day}
-                </div>
-                <div>
-                  <strong>Hora:</strong> {meeting.hour}
-                </div>
-                <div>
-                  <strong>Guia:</strong> {meeting.user.name}
-                </div>
-                <div>
-                  <strong>Rating:</strong> {meeting.rating}
-                </div>
-              <Link to={`/treks/${identifier}/meeting/${meeting.id}`} key={meeting.id}>Inscribirse</Link>
+              <div>
+                <strong>Día:</strong> {meeting.day}
+              </div>
+              <div>
+                <strong>Hora:</strong> {meeting.hour}
+              </div>
+              <div>
+                <strong>Guia:</strong> {meeting.user.name}
+              </div>
+              <div>
+                <strong>Rating:</strong> {meeting.rating}
+              </div>
+              <Link
+                to={`/treks/${identifier}/meeting/${meeting.id}`}
+                key={meeting.id}
+              >
+                Inscribirse
+              </Link>
             </div>
           ))}
         </div>
@@ -88,7 +88,12 @@ export default function TrekDetail() {
             <div key={place.id} className="place-item">
               <div className="place-name">{place.name}</div>
               <div className="place-gps">GPSpos: {place.gps}</div>
-              <Link to={`/treks/${identifier}/places/${place.id}`} className="place-link">Ver detalles</Link>
+              <Link
+                to={`/treks/${identifier}/places/${place.id}`}
+                className="place-link"
+              >
+                Ver detalles
+              </Link>
             </div>
           ))}
         </div>
@@ -96,9 +101,11 @@ export default function TrekDetail() {
         <div className="comments-box">
           <h3>COMENTARIOS</h3>
 
-          {trek.meetings?.flatMap((meeting) => meeting.comments || []).length ? (
+          {trek.meetings?.flatMap((meeting) => meeting.comments || [])
+            .length ? (
             trek.meetings
               ?.flatMap((meeting) => meeting.comments || [])
+              .sort((a, b) => b.score - a.score)
               .map((comment) => (
                 <div key={comment.id} className="comment-item">
                   <div className="comment-user">

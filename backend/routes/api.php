@@ -21,7 +21,15 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
 // Protegida con Sanctum para el usuario autenticado
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    $user = $request->user()->load(['meetings', 'meetings.trek', 'comments']);
+    $user = $request->user()->load([
+        'role',
+        'meetings',
+        'meetings.trek',
+        'comments',
+        'meeting',
+        'meeting.users',
+        'meeting.trek'
+    ]);
     return response()->json(['data' => $user]);
 });
 
