@@ -210,6 +210,23 @@ class UserController extends Controller
 
     }
 
+    public function deactivateAccount()
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'No autenticado'], 401);
+        }
+
+        $user->status = 'n';
+        $user->save();
+
+        return response()->json([
+            'message' => 'Cuenta desactivada correctamente',
+            'user' => $user
+        ]);
+    }
+
 
 
 

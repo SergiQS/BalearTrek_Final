@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getUser, logout } from "../api";
+import { getUser, logout, deactivateAccount } from "../api";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import "./Perfil.css";
@@ -12,10 +12,33 @@ export default function Perfil() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [verUser, setVerUser] = useState({});
+  const [deactivating, setDeactivating] = useState(false);
 
   const handleLogout = async () => {
     await logout();
     navigate("/");
+  };
+
+  const handleDeactivate = async () => {
+    if (!window.confirm("¿Estás seguro de que deseas desactivar tu cuenta? Esta acción cambiará tu estado a inactivo.")) {
+      return;
+    }
+    
+    try {
+      setDeactivating(true);
+      await deactivateAccount();
+      setUser(prev => ({...prev, status: 'n'}));
+      localStorage.setItem("user", JSON.stringify({...user, status: 'n'}));
+      alert("Tu cuenta ha sido desactivada.");
+      setTimeout(() => {
+        handleLogout();
+      }, 2000);
+    } catch (err) {
+      console.error("Error deactivating account:", err);
+      setError("Error al desactivar cuenta. Intenta de nuevo.");
+    } finally {
+      setDeactivating(false);
+    }
   };
 
   useEffect(() => {
@@ -54,9 +77,12 @@ export default function Perfil() {
             </p>
           </div>
           <div className="profile-actions">
-            <button className="edit-btn">Editar</button>
+            {/* <button className="edit-btn">Editar</button> */}
             <button className="logout-btn" onClick={handleLogout}>
               Logout
+            </button>
+            <button className="deactivate-btn" onClick={handleDeactivate} disabled={deactivating}>
+              {deactivating ? "Desactivando..." : "Desactivar Cuenta"}
             </button>
           </div>
         </div>
@@ -153,34 +179,37 @@ export default function Perfil() {
                 </div>
               </div>
             ))}
-            <div className="meetings-box">
-              <h3>Tus Comentarios</h3>
+          </div>
+        )}
 
-              {user.comments && user.comments.length > 0 ? (
-                user.comments.map((comment) => (
-                  <div key={comment.id} className="meeting-item">
-                    <div>
-                      <strong>Trek:</strong>{" "}
-                      {comment.trek?.name || "Trek desconocido"}
-                    </div>
-                    <div>
-                      <strong>Comentario:</strong> {comment.comment}
-                    </div>
-                    <div>
-                      <strong>Puntuación:</strong>{" "}
-                      {"⭐".repeat(comment.score || 0)}
-                    </div>
-                    <div style={{ fontSize: "12px", color: "var(--ink-2)" }}>
-                      {new Date(comment.created_at).toLocaleDateString("es-ES")}
-                    </div>
+        {user.status !== 'n' && (
+          <div className="meetings-box">
+            <h3>Tus Comentarios</h3>
+
+            {user.comments && user.comments.length > 0 ? (
+              user.comments.map((comment) => (
+                <div key={comment.id} className="meeting-item">
+                  <div>
+                    <strong>Trek:</strong>{" "}
+                    {comment.trek?.name || "Trek desconocido"}
                   </div>
-                ))
-              ) : (
-                <p style={{ color: "var(--ink-2)", fontStyle: "italic" }}>
-                  No hay comentarios aún
-                </p>
-              )}
-            </div>
+                  <div>
+                    <strong>Comentario:</strong> {comment.comment}
+                  </div>
+                  <div>
+                    <strong>Puntuación:</strong>{" "}
+                    {"⭐".repeat(comment.score || 0)}
+                  </div>
+                  <div style={{ fontSize: "12px", color: "var(--ink-2)" }}>
+                    {new Date(comment.created_at).toLocaleDateString("es-ES")}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p style={{ color: "var(--ink-2)", fontStyle: "italic" }}>
+                No hay comentarios aún
+              </p>
+            )}
           </div>
         )}
       </section>

@@ -102,6 +102,10 @@ export async function getUser() {
   return api.get("/api/user");
 }
 
+export async function deactivateAccount() {
+  return api.put("/api/user/deactivate");
+}
+
 export async function logout() {
   try {
     await api.post("/api/logout");

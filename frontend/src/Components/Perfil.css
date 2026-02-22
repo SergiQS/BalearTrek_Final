@@ -49,6 +49,30 @@
   background: rgba(27, 127, 122, 0.12);
 }
 
+.deactivate-btn {
+  background: #dc3545;
+  color: #ffffff;
+  border: 1px solid #dc3545;
+  box-shadow: 0 2px 6px rgba(220, 53, 69, 0.25);
+  transition: all 0.2s ease;
+}
+
+.deactivate-btn:hover {
+  background: #c82333;
+  border-color: #c82333;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.35);
+}
+
+.deactivate-btn:active {
+  background: #bb2d3b;
+  box-shadow: 0 1px 4px rgba(220, 53, 69, 0.25);
+}
+
+.deactivate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .info-row {
   display: grid;
   grid-template-columns: minmax(100px, 140px) 1fr;

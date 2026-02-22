@@ -57,6 +57,7 @@ Route::middleware('multiauth')->group(function () {
     // index and show per a usuaris autenticats
     // Route::get('/user', [UserController::class, 'indexUser']);
     Route::get('user/show', [UserController::class, 'showUser']);
+    Route::put('/user/deactivate', [UserController::class, 'deactivateAccount']);
     // Rutes per a operacions amb email
 
     // Route::apiResource('user', UserController::class)->except(['store', 'update', 'destroy']);
