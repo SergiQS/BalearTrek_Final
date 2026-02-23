@@ -22,21 +22,15 @@ export default function App() {
           <Route path="/Contacto" element={<Contacto />} />
           <Route path="/TrekDetails" element={<TrekDetails />} />
           <Route path="/Landingpage" element={<LandingPage />} />
-          <Route
-            path="/Perfil"
-            element={
+          <Route path="/Perfil" element={
               <ProtectedRoute>
                 <Perfil />
               </ProtectedRoute>
             }
           />
-          
           <Route path="/treks/:identifier" element={<TrekDetails />} />
           <Route path="/treks/:identifier/meeting/:id" element={<Meeting />} />
           <Route path="/treks/:identifier/places/:id" element={<PlacesDetails />} />
-
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-          {/* Aquí puedes agregar más rutas, como el dashboard */}
         </Routes>
       </BrowserRouter>
     </>

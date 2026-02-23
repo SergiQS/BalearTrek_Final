@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-
+// Simplemente verifica si el token existe en localStorage.
 export default function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
 

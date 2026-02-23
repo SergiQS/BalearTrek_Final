@@ -1,8 +1,8 @@
-# BalearTrek - Aplicación de Trekking en las Islas Baleares
+# BalearTrek - 
 
 BalearTrek es una aplicación web completa para descubrir, reservar y participar en trekking y excursiones en las islas Baleares. La plataforma permite a los usuarios explorar diferentes treks, unirse a meetings (encuentros de senderismo), dejar comentarios y reseñas, mientras que los guías pueden gestionar sus propias rutas y ver quién está inscrito.
 
-## 📋 Tabla de Contenidos
+##  Tabla de Contenidos
 
 - [Características](#características)
 - [Requisitos](#requisitos)
@@ -14,71 +14,51 @@ BalearTrek es una aplicación web completa para descubrir, reservar y participar
 - [Autenticación](#autenticación)
 - [Funcionalidades](#funcionalidades)
 
-## ✨ Características
+##  Características
 
 ### Para Visitantes
 
-- 🗺️ Explorar treks disponibles con filtros por isla
-- 🔍 Ver detalles de treks (descripción, lugares interesantes, meetings)
-- 📝 Dejar comentarios y puntuaciones en treks
-- 👥 Inscribirse a meetings (encuentros de senderismo)
-- 👤 Gestionar perfil personal
-- 📊 Ver historial de meetings inscritos
-- 💬 Ver comentarios publicados
+- Explorar treks disponibles con filtros por isla
+-  Ver detalles de treks (descripción, lugares interesantes, meetings)
+-  Dejar comentarios y puntuaciones en treks
+-  Inscribirse a meetings (encuentros de senderismo)
+-  Gestionar perfil personal
+-  Ver historial de meetings inscritos
+-  Ver comentarios publicados
 
 ### Para Guías
 
-- 🚀 Crear y gestionar sus propios meetings
-- 👥 Ver lista de usuarios inscritos en sus meetings
-- 📈 Gestionar perfil como guía
-- ⭐ Recibir comentarios y puntuaciones de usuarios
+-  Crear y gestionar sus propios meetings
+-  Ver lista de usuarios inscritos en sus meetings
+-  Gestionar perfil como guía
+-  Recibir comentarios y puntuaciones de usuarios
 
 ### Generales
 
-- 🔐 Autenticación segura con tokens Sanctum
-- 📱 Diseño responsive y adaptable
-- 🎨 Interfaz moderna con tema personalizado
-- 📧 Formulario de contacto
-- 🚫 Opción de desactivar cuenta
+-  Autenticación segura con tokens Sanctum
+-  Diseño responsive y adaptable
+-  Interfaz moderna con tema personalizado
+- Formulario de contacto
+-  Opción de desactivar cuenta
 
-## 📦 Requisitos
+##  Requisitos
 
 ### Backend
 
-- PHP >= 8.1
-- Laravel 11
-- MySQL/MariaDB
+- PHP  
+- Laravel 
+- MySQL
 - Composer
 
 ### Frontend
 
-- Node.js >= 16
-- npm o yarn
+- Node.js
+- npm
 - Vite
 
-## 🚀 Instalación Rápida
 
-### Backend
 
-```bash
-cd backend
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-php artisan db:seed
-php artisan serve
-```
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-## 🏗️ Estructura del Proyecto
+##  Estructura del Proyecto
 
 ### Backend (Laravel)
 
@@ -95,7 +75,7 @@ npm run dev
 - Router: React Router v6 para navegación
 - Styles: CSS custom con variables de tema
 
-## ⚙️ Variables de Entorno
+##  Variables de Entorno
 
 ```env
 # Backend .env
@@ -109,7 +89,7 @@ SANCTUM_STATEFUL_DOMAINS=localhost:5173
 VITE_API_URL=http://localhost:8000
 ```
 
-## 🔌 API Endpoints Principales
+##  API Endpoints Principales
 
 | Método | Endpoint                 | Descripción       |
 | ------ | ------------------------ | ----------------- |
@@ -121,7 +101,7 @@ VITE_API_URL=http://localhost:8000
 | GET    | `/api/treks/{id}`        | Detalles de trek  |
 | GET    | `/api/treks/illa/{isla}` | Filtrar por isla  |
 
-## 💾 Modelos Principales
+## Modelos Principales
 
 ### User
 
@@ -132,13 +112,13 @@ VITE_API_URL=http://localhost:8000
 
 ### Trek
 
-- name, description, difficulty, duration, distance
-- island_id
-- Relaciones: meetings, comments, places (interesantes)
+- name, description, dificultad, 
+- FK isla
+- Relaciones: meetings, comments, intersting places
 
 ### Meeting
 
-- trek_id, user_id (guía), day, hour, max_participants
+- trek_id, user_id (guía), day, hour, 
 - Relaciones: users (participantes)
 
 ### Comment
@@ -149,14 +129,14 @@ VITE_API_URL=http://localhost:8000
 
 - name: visitant, guia, admin
 
-## 🔐 Autenticación
+##  Autenticación
 
 - Sanctum tokens almacenados en localStorage
 - Interceptor automático en requests
 - Rutas protegidas con ProtectedRoute
 - Token enviado en header Authorization: Bearer {token}
 
-## 🎯 Funcionalidades Principales
+##  Funcionalidades Principales
 
 ### Landing Page
 
@@ -187,21 +167,8 @@ VITE_API_URL=http://localhost:8000
 - Validación completa
 - Mensajes éxito/error
 
-## 🎨 Diseño
 
-Paleta de colores:
-
-- Primario: #1b7f7a (Turquesa)
-- Secundario: #2a8f88
-- Acento: #f1b85b
-- Rojo (botones críticos): #dc3545
-
-Tipografía:
-
-- Fraunces: Headings
-- Space Grotesk: Body
-
-## 🚀 Ejecución
+##  Ejecución
 
 ### Desarrollo (dos terminales)
 
@@ -222,7 +189,7 @@ cd frontend && npm run build
 # Servir carpeta dist/
 ```
 
-## 🔒 Seguridad
+##  Seguridad
 
 - Passwords hasheadas (bcrypt)
 - CORS configurado
@@ -230,24 +197,9 @@ cd frontend && npm run build
 - Tokens Sanctum
 - Rutas protegidas por middleware
 
-## 📝 Stack Tecnológico
 
-**Backend:**
 
-- Laravel 11
-- Laravel Sanctum
-- MySQL
-- PHP 8.1+
-
-**Frontend:**
-
-- React 18
-- Vite
-- React Router v6
-- Axios
-- CSS3
-
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 | Problema                | Solución                                           |
 | ----------------------- | -------------------------------------------------- |
@@ -263,7 +215,7 @@ El frontend no guardaba ni enviaba token. Guardamos el token en localStorage. Co
 En el backend faltaba configuar el auth.php para que tambien use el sanctum, 
 
 
-## 📚 Documentación
+##  Documentación
 
 - [Laravel](https://laravel.com)
 - [React](https://react.dev)
@@ -335,5 +287,3 @@ En el backend faltaba configuar el auth.php para que tambien use el sanctum,
     ![alt text](image-32.png)(vemos que hay uno menos)
 
 **Última actualización:** Febrero 2026
-
-Para más información contacta a través del formulario de contacto de la aplicación.
