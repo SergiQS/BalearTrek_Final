@@ -19,7 +19,7 @@ export default function Register() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setForm((prev) => ({ ...prev, [name]: value }));
+        setForm((prev) => ({ ...prev, [name]: value }));    // Actualizamos el estado del formulario con el nuevo valor del campo correspondiente
     };
 
     const handleSubmit = async (e) => {
@@ -27,16 +27,16 @@ export default function Register() {
         setError("");
         setLoading(true);
 
-        const payload = {
+        const formulario = {                                   // Creamos un objeto formulario con los datos del estado y la confirmación de contraseña
             ...form,
             password_confirmation: form.confirmPassword,
         };
 
         try {
-            await register(payload);
+            await register(formulario);
             navigate("/");
         } catch (err) {
-            const message =
+            const message =                                             //Mensaje de error más específico dependiendo de la respuesta del backend, priorizando errores relacionados con la contraseña
                 err.response?.data?.message ||
                 err.response?.data?.errors?.password?.[0] ||
                 err.response?.data?.errors?.password_confirmation?.[0] ||

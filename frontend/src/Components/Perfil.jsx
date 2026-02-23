@@ -8,7 +8,7 @@ export default function Perfil() {
   const navigate = useNavigate();
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null,
-  );
+  ); // Cargar usuario desde localStorage inicialmente para evitar parpadeos al cargar el perfil
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [verUser, setVerUser] = useState({});
@@ -25,10 +25,10 @@ export default function Perfil() {
     }
     
     try {
-      setDeactivating(true);
+      setDeactivating(true); 
       await deactivateAccount();
-      setUser(prev => ({...prev, status: 'n'}));
-      localStorage.setItem("user", JSON.stringify({...user, status: 'n'}));
+      setUser(prev => ({...prev, status: 'n'})); // Actualizar estado local del usuario a inactivo
+      localStorage.setItem("user", JSON.stringify({...user, status: 'n'}));// Actualizar localStorage para reflejar el cambio de estado
       alert("Tu cuenta ha sido desactivada.");
       setTimeout(() => {
         handleLogout();
@@ -41,6 +41,7 @@ export default function Perfil() {
     }
   };
 
+    // Cargar datos del usuario al montar el componente
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -153,15 +154,15 @@ export default function Perfil() {
                   <button
                     className="toggle-attendees-btn"
                     onClick={() =>
-                      setVerUser((prev) => ({
+                      setVerUser((prev) => ({                   //Toggle para mostrar/ocultar la lista de inscritos en cada meeting
                         ...prev,
-                        [meeting.id]: !prev[meeting.id],
+                        [meeting.id]: !prev[meeting.id],       // Cambia el estado para mostrar u ocultar la lista de inscritos de este meeting
                       }))
                     }
                   >
                     {verUser[meeting.id] ? "Cerrar" : "Ver lista"}
                   </button>
-                  {verUser[meeting.id] && (
+                  {verUser[meeting.id] && (                     // Si el estado indica que se debe mostrar la lista de inscritos para este meeting, se renderiza la sección correspondiente
                     <div>
                       {meeting.users?.length > 0 ? (
                         <ul className="attendees-list">
@@ -198,10 +199,10 @@ export default function Perfil() {
                   </div>
                   <div>
                     <strong>Puntuación:</strong>{" "}
-                    {"⭐".repeat(comment.score || 0)}
+                    {"⭐".repeat(comment.score || 0)}    {/* Mostrar estrellas según la puntuación */}
                   </div>
                   <div style={{ fontSize: "12px", color: "var(--ink-2)" }}>
-                    {new Date(comment.created_at).toLocaleDateString("es-ES")}
+                    {new Date(comment.created_at).toLocaleDateString("es-ES")} {/* Mostrar fecha del comentario en formato dd/mm/aa */}
                   </div>
                 </div>
               ))

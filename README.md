@@ -256,6 +256,13 @@ cd frontend && npm run build
 | Comentarios no aparecen | Verificar user.status !== 'n'                      |
 | Token no persiste       | Verificar localStorage habilitado / Revisar api.js |
 
+### Error 401:
+
+El frontend no guardaba ni enviaba token. Guardamos el token en localStorage. Con axios ponemos el token en el header en todas las peticiones.
+
+En el backend faltaba configuar el auth.php para que tambien use el sanctum, 
+
+
 ## 📚 Documentación
 
 - [Laravel](https://laravel.com)

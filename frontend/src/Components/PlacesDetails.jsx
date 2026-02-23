@@ -27,7 +27,7 @@ export default function PlacesDetails() {
   if (!trek) return <p>Cargando...</p>;
 
   const placeDetails = trek.interestingPlaces?.find(
-    (place) => String(place.id) === String(id), // Aseguramos que ambos sean strings para la comparación
+    (place) => String(place.id) === String(id), //Para comprobar  que ambos sean strings para la comparación
   );
 
    console.log(placeDetails);

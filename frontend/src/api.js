@@ -3,7 +3,7 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8000";
 
-const api = axios.create({
+const api = axios.create({                                        // Creamos una instancia de axios con la URL base y configuraciones comunes
   baseURL: API_URL,
   withCredentials: true,
   headers: {
@@ -29,7 +29,7 @@ api.interceptors.request.use(
   },
   (error) => {
     console.error("❌ REQUEST ERROR:", error);
-    return Promise.reject(error);
+    return Promise.reject(error); // Rechazamos la promesa para que el error pueda ser manejado en los componentes
   },
 );
 
@@ -88,9 +88,9 @@ export async function login(email, password) {
   }
 }
 
-export async function register(payload) {
+export async function register(formulario) {
   try {
-    const res = await api.post("/api/register", payload);
+    const res = await api.post("/api/register", formulario);
     return res;
   } catch (error) {
     console.error("Register error:", error.response?.data || error.message);

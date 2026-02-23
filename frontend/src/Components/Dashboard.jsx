@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {  getUser } from "../api"; // renombrado
+import {  getUser } from "../api"; 
 
 export default function Dashboard() {
     const [user, setUser] = useState(null);
@@ -10,7 +10,7 @@ export default function Dashboard() {
         getUser()
             .then((data) => setUser(data))
             .catch(() => {
-                // Opcional: mostrar alerta antes de redirigir
+                
                 alert("No estás autenticado. Redirigiendo al login...");
                 window.location.href = "/login";
             })

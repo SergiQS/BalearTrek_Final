@@ -157,7 +157,7 @@
   animation: slideIn 0.3s ease;
 }
 
-@keyframes slideIn {
+@keyframes slideIn {      /*Animación para mostrar los mensajes de éxito o error*/
   from {
     opacity: 0;
     transform: translateY(-10px);

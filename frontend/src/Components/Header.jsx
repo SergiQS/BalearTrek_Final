@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 export default function Header() {
 
-const isLoggedIn = Boolean(localStorage.getItem("token"));
+const isLoggedIn = Boolean(localStorage.getItem("token"));//Para quitar el botón de login si el usuario ya ha iniciado sesión
 
   return (
        <>

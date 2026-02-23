@@ -19,8 +19,6 @@ return [
 
     'allowed_methods' => ['*'],
 
-    // Requiere que FRONTEND_URL esté definida en .env (ej: http://localhost:5173).
-    // Si es null, CORS bloquea todas las peticiones cross-origin del SPA.
     'allowed_origins' => [env('FRONTEND_URL')],
 
     'allowed_origins_patterns' => [],

@@ -23,20 +23,21 @@ export default function Cardtreks() {
   }, []);
 
   const filteredTreks = treks.filter((trek) => {
-    const islandName = trek.municipality?.island?.name?.toLowerCase();
-    const matchIsland = isla ? islandName === isla.toLowerCase() : true;
-    const matchZona = zona
-      ? trek.zone?.some((z) => z.name.toLowerCase() === zona.toLowerCase())
-      : true;
+    const islandName = trek.municipality?.island?.name?.toLowerCase(); // Obtener el nombre de la isla en minúsculas
+    const matchIsland = isla ? islandName === isla.toLowerCase() : true; // Comparar con el filtro de isla (si se seleccionó)
+    // const matchZona = zona
+    //   ? trek.zone?.some((z) => z.name.toLowerCase() === zona.toLowerCase()) // Comparar con el filtro de zona (si se seleccionó)
+    //   : true;
 
-    return matchIsland && matchZona;
+    return matchIsland; //&& matchZona;
   });
 
   const filteredSortedTreks = [...filteredTreks].sort(
-    (a, b) => b.rating - a.rating
+    (a, b) => b.rating - a.rating,
   );
 
   function Stars({ rating }) {
+    //Cambiar a una mas sencilla
     return (
       <span>
         {[1, 2, 3, 4, 5].map((star) => {
@@ -58,18 +59,19 @@ export default function Cardtreks() {
           <option value="ibiza">Ibiza</option>
           <option value="formentera">Formentera</option>
         </select>
+      </div>
 
-        <select value={zona} onChange={(e) => setZona(e.target.value)}>
+      {/* <select value={zona} onChange={(e) => setZona(e.target.value)}>
           <option value="">Zona</option>
           <option value="norte">Norte</option>
           <option value="sur">Sur</option>
           <option value="este">Este</option>
           <option value="oeste">Oeste</option>
         </select>
-      </div>
+      </div> */}
 
       <div className="treks-grid">
-        {filteredSortedTreks.map(trek =>
+        {filteredSortedTreks.map((trek) => (
           <Link
             key={trek.identifier}
             to={`/treks/${trek.identifier}`}
@@ -79,8 +81,8 @@ export default function Cardtreks() {
             <p>{trek.rating}</p>
             <Stars rating={trek.rating} />
           </Link>
-        )}
+        ))}
       </div>
     </>
   );
-} 
+}

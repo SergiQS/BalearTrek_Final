@@ -23,6 +23,8 @@ export default function TrekDetail() {
   useEffect(() => {
     getTrek();
   }, [identifier]);
+
+
   function Stars({ rating }) {
     return (
       <span>
@@ -101,10 +103,10 @@ export default function TrekDetail() {
         <div className="comments-box">
           <h3>COMENTARIOS</h3>
 
-          {trek.meetings?.flatMap((meeting) => meeting.comments || [])
+          {trek.meetings?.flatMap((meeting) => meeting.comments)    //Revisar
             .length ? (
             trek.meetings
-              ?.flatMap((meeting) => meeting.comments || [])
+              ?.flatMap((meeting) => meeting.comments)
               .sort((a, b) => b.score - a.score)
               .map((comment) => (
                 <div key={comment.id} className="comment-item">
