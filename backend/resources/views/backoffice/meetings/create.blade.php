@@ -47,7 +47,7 @@
                     {{-- DÍA --}}
                     <div class="mb-4">
                         <x-input-label for="day" value="Día" />
-                        <x-text-input id="day" name="day" type="text" class="mt-1 block w-full" placeholder="Ej: 24/12/2024"
+                        <x-text-input id="day" name="day" type="date" class="mt-1 block w-full" placeholder="Ej: 24/12/2024"
                             value="{{ old('day') }}" />
                         <x-input-error :messages="$errors->get('day')" class="mt-2" />
                     </div>
