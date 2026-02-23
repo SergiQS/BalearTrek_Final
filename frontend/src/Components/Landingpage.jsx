@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import "./LandingPage.css"; // estilos opcionales
-import { Link } from "react-router-dom"; // para navegación´
+
+import "./LandingPage.css"; 
+
 import Cardtreks from "./Cardtreks";
 import Header from "./Header";
 

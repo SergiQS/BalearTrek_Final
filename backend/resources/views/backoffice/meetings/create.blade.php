@@ -5,18 +5,18 @@
 
             <div class="max-w-3xl mx-auto bg-white shadow sm:rounded-lg p-6">
 
-                <h1 class="text-2xl font-semibold mb-6">Crear Meeting</h1>
+                <h1 class="text-2xl font-semibold mb-6">Crear Encuentro</h1>
 
                 <form method="POST" action="{{ route('backoffice.meetings.store') }}">
                     @csrf
 
-                    {{-- TREK --}}
+                    {{-- EXCURSIÓN --}}
                     <div class="mb-4">
-                        <x-input-label for="trek_id" value="Trek" />
+                        <x-input-label for="trek_id" value="Excursión" />
                         <select id="trek_id" name="trek_id"
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
 
-                            <option value="">Selecciona un trek</option>
+                            <option value="">Selecciona una excursión</option>
 
                             @foreach ($treks as $trek)
                                 <option value="{{ $trek->id }}" {{ old('trek_id') == $trek->id ? 'selected' : '' }}>

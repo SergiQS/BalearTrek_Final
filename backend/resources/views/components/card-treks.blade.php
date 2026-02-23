@@ -6,10 +6,10 @@
         </h5>
 
         <p class="mb-4 text-sm">
-            <strong>Municipality:</strong> {{ $trek->municipality->name ?? '—' }}
+            <strong>Municipio:</strong> {{ $trek->municipality->name ?? '—' }}
         </p>
         <p class="mb-4 text-sm">
-            <strong>Sitios de interes</strong>
+            <strong>Sitios de interés:</strong>
         </p>
         <div class="mb-4">
             @foreach ($trek->interestingPlaces as $place)

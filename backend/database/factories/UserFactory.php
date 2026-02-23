@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'phone'=> fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'status' => fake()->randomElement(['y', 'n']),
+            'status' => 'y',
             'password' => static::$password ??= Hash::make('password'),
             'role_id' => Role::where('name', 'visitant')->value('id'),
             'remember_token' => Str::random(10),

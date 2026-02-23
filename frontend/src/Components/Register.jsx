@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { register } from "../api";
+import { register, login } from "../api";
 import "./Register.css";
 
 export default function Register() {
@@ -34,7 +34,17 @@ export default function Register() {
 
         try {
             await register(formulario);
-            navigate("/");
+            
+            // Loguear automáticamente después del registro
+            try {
+                await login(form.email, form.password);
+                console.log(" Login automático exitoso después del registro");
+                navigate("/Landingpage");
+            } catch (loginErr) {
+                console.error("Login automático fallido después del registro:", loginErr);
+                // Si el login falla, redirigir al login normal
+                navigate("/");
+            }
         } catch (err) {
             const message =                                             //Mensaje de error más específico dependiendo de la respuesta del backend, priorizando errores relacionados con la contraseña
                 err.response?.data?.message ||

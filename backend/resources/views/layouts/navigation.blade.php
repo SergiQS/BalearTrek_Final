@@ -36,21 +36,21 @@
                     </x-nav-link>
 
                       <x-nav-link :href="route('backoffice.treks.index')" :active="request()->routeIs('backoffice.treks.index')">
-                        {{ __('Treks') }}
+                        {{ __('Excursiones') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('backoffice.treks.create')"
                         :active="request()->routeIs('backoffice.treks.create')">
-                        {{ __('Nuevo Trek') }}
+                        {{ __('Nueva Excursión') }}
                     </x-nav-link>
 
                       <x-nav-link :href="route('backoffice.meetings.index')" :active="request()->routeIs('backoffice.meetings.index')">
-                        {{ __('Meetings') }}
+                        {{ __('Encuentros') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('backoffice.meetings.create')"
                         :active="request()->routeIs('backoffice.meetings.create')">
-                        {{ __('Nuevo Meeting') }}
+                        {{ __('Nuevo Encuentro') }}
                     </x-nav-link>
 
                       <x-nav-link :href="route('backoffice.interestingplaces.index')" :active="request()->routeIs('backoffice.interestingplaces.index')">

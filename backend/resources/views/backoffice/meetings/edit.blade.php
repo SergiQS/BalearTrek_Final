@@ -2,7 +2,7 @@
 @extends('layouts.backoffice')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Editar Meeting: {{ $meeting->trek->name }}
+            Editar Encuentro: {{ $meeting->trek->name }}
         </h2>
     </x-slot>
 
@@ -19,13 +19,13 @@
                             <div class="p-6 text-surface">
 
                                 <h5 class="mb-4 text-xl font-medium leading-tight">
-                                    Editar datos del Meeting
+                                    Editar datos del encuentro
                                 </h5>
 
-                                {{-- Trek --}}
+                                {{-- Excursión --}}
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-1">
-                                        Trek
+                                        Excursión
                                     </label>
                                     <select name="trek_id"
                                             class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">

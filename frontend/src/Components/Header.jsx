@@ -20,7 +20,7 @@ const isLoggedIn = Boolean(localStorage.getItem("token"));//Para quitar el botó
         </Link>
         {!isLoggedIn && (
           <Link to="/Login" className="icon-btn link-button">
-            Login
+            Iniciar Sesión
           </Link>
         )}
       </header>

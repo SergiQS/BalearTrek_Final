@@ -1,8 +1,7 @@
-import { useState } from "react";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Login from "./Components/Login";
-import Dashboard from "./Components/Dashboard";
 import LandingPage from "./Components/Landingpage";
 import TrekDetails from "./Components/TrekDetails";
 import Perfil from "./Components/Perfil";
@@ -11,6 +10,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import PlacesDetails from "./Components/PlacesDetails";
 import Register from "./Components/Register";
 import Contacto from "./Components/Contacto";
+
 export default function App() {
   return (
     <>

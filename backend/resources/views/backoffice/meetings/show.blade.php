@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Show Meeting:') }} {{ $meeting->name }}
+            {{ __('Ver Encuentro:') }} {{ $meeting->name }}
         </h2>
     </x-slot>
 
@@ -24,7 +24,7 @@
 
                 @if ($meeting->getUsuariosNormales()->count() > 0)
                     <div class="mt-6 p-4 bg-blue-50 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-3">Participantes del Meeting</h3>
+                        <h3 class="text-lg font-semibold mb-3">Participantes del Encuentro</h3>
 
                         <p class="text-sm font-semibold text-indigo-600 mb-2">Usuarios Inscritos
                             ({{ $meeting->getUsuariosNormales()->count() }}):</p>

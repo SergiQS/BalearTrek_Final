@@ -33,7 +33,7 @@ export default function Meeting() {
     <Header></Header>
       {/* MEETINGS */}
       <div className="meetings-box">
-        <h3>MEETING de {trek.trek?.name}</h3>
+        <h3>Encuentro de {trek.trek?.name}</h3>
 
         {trek.meeting && (
           <div className="meeting-item">
@@ -54,7 +54,7 @@ export default function Meeting() {
         )}
       </div>
 
-      <button onClick={() => alert("Te has inscrito en meeting")}>
+      <button onClick={() => alert("Te has inscrito en el encuentro")}>
         {" "}
         Inscribirse{" "}
       </button>

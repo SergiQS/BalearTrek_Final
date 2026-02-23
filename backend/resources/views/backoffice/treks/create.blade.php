@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-3xl mx-auto bg-white shadow sm:rounded-lg p-6">
 
-    <h1 class="text-2xl font-semibold mb-6">Crear Trek</h1>
+    <h1 class="text-2xl font-semibold mb-6">Crear Excursión</h1>
 
     <form method="POST" action="{{ route('backoffice.treks.store') }}">
         @csrf

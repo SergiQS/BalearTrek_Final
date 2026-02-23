@@ -171,7 +171,7 @@ class UserController extends Controller
 
     public function indexUser()
     {
-        $user = auth()->user();
+        $user = auth('sanctum')->user();
 
         if (!$user) {
             return response()->json(['error' => 'No autenticado'], 401);
@@ -188,7 +188,7 @@ class UserController extends Controller
 
     public function showUser()
     {
-        $user = auth()->user();
+        $user = auth('sanctum')->user();
 
         if (!$user) {
             return response()->json(['error' => 'No autenticado'], 401);
@@ -210,9 +210,9 @@ class UserController extends Controller
 
     }
 
-    public function deactivateAccount()
+    public function deactivateAccount(Request $request)
     {
-        $user = auth()->user();
+        $user = auth('sanctum')->user();
 
         if (!$user) {
             return response()->json(['error' => 'No autenticado'], 401);

@@ -55,21 +55,39 @@ class AuthenticatedSessionController extends Controller
         //         'error_details' => $e->getMessage(),
         //     ], 200);
         // }
-        {
-            $credentials = $request->only('email', 'password');
+        // {
+        //     $credentials = $request->only('email', 'password');
 
-            if (!Auth::attempt($credentials)) {
-                return response()->json(['message' => 'Credenciales incorrectas'], 401);
-            }
+        //     if (!Auth::attempt($credentials)) {
+        //         return response()->json(['message' => 'Credenciales incorrectas'], 401);
+        //     }
 
-            $user = Auth::user();
-            $token = $user->createToken('API Token')->plainTextToken;
 
-            return response()->json([
-                'user' => $user,
-                'token' => $token
-            ]);
+        
+
+        //     $user = Auth::user();
+        //     $token = $user->createToken('API Token')->plainTextToken;
+
+        //     return response()->json([
+        //         'user' => $user,
+        //         'token' => $token
+        //     ]);
+        // }
+
+            $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (!Auth::attempt($credentials)) {
+            return back()->withErrors([
+                'email' => 'Credenciales incorrectas.',
+            ])->withInput(); // mantiene el email ingresado
         }
+
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('dashboard'));
     }
 
     public function destroy(Request $request)

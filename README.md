@@ -57,7 +57,6 @@ BalearTrek es una aplicación web completa para descubrir, reservar y participar
 - Vite
 
 
-
 ##  Estructura del Proyecto
 
 ### Backend (Laravel)

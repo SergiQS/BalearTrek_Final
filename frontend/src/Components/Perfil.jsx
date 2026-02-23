@@ -80,7 +80,7 @@ export default function Perfil() {
           <div className="profile-actions">
             {/* <button className="edit-btn">Editar</button> */}
             <button className="logout-btn" onClick={handleLogout}>
-              Logout
+              Cerrar Sesión
             </button>
             <button className="deactivate-btn" onClick={handleDeactivate} disabled={deactivating}>
               {deactivating ? "Desactivando..." : "Desactivar Cuenta"}
@@ -105,6 +105,10 @@ export default function Perfil() {
           <span className="label">Email:</span>
           <span>{user.email}</span>
         </div>
+          <div className="info-row">
+          <span className="label">Estado de cuenta: </span>
+          <span>{user.status === 'n' ? 'Inactivo' : 'Activo'}</span>
+        </div>
 
         <div className="info-row">
           <span className="label">Tlf:</span>
@@ -117,7 +121,7 @@ export default function Perfil() {
         </div>
 
         <div className="meetings-box">
-          <h3>MEETINGS a los que estas inscrito</h3>
+          <h3>ENCUENTROS a los que estás inscrito</h3>
 
           {user.meetings?.map((meeting) => (
             <div key={meeting.id} className="meeting-item">
@@ -136,7 +140,7 @@ export default function Perfil() {
 
         {user.role?.name === "guia" && user.meeting?.length > 0 && (
           <div className="meetings-box">
-            <h3>MEETINGS DONDE ERES GUÍA</h3>
+            <h3>ENCUENTROS DONDE ERES GUÍA</h3>
 
             {user.meeting.map((meeting) => (
               <div key={meeting.id} className="meeting-item">
@@ -190,10 +194,7 @@ export default function Perfil() {
             {user.comments && user.comments.length > 0 ? (
               user.comments.map((comment) => (
                 <div key={comment.id} className="meeting-item">
-                  <div>
-                    <strong>Trek:</strong>{" "}
-                    {comment.trek?.name || "Trek desconocido"}
-                  </div>
+                  {console.log(comment)}
                   <div>
                     <strong>Comentario:</strong> {comment.comment}
                   </div>

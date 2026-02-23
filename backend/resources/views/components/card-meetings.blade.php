@@ -6,7 +6,7 @@
         </h5>
 
         <p class="mb-4 text-sm">
-            <strong>Municipality:</strong> {{ $meeting->trek->municipality->name ?? '—' }}
+            <strong>Municipio:</strong> {{ $meeting->trek->municipality->name ?? '—' }}
         </p>
         <p class="mb-4 text-sm">
             <strong>Fecha Inicial:</strong> {{ $meeting->dateIni }}

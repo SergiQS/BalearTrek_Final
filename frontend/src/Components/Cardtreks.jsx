@@ -36,17 +36,26 @@ export default function Cardtreks() {
     (a, b) => b.rating - a.rating,
   );
 
-  function Stars({ rating }) {
-    //Cambiar a una mas sencilla
-    return (
-      <span>
-        {[1, 2, 3, 4, 5].map((star) => {
-          if (star <= rating) return <FaStar key={star} />;
-          if (star - 0.5 === rating) return <FaStarHalfAlt key={star} />;
-          return <FaRegStar key={star} />;
-        })}
-      </span>
-    );
+  function RenderStars(rating) {
+    const stars = [];
+
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0); // calcula el número de estrellas vacías
+
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(<FaStar key={i} />);
+    }
+
+    if (halfStar) {
+      stars.push(<FaStarHalfAlt key="half" />); 
+    }
+
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push(<FaRegStar key={`empty-${i}`} />); 
+    }
+
+    return stars;
   }
 
   return (
@@ -79,7 +88,7 @@ export default function Cardtreks() {
           >
             <h3>{trek.name}</h3>
             <p>{trek.rating}</p>
-            <Stars rating={trek.rating} />
+            <span>{RenderStars(trek.rating)}</span>
           </Link>
         ))}
       </div>

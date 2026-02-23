@@ -17,7 +17,26 @@ use Illuminate\Support\Facades\Route;
 // que sí tiene middleware de sesión y CSRF. Tener una copia aquí en api.php
 // (que se monta como /api/login) no se usaba y creaba confusión.
 Route::post('/register', [RegisteredUserController::class, 'store']);
-Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+
+// Endpoint /api/login para aplicaciones móviles/SPA que usan Sanctum
+Route::post('/login', function (Request $request) {
+    $credentials = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+    ]);
+
+    if (!Auth::attempt($credentials)) {
+        return response()->json(['message' => 'Credenciales incorrectas'], 401);
+    }
+
+    $user = Auth::user();
+    $token = $user->createToken('API Token')->plainTextToken;
+
+    return response()->json([
+        'user' => $user->load('role'),
+        'token' => $token
+    ]);
+});
 
 // Protegida con Sanctum para el usuario autenticado
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

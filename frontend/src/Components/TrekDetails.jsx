@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import Header from "./Header";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
 
 export default function TrekDetail() {
   const { identifier } = useParams();
@@ -25,17 +25,27 @@ export default function TrekDetail() {
   }, [identifier]);
 
 
-  function Stars({ rating }) {
-    return (
-      <span>
-        {[1, 2, 3, 4, 5].map((star) => {
-          if (star <= rating) return <FaStar key={star} />;
-          if (star - 0.5 === rating) return <FaStarHalfAlt key={star} />;
-          return <FaRegStar key={star} />;
-        })}
-      </span>
-    );
-  }
+   function RenderStars(rating) {
+      const stars = [];
+  
+      const fullStars = Math.floor(rating);
+      const halfStar = rating % 1 >= 0.5;
+      const emptyStars = 5 - fullStars - (halfStar ? 1 : 0); // calcula el número de estrellas vacías
+  
+      for (let i = 0; i < fullStars; i++) {
+        stars.push(<FaStar key={`full-${i}`} />);
+      }
+  
+      if (halfStar) {
+        stars.push(<FaStarHalfAlt key="half" />); 
+      }
+  
+      for (let i = 0; i < emptyStars; i++) {
+        stars.push(<FaRegStar key={`empty-${i}`} />); 
+      }
+  
+      return stars;
+    }
 
   if (!trek) return <p>Cargando...</p>;
   
@@ -51,12 +61,12 @@ export default function TrekDetail() {
         {/* RATING  */}
         <div className="trek-info">
           <div className="rating">{trek.rating}</div>
-          <Stars rating={trek.rating} />
+          <span>{RenderStars(trek.rating)}</span>
         </div>
 
-        {/* MEETINGS */}
+        {/* ENCUENTROS DISPONIBLES */}
         <div className="meetings-box">
-          <h3>MEETINGS DISPONIBLES</h3>
+          <h3>ENCUENTROS DISPONIBLES</h3>
 
           {trek.meetings?.map((meeting) => (
             <div key={meeting.id} className="meeting-item">

@@ -2,7 +2,7 @@
 @extends('layouts.backoffice')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Listado de Treks') }}
+            {{ __('Listado de Excursiones') }}
         </h2>
     </x-slot>
 
@@ -12,7 +12,7 @@
                 <div class="p-6 text-gray-900">
 
 
-                    {{-- Cards de treks --}}
+                    {{-- Cards de excursiones --}}
                     @each('components.card-treks', $treks, 'trek')
 
                     {{-- Paginación --}}

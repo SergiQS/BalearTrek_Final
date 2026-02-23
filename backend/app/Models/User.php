@@ -34,25 +34,27 @@ class User extends Authenticatable
         'password',
     
     ];
+   
+
 
      public function setNameAttribute($value)
     {
-        $this->attributes['name'] = mb_strtoupper($value, 'UTF-8');
+        $this->attributes['name'] = mb_strtoupper($value, 'UTF-8'); // Convierte el nombre a mayúsculas antes de guardarlo
     }
 
     public function setLastNameAttribute($value)
     {
-        $this->attributes['lastName'] = mb_strtoupper($value, 'UTF-8');
+        $this->attributes['lastName'] = mb_strtoupper($value, 'UTF-8');// Convierte el apellido a mayúsculas antes de guardarlo
     }
 
     public function getLastNameAttribute()
     {
-        return $this->attributes['lastName'] ?? null;
+        return $this->attributes['lastName'] ?? null; // Devuelve el apellido o null si no está definido
     }
     
     public function setEmailAttribute($value)
     {
-        $this->attributes['email'] = mb_strtolower($value, 'UTF-8');
+        $this->attributes['email'] = mb_strtolower($value, 'UTF-8'); // Convierte el email a minúsculas antes de guardarlo
     }
 
 

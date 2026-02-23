@@ -44,7 +44,7 @@ export default function ContactForm() {
 
           <div className="form-group">
             <label htmlFor="email" className="form-label">
-              Email Address
+              Email 
             </label>
             <input
               id="email"
@@ -78,7 +78,7 @@ export default function ContactForm() {
           
           <div className="form-group">
             <label htmlFor="message" className="form-label">
-              Message
+              Mensaje
             </label>
             <textarea
               id="message"
@@ -94,7 +94,7 @@ export default function ContactForm() {
           
           <div className="form-actions">
             <button type="submit" disabled={state.submitting} className="submit-btn">
-              Submit
+              Enviar
             </button>
           </div>
         </form>

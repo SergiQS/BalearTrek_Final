@@ -20,10 +20,7 @@
                 Iniciar sesión
             </a>
 
-            <a href="{{ route('register') }}"
-               class="px-6 py-3 bg-gray-700 text-white rounded hover:bg-gray-800 transition">
-                Registrarse
-            </a>
+           
         </div>
     </div>
 
