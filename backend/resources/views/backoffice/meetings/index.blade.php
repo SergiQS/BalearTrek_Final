@@ -2,7 +2,7 @@
 @extends('layouts.backoffice')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Listado de Treks') }}
+            {{ __('Listado de Meetings') }}
         </h2>
     </x-slot>
 

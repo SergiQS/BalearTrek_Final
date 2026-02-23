@@ -58,37 +58,38 @@
                                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
                                 </div>
 
-                                {{-- Guía --}}
+                                {{-- Guía Responsable --}}
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-1">
-                                        Guía
+                                        Guía Responsable
                                     </label>
                                     <select name="user_id"
                                             class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
                                         @foreach ($guias as $guia)
                                             <option value="{{ $guia->id }}"
                                                 {{ $meeting->user_id == $guia->id ? 'selected' : '' }}>
-                                                {{ $guia->name }}
-                                            </option>
+                                                {{ $guia->name }} {{ $guia->lastName }}
+                                            </option> 
                                         @endforeach
                                     </select>
                                 </div>
 
-                                  {{-- Añadir Guía --}}
-                                <!-- <div class="mb-4">
+                                {{-- Guías Adicionales --}}
+                                <div class="mb-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-1">
-                                        Añadir Guía
+                                        Guías Adicionales (mantén Ctrl para seleccionar múltiples)
                                     </label>
-                                    <select name="user_id multiple"
-                                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                    <select name="guias_adicionales[]" multiple
+                                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                                            style="min-height: 120px;">
                                         @foreach ($guias as $guia)
                                             <option value="{{ $guia->id }}"
-                                                {{ $meeting->user_id == $guia->id ? 'selected' : '' }}>
-                                                {{ $guia->name }}
+                                                {{ $meeting->users->contains($guia->id) && $meeting->user_id != $guia->id ? 'selected' : '' }}>
+                                                {{ $guia->name }} {{ $guia->lastName }}
                                             </option>
                                         @endforeach
                                     </select>
-                                </div> -->
+                                </div>
 
                                 {{-- Día --}}
                                 <div class="mb-4">

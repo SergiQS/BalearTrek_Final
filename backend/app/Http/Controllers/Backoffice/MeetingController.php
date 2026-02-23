@@ -15,7 +15,7 @@ class MeetingController extends Controller
      */
     public function index()
     {
-        $meetings = Meeting::with('trek', 'user')->paginate(10);
+        $meetings = Meeting::with('trek', 'trek.municipality', 'user', 'users.role')->paginate(10);
         // $treks = Trek::with(['meetings.user'])
         // ->orderBy('name')
         // ->get();
@@ -69,7 +69,7 @@ class MeetingController extends Controller
     public function show(string $id)
     {
         //
-        $meeting = Meeting::with('trek', 'user')->findOrFail($id);
+        $meeting = Meeting::with('trek', 'user', 'users.role')->findOrFail($id);
         return view('backoffice.meetings.show', compact('meeting'));
     }
 
@@ -95,6 +95,8 @@ class MeetingController extends Controller
             'dateIni' => 'required|date',
             'dateEnd' => 'nullable|date|after_or_equal:dateIni',
             'user_id' => 'required|exists:users,id',
+            'guias_adicionales' => 'nullable|array',
+            'guias_adicionales.*' => 'exists:users,id',
             'day' => 'required|string',
             'hour' => 'required',
         ]);
@@ -109,8 +111,27 @@ class MeetingController extends Controller
             'hour' => $request->hour,
         ]);
 
+        // Obtener los usuarios normales actuales (no guías) para mantenerlos
+        $usuariosNormales = $meeting->getUsuariosNormales()->pluck('id')->toArray();
+        
+        // Preparar array de todas las guías (responsable + adicionales)
+        $guiasIds = [$request->user_id];
+        
+        if ($request->has('guias_adicionales') && is_array($request->guias_adicionales)) {
+            $guiasIds = array_merge($guiasIds, $request->guias_adicionales);
+        }
+        
+        // Eliminar duplicados de guías
+        $guiasIds = array_unique($guiasIds);
+        
+        // Combinar guías + usuarios normales
+        $todosLosUsuarios = array_unique(array_merge($guiasIds, $usuariosNormales));
+        
+        // Sincronizar en la tabla pivot (guías + participantes)
+        $meeting->users()->sync($todosLosUsuarios);
+
         return redirect()->route('backoffice.meetings.index')
-            ->with('status', 'Meeting actualizado correctamente');
+            ->with('status', 'Meeting actualizado correctamente con ' . count($guiasIds) . ' guía(s) y ' . count($usuariosNormales) . ' participante(s)');
     }
 
     /**
@@ -118,21 +139,22 @@ class MeetingController extends Controller
      */
     public function destroy(Meeting $meeting)
     {
-        //Eliminar comments
-        if (method_exists($meeting, 'comments')) {
-            $meeting->comments()->delete();
+        // Primero eliminar las imágenes de cada comentario
+        foreach ($meeting->comments as $comment) {
+            $comment->images()->delete();
         }
-        //Eliminar images
-        if (method_exists($meeting, 'images')) {
-            $meeting->images()->delete();
-        }
-        //Eliminar el meeting
+        
+        // Luego eliminar los comentarios
+        $meeting->comments()->delete();
+        
+        // Detach guías de la tabla pivot
         $meeting->users()->detach();
         
+        // Finalmente eliminar el meeting
         $meeting->delete();
 
         return redirect()->route('backoffice.meetings.index')
-        ->with('success', 'Meeting eliminada correctament');
+            ->with('success', 'Meeting eliminado correctamente');
 
     }
 }

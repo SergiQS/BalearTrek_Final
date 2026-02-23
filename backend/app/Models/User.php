@@ -37,12 +37,12 @@ class User extends Authenticatable
 
      public function setNameAttribute($value)
     {
-        $this->attributes['name'] = strtoupper($value);
+        $this->attributes['name'] = mb_strtoupper($value, 'UTF-8');
     }
 
     public function setLastNameAttribute($value)
     {
-        $this->attributes['lastName'] = strtoupper($value);
+        $this->attributes['lastName'] = mb_strtoupper($value, 'UTF-8');
     }
 
     public function getLastNameAttribute()
@@ -52,7 +52,7 @@ class User extends Authenticatable
     
     public function setEmailAttribute($value)
     {
-        $this->attributes['email'] = strtolower($value);
+        $this->attributes['email'] = mb_strtolower($value, 'UTF-8');
     }
 
 

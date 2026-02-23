@@ -66,16 +66,57 @@ class Meeting extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);//guia
+        return $this->belongsTo(User::class);//guia responsable
     }
+    
     public function users()
     {
-        return $this->belongsToMany(User::class);//un usuario puede estar en muchas reuniones
+        return $this->belongsToMany(User::class);//todos los usuarios del meeting
     }
+    
+    /**
+     * Obtiene el guía responsable del meeting
+     */
+    public function getGuiaResponsable()
+    {
+        return $this->user;
+    }
+    
+    /**
+     * Obtiene todos los guías del meeting (responsable + acompañantes)
+     */
+    public function getAllGuias()
+    {
+        return $this->users->filter(function($user) {
+            return $user->role && $user->role->name === 'guia';
+        });
+    }
+    
+    /**
+     * Obtiene solo los guías acompañantes (excluyendo al responsable)
+     */
+    public function getGuiasAcompanantes()
+    {
+        return $this->users->filter(function($user) {
+            return $user->role && $user->role->name === 'guia' && $user->id !== $this->user_id;
+        });
+    }
+    
+    /**
+     * Obtiene solo los usuarios normales (no guías)
+     */
+    public function getUsuariosNormales()
+    {
+        return $this->users->filter(function($user) {
+            return !$user->role || $user->role->name !== 'guia';
+        });
+    }
+    
     public function trek()
     {
         return $this->belongsTo(Trek::class);//una reunion pertenece a un trek
     }
+    
     public function comments()
     {
         return $this->hasMany(Comment::class);//una reunion puede tener muchos comentarios

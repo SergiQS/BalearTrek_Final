@@ -12,22 +12,33 @@
                 <div class="p-6 text-gray-900">
 
                     @each('components.card-meetings', [$meeting], 'meeting')
-                    <div>
-                        @if ($meeting->users->count() > 0)
-                            <p class="mb-2 text-sm font-semibold">Usuarios del Meeting: {{ $meeting->users->count() }}</p>
 
-                            <ul class="mb-4 text-sm text-gray-700">
-                                @foreach ($meeting->users as $user)
-                                    <li class="mb-1">• {{ $user->name }}</li>
-                                @endforeach
-                            </ul>
 
-                        @endif
+
+
+
+                    <div class="mt-2 pt-2 border-t">
+                        <p class="text-xs text-gray-600">Total de guías: {{ $meeting->getAllGuias()->count() }}</p>
                     </div>
-
                 </div>
+
+                @if ($meeting->getUsuariosNormales()->count() > 0)
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-3">Participantes del Meeting</h3>
+
+                        <p class="text-sm font-semibold text-indigo-600 mb-2">Usuarios Inscritos
+                            ({{ $meeting->getUsuariosNormales()->count() }}):</p>
+                        <ul class="ml-4 text-sm text-gray-700">
+                            @foreach ($meeting->getUsuariosNormales() as $participante)
+                                <li class="mb-1">• {{ $participante->name }} {{ $participante->lastName ?? '' }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
             </div>
         </div>
-    </div>  
+    </div>
+    </div>
 
 </x-app-layout>
