@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
         // Usuari d'inici
         $user = new User();
         $user->name = "admin";
-        $user->lastname="administrator";
+        $user->lastName="administrator";
         $user->dni="000000000";
         $user->phone="0";
         $user->email = "admin@baleartrek.com";

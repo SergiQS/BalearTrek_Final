@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('interesting_place_trek', function (Blueprint $table) {
             $table->id();
-            $table->integer('order');
+            $table->integer('order')->default(0);
             $table->foreignId('trek_id')->constrained()->onUpdate('restrict')->onDelete('restrict');
             $table->foreignId('interesting_place_id')->constrained()->onUpdate('restrict')->onDelete('restrict');
             $table->timestamps();

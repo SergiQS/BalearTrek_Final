@@ -39,23 +39,28 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
-        
+        // Validar datos
+        $request->validate([
+            'trek_id' => 'required|exists:treks,id',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'day' => 'required|string',
+            'time' => 'required',
+            'guides' => 'required|exists:users,id',
+        ]);
 
+        // Crear el meeting
         $meeting = Meeting::create([
-        'trek_id' => $request->trek_id,
-        'start_date' => $request->start_date,
-        'end_date' => $request->end_date,
-        'day' => $request->day,
-        'time' => $request->time,
-    ]);
-    if ($request->has('guias')) {
-        $meeting->users()->attach($request->guias);
-    }
-
-
+            'trek_id' => $request->trek_id,
+            'dateIni' => $request->start_date,
+            'dateEnd' => $request->end_date,
+            'day' => $request->day,
+            'hour' => $request->time,
+            'user_id' => $request->guides,
+        ]);
 
         return redirect()->route('backoffice.meetings.index')
-                     ->with('status', 'Meeting creado correctamente');
+            ->with('status', 'Meeting creado correctamente');
     }
 
     /**
@@ -84,13 +89,28 @@ class MeetingController extends Controller
      */
     public function update(Request $request, Meeting $meeting)
     {
+        // Validar datos del formulario
         $request->validate([
-            'nom' => 'required|string|max:255',
+            'trek_id' => 'required|exists:treks,id',
+            'dateIni' => 'required|date',
+            'dateEnd' => 'nullable|date|after_or_equal:dateIni',
+            'user_id' => 'required|exists:users,id',
+            'day' => 'required|string',
+            'hour' => 'required',
         ]);
-        $meeting->users()->sync($request->users);
-        $meeting->update($request->all());
 
-        return redirect()->route('backoffice.meetings.index');
+        // Actualizar el meeting
+        $meeting->update([
+            'trek_id' => $request->trek_id,
+            'dateIni' => $request->dateIni,
+            'dateEnd' => $request->dateEnd,
+            'user_id' => $request->user_id,
+            'day' => $request->day,
+            'hour' => $request->hour,
+        ]);
+
+        return redirect()->route('backoffice.meetings.index')
+            ->with('status', 'Meeting actualizado correctamente');
     }
 
     /**

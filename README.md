@@ -17,6 +17,7 @@ BalearTrek es una aplicación web completa para descubrir, reservar y participar
 ## ✨ Características
 
 ### Para Visitantes
+
 - 🗺️ Explorar treks disponibles con filtros por isla
 - 🔍 Ver detalles de treks (descripción, lugares interesantes, meetings)
 - 📝 Dejar comentarios y puntuaciones en treks
@@ -26,12 +27,14 @@ BalearTrek es una aplicación web completa para descubrir, reservar y participar
 - 💬 Ver comentarios publicados
 
 ### Para Guías
+
 - 🚀 Crear y gestionar sus propios meetings
 - 👥 Ver lista de usuarios inscritos en sus meetings
 - 📈 Gestionar perfil como guía
 - ⭐ Recibir comentarios y puntuaciones de usuarios
 
 ### Generales
+
 - 🔐 Autenticación segura con tokens Sanctum
 - 📱 Diseño responsive y adaptable
 - 🎨 Interfaz moderna con tema personalizado
@@ -41,12 +44,14 @@ BalearTrek es una aplicación web completa para descubrir, reservar y participar
 ## 📦 Requisitos
 
 ### Backend
+
 - PHP >= 8.1
 - Laravel 11
 - MySQL/MariaDB
 - Composer
 
 ### Frontend
+
 - Node.js >= 16
 - npm o yarn
 - Vite
@@ -54,6 +59,7 @@ BalearTrek es una aplicación web completa para descubrir, reservar y participar
 ## 🚀 Instalación Rápida
 
 ### Backend
+
 ```bash
 cd backend
 composer install
@@ -65,6 +71,7 @@ php artisan serve
 ```
 
 ### Frontend
+
 ```bash
 cd frontend
 npm install
@@ -74,6 +81,7 @@ npm run dev
 ## 🏗️ Estructura del Proyecto
 
 ### Backend (Laravel)
+
 - Controllers: API RESTful con endpoints
 - Models: User, Trek, Meeting, Comment, Role, Island, Zone, etc.
 - Migrations: Estructura de base de datos
@@ -81,6 +89,7 @@ npm run dev
 - Resources: API formatters para respuestas JSON
 
 ### Frontend (React + Vite)
+
 - Components: Landing, Trek Details, Profile, Login, Register, Contact
 - API: Axios client con interceptores
 - Router: React Router v6 para navegación
@@ -102,37 +111,42 @@ VITE_API_URL=http://localhost:8000
 
 ## 🔌 API Endpoints Principales
 
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| POST | `/api/register` | Registrar usuario |
-| POST | `/api/login` | Iniciar sesión |
-| GET | `/api/user` | Obtener perfil |
-| PUT | `/api/user/deactivate` | Desactivar cuenta |
-| GET | `/api/treks` | Listar treks |
-| GET | `/api/treks/{id}` | Detalles de trek |
-| GET | `/api/treks/illa/{isla}` | Filtrar por isla |
+| Método | Endpoint                 | Descripción       |
+| ------ | ------------------------ | ----------------- |
+| POST   | `/api/register`          | Registrar usuario |
+| POST   | `/api/login`             | Iniciar sesión    |
+| GET    | `/api/user`              | Obtener perfil    |
+| PUT    | `/api/user/deactivate`   | Desactivar cuenta |
+| GET    | `/api/treks`             | Listar treks      |
+| GET    | `/api/treks/{id}`        | Detalles de trek  |
+| GET    | `/api/treks/illa/{isla}` | Filtrar por isla  |
 
 ## 💾 Modelos Principales
 
 ### User
+
 - name, lastName, email, password, dni, phone
 - role_id (visitant/guia/admin)
 - status (s=activo, n=inactivo)
 - Relaciones: meetings (inscritos), meeting (como guía), comments
 
 ### Trek
+
 - name, description, difficulty, duration, distance
 - island_id
 - Relaciones: meetings, comments, places (interesantes)
 
 ### Meeting
+
 - trek_id, user_id (guía), day, hour, max_participants
 - Relaciones: users (participantes)
 
 ### Comment
+
 - user_id, trek_id, comment, score (1-5)
 
 ### Role
+
 - name: visitant, guia, admin
 
 ## 🔐 Autenticación
@@ -145,11 +159,13 @@ VITE_API_URL=http://localhost:8000
 ## 🎯 Funcionalidades Principales
 
 ### Landing Page
+
 - Grid de treks con tarjetas
 - Filtrados por isla
 - Búsqueda
 
 ### Trek Details
+
 - Información completa
 - Lugares de interés
 - Meetings disponibles
@@ -157,6 +173,7 @@ VITE_API_URL=http://localhost:8000
 - Crear comentario (autenticado)
 
 ### Perfil Usuario
+
 - Info personal
 - Rol visible
 - Meetings inscritos
@@ -165,6 +182,7 @@ VITE_API_URL=http://localhost:8000
 - Botón desactivar cuenta
 
 ### Página de Contacto
+
 - Formulario: nombre, email, asunto, mensaje
 - Validación completa
 - Mensajes éxito/error
@@ -172,18 +190,21 @@ VITE_API_URL=http://localhost:8000
 ## 🎨 Diseño
 
 Paleta de colores:
+
 - Primario: #1b7f7a (Turquesa)
 - Secundario: #2a8f88
 - Acento: #f1b85b
 - Rojo (botones críticos): #dc3545
 
 Tipografía:
+
 - Fraunces: Headings
 - Space Grotesk: Body
 
 ## 🚀 Ejecución
 
 ### Desarrollo (dos terminales)
+
 ```bash
 # Terminal 1
 cd backend && php artisan serve
@@ -195,6 +216,7 @@ cd frontend && npm run dev
 Acceder a: http://localhost:5173
 
 ### Producción
+
 ```bash
 cd frontend && npm run build
 # Servir carpeta dist/
@@ -211,12 +233,14 @@ cd frontend && npm run build
 ## 📝 Stack Tecnológico
 
 **Backend:**
+
 - Laravel 11
 - Laravel Sanctum
 - MySQL
 - PHP 8.1+
 
 **Frontend:**
+
 - React 18
 - Vite
 - React Router v6
@@ -225,12 +249,12 @@ cd frontend && npm run build
 
 ## 🐛 Troubleshooting
 
-| Problema | Solución |
-|----------|----------|
-| Error 401 | Verificar token en localStorage / Re-login |
-| CORS Error | Revisar config/cors.php y SANCTUM_STATEFUL_DOMAINS |
-| Comentarios no aparecen | Verificar user.status !== 'n' |
-| Token no persiste | Verificar localStorage habilitado / Revisar api.js |
+| Problema                | Solución                                           |
+| ----------------------- | -------------------------------------------------- |
+| Error 401               | Verificar token en localStorage / Re-login         |
+| CORS Error              | Revisar config/cors.php y SANCTUM_STATEFUL_DOMAINS |
+| Comentarios no aparecen | Verificar user.status !== 'n'                      |
+| Token no persiste       | Verificar localStorage habilitado / Revisar api.js |
 
 ## 📚 Documentación
 
@@ -240,6 +264,68 @@ cd frontend && npm run build
 - [Sanctum](https://laravel.com/docs/sanctum)
 
 ---
+
+## Pruebas
+
+### BackEnd
+
+- Usuario
+  - Clickamos en Usuario nuevo, y rellenamos los campos
+    ![alt text](image-3.png)
+    Confirmamos que se ha creado
+    ![alt text](image-4.png)
+    Confirmamos que el editar funciona
+    ![alt text](image-5.png)
+    ![alt text](image-6.png)
+    Al eliminar vemos que cambia el estado a N
+    ![alt text](image-7.png)
+
+- Municipio
+  - Clickamos en Municipio nuevo, y rellenamos los campos
+    ![alt text](image-8.png)
+    Confirmamos que se ha creado
+    ![alt text](image-9.png)
+    Confirmamos que el editar funciona
+    ![alt text](<Captura de pantalla 2026-02-23 112702.png>)
+    ![alt text](image-10.png)
+    Confirmamos que el elimanar funciona
+    ![alt text](image-11.png)
+    ![alt text](image-12.png)(vemos que hay uno menos)
+
+- Treks
+  - Clickamos en Trek nuevo, y rellenamos los campos
+    ![alt text](image-14.png)
+    Confirmamos que se ha creado
+    ![alt text](image-15.png)
+    Confirmamos que el editar funciona
+    ![alt text](image-17.png)
+    ![alt text](image-18.png)
+    Confirmamos que el eliminar funciona
+    ![alt text](image-19.png)
+    ![alt text](image-20.png)(vemos que hay uno menos)
+
+- Meeting
+  - Clickamos en Meeting nuevo, y rellenamos los campos
+    ![alt text](image-21.png)
+    Confirmamos que se ha creado
+    ![alt text](image-22.png)
+    Confirmamos que el editar funciona
+    ![alt text](image-23.png)
+    ![alt text](image-24.png)
+    Confirmamos que el eliminar funciona
+    ![alt text](image-25.png)
+    ![alt text](image-26.png)(vemos que hay uno menos)
+- Lugares de Interes
+  - Clickamos en Lugar de interes nuevo, y rellenamos los campos
+    ![alt text](image-27.png)
+    Confirmamos que se ha creado
+    ![alt text](image-28.png)
+    Confirmamos que el editar funciona
+    ![alt text](image-29.png)
+    ![alt text](image-30.png)
+    Confirmamos que el eliminar funciona
+    ![alt text](image-31.png)
+    ![alt text](image-32.png)(vemos que hay uno menos)
 
 **Última actualización:** Febrero 2026
 

@@ -32,7 +32,7 @@
                 <x-input-label for="municipality_id" value="Municipio" />
                 <select id="municipality_id" name="municipality_id"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-
+                    <option value="">Selecciona un municipio</option>
                     @foreach ($municipalities as $municipality)
                         <option value="{{ $municipality->id }}" >
                             {{ $municipality->name }}
@@ -45,6 +45,7 @@
 
         {{-- Lugares de interes --}}
             <div class="mb-4">
+                <x-input-label value="Lugares de Interés" />
                 <div class="grid grid-cols-2 gap-2 mt-2">
                     @foreach ($interestingPlaces as $place)
                         <label class="flex items-center gap-2">
@@ -57,9 +58,6 @@
                     @endforeach
                 </div>
          </div>
-
-       
-
 
         {{-- Botones --}}
            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

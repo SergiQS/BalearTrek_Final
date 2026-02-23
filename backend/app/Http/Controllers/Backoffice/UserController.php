@@ -35,7 +35,7 @@ class UserController extends Controller
 
         $user = User::create([
             'name' => $request->name,
-            'lastname' => $request->lastname,
+            'lastName' => $request->lastName ?? $request->lastname,
             'email' => $request->email,
             'dni' => $request->dni,
             'phone' => $request->phone,
@@ -80,7 +80,7 @@ class UserController extends Controller
         }
         $request->validate([
             'name' => 'required',
-            'lastname' => 'required',
+            'lastName' => 'required',
             'email' => 'required|email',
             'dni' => 'nullable',
             'phone' => 'nullable',
@@ -90,7 +90,7 @@ class UserController extends Controller
 
         //Update fields
         $user->name = $request->name ?? $user->name;
-        $user->lastname = $request->lastname ?? $user->lastname;
+        $user->lastName = $request->lastName ?? $request->lastname ?? $user->lastName;
         $user->email = $request->email ?? $user->email;
         $user->dni = $request->dni ?? $user->dni;
         $user->phone = $request->phone ?? $user->phone;

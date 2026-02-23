@@ -24,79 +24,45 @@ class TrekController extends Controller
         //
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $municipalities = Municipality::all();
+        $interestingPlaces = InterestingPlace::all();
+        return view('backoffice.treks.create', compact('municipalities', 'interestingPlaces'));
+    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
-        // $trek = Trek::Create([
-        //     'regNumber' => $request->regNumber,
-        //     'name' => $request->name,
-        //     'municipality_id' => $request->municipality_id,
-        // ]);
+        // Validación básica
+        $request->validate([
+            'regNumber' => 'required|string',
+            'name' => 'required|string',
+            'municipality_id' => 'required|exists:municipalities,id',
+        ]);
 
-        // trek M:N interestingPlace
-        /* foreach (explode(',', $request->regNumber) as $inter)
-            $trek->tags()->attach(InterestingPlace::firstOrCreate(['name' => trim($inter)])->id); */
-
-
-        //return response()->json($trek);
-
-
-
-        //Buscar municipio por nombre
-        $municipality = Municipality::where('name', $request->municipality)->firstOrFail();
-
-        //Crear el Trek
+        // Crear el Trek
         $trek = Trek::create([
             'regNumber' => $request->regNumber,
             'name' => $request->name,
-            'municipality_id' => $municipality->id,
+            'municipality_id' => $request->municipality_id,
             'status' => 'y'
         ]);
 
-        //Crear meetings
-        foreach ($request->meetings as $meetingData) {
-
-            // Buscar usuario por DNI
-            $user = User::where('dni', $meetingData['DNI'])->firstOrFail();
-
-            // Crear meeting
-            $meeting = $trek->meetings()->create([
-                'day' => $meetingData['day'],
-                'hour' => $meetingData['time'],
-                'dateIni' => $meetingData['day'],
-                'user_id' => $user->id
-            ]);
-
-            //Crear comments dentro del meeting
-            if (isset($meetingData['comments'])) {
-                foreach ($meetingData['comments'] as $commentData) {
-
-                    // Buscar usuario del comentario por DNI
-                    $userComment = User::where('dni', $commentData['DNI'])->firstOrFail();
-
-                    $meeting->comments()->create([
-                        'comment' => $commentData['comment'],
-                        'score' => $commentData['score'],
-                        'user_id' => $userComment->id
-                    ]);
-                }
-            }
+        // Asociar lugares de interés si se enviaron
+        if ($request->has('interesting_places')) {
+            $trek->interestingPlaces()->attach($request->interesting_places);
         }
 
-        // 5. Cargar relaciones para devolver el Trek completo
-        $trek->load([
-            'municipality',
-            'meetings.user',
-            'meetings.comments',
-            'interestingPlaces.placeType'
-        ]);
-
-        return new TrekResource($trek);
+        return redirect()->route('backoffice.treks.index')
+            ->with('success', 'Trek creado correctamente');
     }
+    
 
 
     /**
@@ -130,81 +96,59 @@ class TrekController extends Controller
      */
     public function update(Request $request, Trek $trek)
     {
-        try { //Buscar municipio por nombre
-            $municipality = Municipality::where('name', $request->municipality)->firstOrFail();
+        try {
+            // Validación básica
+            $request->validate([
+                'regNumber' => 'required|string',
+                'name' => 'required|string',
+                'municipality_id' => 'required|exists:municipalities,id',
+            ]);
 
             // Actualizar Trek
             $trek->update([
                 'regNumber' => $request->regNumber,
                 'name' => $request->name,
-                'municipality_id' => $municipality->id
+                'municipality_id' => $request->municipality_id
             ]);
 
             // Sincronizar lugares interesantes
             if ($request->has('interesting_places')) {
-                $ids = collect($request->interesting_places)->pluck('id');
-                $trek->interestingPlaces()->sync($ids);
+                $trek->interestingPlaces()->sync($request->interesting_places);
+            } else {
+                // Si no se envía nada, desasociar todos
+                $trek->interestingPlaces()->detach();
             }
 
-
-            //Borrar meetings y comments antiguos
-            foreach ($trek->meetings as $meeting) {
-                $meeting->comments()->delete();
-            }
-            $trek->meetings()->delete();
-
-            //Crear meetings nuevos
-            foreach ($request->meetings as $meetingData) {
-
-                //Buscar usuario del meeting por DNI
-                $user = User::where('dni', $meetingData['DNI'])->firstOrFail();
-
-                $meeting = $trek->meetings()->create([
-                    'day' => $meetingData['day'],
-                    'hour' => $meetingData['time'],
-                    'dateIni' => $meetingData['day'],
-                    'dateEnd' => $meetingData['day'],
-                    'user_id' => $user->id
-                ]);
-
-                //Crear comments nuevos
-                if (isset($meetingData['comments'])) {
-                    foreach ($meetingData['comments'] as $commentData) {
-
-                        $userComment = User::where('dni', $commentData['DNI'])->firstOrFail();
-
-                        $meeting->comments()->create([
-                            'comment' => $commentData['comment'], // tu columna real
-                            'score' => $commentData['score'],
-                            'user_id' => $userComment->id
-                        ]);
-                    }
-                }
-            }
-
-            //Cargar relaciones para devolver el Trek completo
-            $trek->load([
-                'municipality',
-                'meetings.user',
-                'meetings.comments',
-                'interestingPlaces.placeType'
-            ]);
-
-            return new TrekResource($trek);
+            return redirect()->route('backoffice.treks.index')
+                ->with('success', 'Trek actualizado correctamente');
         } catch (Exception $e) {
-            return response()->json(['error' => 'Error updating trek: ' . $e->getMessage()], 500);
+            return back()->with('error', 'Error actualizando trek: ' . $e->getMessage());
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    //public function destroy(Trek $trek)
     public function destroy(Trek $trek)
     {
-        $trek->delete();
-        //
-        return (new TrekResource($trek))->additional(['message' => 'Trek deleted successfully']);
+        try {
+            // Desasociar lugares de interés primero
+            $trek->interestingPlaces()->detach();
+            
+            // Eliminar meetings y sus comentarios
+            foreach ($trek->meetings as $meeting) {
+                $meeting->comments()->delete();
+            }
+            $trek->meetings()->delete();
+            
+            // Ahora sí eliminar el trek
+            $trek->delete();
+            
+            return redirect()->route('backoffice.treks.index')
+                ->with('success', 'Trek eliminado correctamente');
+        } catch (Exception $e) {
+            return back()->with('error', 'Error eliminando trek: ' . $e->getMessage());
+        }
     }
 
     public function filterByIsland($illa)
@@ -265,17 +209,6 @@ class TrekController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        $municipalities = Municipality::all();
-        $interestingPlaces = InterestingPlace::orderBy('name','asc')->get();
-
-        return view('backoffice.treks.create', [
-           
-            'municipalities' => $municipalities,
-            'interestingPlaces' => $interestingPlaces,
-        ]);
-    }
-
+    
 
 }

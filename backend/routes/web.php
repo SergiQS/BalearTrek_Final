@@ -24,7 +24,7 @@ Route::get('/dashboard', function () {
 
 // Rutas del BackOffice
 Route::middleware('auth')->prefix('backoffice')->name('backoffice.')->group(function () {
-    Route::get('/', function () {
+    Route::get('/dashboard', function () {
         return redirect()->route('backoffice.users.index');
     })->name('home');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');//

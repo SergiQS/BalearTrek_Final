@@ -75,15 +75,24 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $token = Auth::guard('sanctum')->user()->currentAccessToken();
-            $token->delete();
+            // Verificar si el usuario está autenticado con token Sanctum
+            if ($request->user() && $request->user()->currentAccessToken()) {
+                // Logout con token API
+                $request->user()->currentAccessToken()->delete();
+                return response()->json(['message' => 'Logout exitoso (token eliminado)']);
+            }
+            
+            // Logout con sesión web (si no hay token)
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
 
-            return response()->json(['message' => 'Logout OK successful']);
+            return response()->json(['message' => 'Logout exitoso (sesión cerrada)']);
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'S\'ha produït un error al tractar les dades',
+                'message' => 'Error al cerrar sesión',
                 'error_details' => $e->getMessage(),
-            ], 200);
+            ], 500);
         }
     }
 }

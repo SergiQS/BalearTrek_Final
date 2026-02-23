@@ -26,7 +26,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'lastname' => fake()->lastName(),
+            'lastName' => fake()->lastName(),
             'dni' => fake()->regexify('[0-9]{8}[A-Z]{1}'),
             'phone'=> fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),

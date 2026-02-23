@@ -20,10 +20,10 @@
 
                     {{-- Apellidos --}}
                     <div class="mb-4">
-                        <x-input-label for="lastname" value="Apellidos" />
-                        <x-text-input id="lastname" name="lastname" type="text" class="mt-1 block w-full"
-                            value="{{ old('lastname', $user->lastName) }}" />
-                        <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
+                        <x-input-label for="lastName" value="Apellidos" />
+                        <x-text-input id="lastName" name="lastName" type="text" class="mt-1 block w-full"
+                            value="{{ old('lastName', $user->lastName) }}" />
+                        <x-input-error :messages="$errors->get('lastName')" class="mt-2" />
                     </div>
 
                     {{-- Email --}}
@@ -51,12 +51,12 @@
                     </div>
 
                     {{-- Contraseña --}}
-                    <div class="mb-4">
+                    <!-- <div class="mb-4">
                         <x-input-label for="password" value="Contraseña (opcional)" />
                         <x-text-input id="password" name="password" type="password" class="mt-1 block w-full"
                             placeholder="Déjalo vacío si no quieres cambiarla" />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                    </div>
+                    </div> -->
 
                     {{-- Rol --}}
                     <div class="mb-4">

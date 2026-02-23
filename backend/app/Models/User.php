@@ -20,7 +20,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'lastname',
         'lastName',
         'email',
         'dni',
@@ -41,12 +40,12 @@ class User extends Authenticatable
         $this->attributes['name'] = strtoupper($value);
     }
 
-    public function setLastnameAttribute($value)
+    public function setLastNameAttribute($value)
     {
         $this->attributes['lastName'] = strtoupper($value);
     }
 
-    public function getLastnameAttribute()
+    public function getLastNameAttribute()
     {
         return $this->attributes['lastName'] ?? null;
     }
