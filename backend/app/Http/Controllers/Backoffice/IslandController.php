@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreIslandRequest;
+use App\Http\Requests\UpdateIslandsRequest;
 use App\Models\Island;
 use Illuminate\Http\Request;
 
@@ -28,7 +30,7 @@ class IslandController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreIslandRequest $request)
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:islands,name',
@@ -62,17 +64,14 @@ class IslandController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Island $island)
+    public function update(UpdateIslandsRequest $request, Island $island)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:islands,name,' . $island->id,
-        ]);
+        $validated = $request->validated();
 
-        $island->update([
-            'name' => $request->name,
-        ]);
+        $island->update($validated);
 
-        return redirect()->route('backoffice.islands.index');
+        return redirect()->route('backoffice.islands.index')
+            ->with('success', 'Isla actualizada correctamente');
     }
 
     /**
@@ -90,6 +89,6 @@ class IslandController extends Controller
 
         return redirect()
             ->route('backoffice.islands.index')
-            ->with('success', 'Isla eliminada correctamente');
+            ->with('danger', 'Isla eliminada correctamente');
     }
 }

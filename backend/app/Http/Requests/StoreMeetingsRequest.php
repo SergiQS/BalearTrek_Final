@@ -22,10 +22,12 @@ class StoreMeetingsRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'trek_id' => 'required|exists:treks,id',
             'dateIni' => 'required|date',
             'dateEnd' => 'required|date|after_or_equal:dateIni',
             'day' => 'required|date',
             'hour' => 'required',
+            'user_id' => 'required|exists:users,id',
             
         ];
     }
@@ -36,10 +38,13 @@ class StoreMeetingsRequest extends FormRequest
             'dateIni.required' => 'La fecha de inicio es obligatoria.',
             'dateIni.date' => 'La fecha de inicio debe ser una fecha válida.',
             'dateEnd.date' => 'La fecha de fin debe ser una fecha válida.',
+            'dateEnd.required' => 'La fecha de fin es obligatoria.',
             'dateEnd.after_or_equal' => 'La fecha de fin debe ser igual o posterior a la fecha de inicio.',
             'day.required' => 'El día es obligatorio.',
             'day.date' => 'El día debe ser una fecha válida.',
             'hour.required' => 'La hora es obligatoria.',
+            'hour.date_format' => 'La hora debe estar en formato válido ',
+            'user_id.required' => 'El guía responsable es obligatorio.',
         ];
     }
 }

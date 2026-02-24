@@ -1,10 +1,6 @@
 <x-app-layout>
 @extends('layouts.backoffice')
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Editar Encuentro: {{ $meeting->trek->name }}
-        </h2>
-    </x-slot>
+   
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -99,7 +95,7 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1">
                                         Día
                                     </label>
-                                    <input type="text" name="day"
+                                    <input type="date" name="day"
                                            value="{{ $meeting->day }}"
                                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
                                          @error('day')

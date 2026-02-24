@@ -13,7 +13,7 @@
     
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-7 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -69,6 +69,16 @@
                     <x-nav-link :href="route('backoffice.zones.create')"
                         :active="request()->routeIs('backoffice.zones.create')">
                         {{ __('Nueva Zona') }}
+                    </x-nav-link>
+
+                     <x-nav-link :href="route('backoffice.islands.index')"
+                        :active="request()->routeIs('backoffice.islands.index')">
+                        {{ __('Islas') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('backoffice.islands.create')"
+                        :active="request()->routeIs('backoffice.islands.create')">
+                        {{ __('Nueva Isla') }}
                     </x-nav-link>
 
 

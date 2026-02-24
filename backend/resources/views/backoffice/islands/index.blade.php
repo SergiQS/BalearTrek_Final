@@ -23,6 +23,12 @@
                         </div>
                     @endif
 
+                    @if (session('danger'))
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50">
+                            <span class="font-medium">{{ session('danger') }}</span>
+                        </div>
+                    @endif
+
                     @each('components.card-islands', $islands, 'island')
 
                     <div class="mt-6">

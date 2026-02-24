@@ -42,7 +42,7 @@
                     <div class="mb-4">
                         <label for="dateEnd">Fecha final</label>
                         <input id="dateEnd" name="dateEnd" type="date" class="mt-1 block w-full"
-                            value="{{ old('dateEnd  ') }}" />
+                            value="{{ old('dateEnd') }}" />
                          @error('dateEnd')
                             <div style="color: red;">{{ $message }}</div>
                         @enderror
@@ -60,28 +60,30 @@
 
                     {{-- HORA --}}
                     <div class="mb-4">
-                        <label for="time">Hora</label>
-                        <input id="time" name="time" type="time" class="mt-1 block w-full" value="{{ old('time') }}" />
-                            @error('time')
+                        <label for="hour">Hora</label>
+                        <input id="hour" name="hour" type="time" class="mt-1 block w-full" value="{{ old('hour') }}" />
+                            @error('hour')
                                 <div style="color: red;">{{ $message }}</div>
                             @enderror
                     </div>
 
                     {{-- GUÍAS --}}
                     <div class="mb-4">
-                        <label for="guides">Guías</label>
+                        <label for="user_id">Guía Responsable</label>
 
-                        <select id="guides" name="guides"
+                        <select id="user_id" name="user_id"
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-
+                            <option value="">Selecciona una guía</option>
                             @foreach ($guias as $guia)
-                                <option value="{{ $guia->id }}" {{$guia->id == old('guides') ? 'selected' : ''}}>
+                                <option value="{{ $guia->id }}" {{$guia->id == old('user_id') ? 'selected' : ''}}>
                                     {{ $guia->name }} {{ $guia->lastName }}
                                 </option>
                             @endforeach
 
                         </select>
-
+                        @error('user_id')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
                     </div>
                   
                     {{-- BOTÓN --}}

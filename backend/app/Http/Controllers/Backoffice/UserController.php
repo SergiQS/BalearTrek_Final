@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
@@ -34,7 +35,7 @@ class UserController extends Controller
         $validated = $request->validated();
         $role = Role::where('name', 'visitant')->first();
 
-        $user = User::create([
+        User::create([
             'name' => $validated['name'],
             'lastName' => $validated['lastName'],
             'email' => $validated['email'],
@@ -49,7 +50,7 @@ class UserController extends Controller
         //return response()->json($user);
 
         return redirect()->route('backoffice.users.index')
-            ->with('success', 'Usuari creat correctament');
+            ->with('success', 'Usuario creado correctamente');
     }
 
     /**
@@ -71,40 +72,33 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $identifier)
+    public function update(UpdateUserRequest $request, $identifier)
     //public function update(Request $request, string $id)
     {
-        if (is_numeric($identifier)) {
+        if (is_numeric($identifier)) {                                    // Si el identificador es numérico, buscar por ID
             $user = User::findOrFail($identifier);
         } else {
-            $user = User::where('email', $identifier)->firstOrFail();
+            $user = User::where('email', $identifier)->firstOrFail(); // Si no es numérico, buscar por email
         }
-        $request->validate([
-            'name' => 'required',
-            'lastName' => 'required',
-            'email' => 'required|email',
-            'dni' => 'nullable',
-            'phone' => 'nullable',
-            'role_id' => 'required|exists:roles,id',
-        ]);
-
+        $validated = $request->validated();
+      
 
         //Update fields
-        $user->name = $request->name ?? $user->name;
-        $user->lastName = $request->lastName ?? $request->lastname ?? $user->lastName;
-        $user->email = $request->email ?? $user->email;
-        $user->dni = $request->dni ?? $user->dni;
-        $user->phone = $request->phone ?? $user->phone;
+        $user->name = $validated['name'] ?? $user->name;
+        $user->lastName = $validated['lastName'] ?? $validated['lastname'] ?? $user->lastName;
+        $user->email = $validated['email'] ?? $user->email;
+        $user->dni = $validated['dni'] ?? $user->dni;
+        $user->phone = $validated['phone'] ?? $user->phone;
 
         if ($request->filled('password')) {
-            $user->password = bcrypt($request->password);
+            $user->password = bcrypt($validated['password']);
         }
-        $user->role_id = $request->role_id;
+        $user->role_id = $validated['role_id'] ?? $user->role_id;
 
         $user->save();
 
         return redirect()->route('backoffice.users.index')
-            ->with('success', 'Usuari actualitzat correctament');
+            ->with('success', 'Usuario actualizado correctamente');
 
 
 
@@ -144,9 +138,7 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('backoffice.users.index')
-            ->with('status', 'Usuario desactivado correctamente');
-
-        //
+            ->with('danger', 'Usuario desactivado correctamente');
     }
 
 

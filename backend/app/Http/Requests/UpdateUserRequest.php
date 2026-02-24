@@ -21,15 +21,39 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('user')->id;
+
 
         return [
-            'name' => 'sometimes|string|max:100',
-            'lastName' => 'sometimes|string|max:100',
-            'email' => "sometimes|email|unique:users,email,$id",
-            'dni' => "sometimes|string|unique:users,dni,$id",
-            'password' => 'sometimes|string|min:6',
-            'role' => 'sometimes|string|in:user,admin'
+            'name' => 'required|string|max:100',
+            'lastName' => 'required|string|max:100',
+            'email' => 'required|email|unique:users,email',
+            'dni' => 'required|string|unique:users,dni',
+            'phone' => 'nullable|string',
+            'password' => 'required|string|min:6',
+
+
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'El nombre es obligatorio.',
+            'name.string' => 'El nombre debe ser una cadena de texto.',
+            'name.max' => 'El nombre no puede tener más de 100 caracteres.',
+            'lastName.required' => 'El apellido es obligatorio.',
+            'lastName.string' => 'El apellido debe ser una cadena de texto.',
+            'lastName.max' => 'El apellido no puede tener más de 100 caracteres.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'El correo electrónico debe ser una dirección de correo válida.',
+            'email.unique' => 'El correo electrónico ya está en uso.',
+            'dni.required' => 'El DNI es obligatorio.',
+            'dni.string' => 'El DNI debe ser una cadena de texto.',
+            'dni.unique' => 'El DNI ya está en uso.',
+            'phone.string' => 'El teléfono debe ser una cadena de texto.',
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.string' => 'La contraseña debe ser una cadena de texto.',
+            'password.min' => 'La contraseña debe tener al menos 6 caracteres.',
 
         ];
     }

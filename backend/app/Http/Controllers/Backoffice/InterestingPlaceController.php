@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePlaceRequest;
+use App\Http\Requests\UpdatePlacesRequest;
 use App\Models\InterestingPlace;
 use App\Models\PlaceType;
 use Illuminate\Http\Request;
@@ -40,7 +41,8 @@ class InterestingPlaceController extends Controller
 
         InterestingPlace::create($validated);
 
-        return redirect()->route('backoffice.interestingplaces.index');
+        return redirect()->route('backoffice.interestingplaces.index')
+            ->with('success', 'Lugar creado correctamente');
     }
 
     /**
@@ -66,13 +68,11 @@ class InterestingPlaceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, InterestingPlace $interestingplace)
+    public function update(UpdatePlacesRequest $request, InterestingPlace $interestingplace)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'gps' => 'nullable|string|max:255',
-            'place_type_id' => 'nullable|exists:place_types,id',
-        ]);
+        $validated = $request->validated();
+
+        $interestingplace->update($validated);
 
         $interestingplace->update($request->all());
 
@@ -87,7 +87,7 @@ class InterestingPlaceController extends Controller
     public function destroy(InterestingPlace $interestingplace)
     {
         $interestingplace->delete();
-        return redirect()->route('backoffice.interestingplaces.index');
-
+        return redirect()->route('backoffice.interestingplaces.index')
+            ->with('danger', 'Lugar eliminado correctamente');
     }
 }

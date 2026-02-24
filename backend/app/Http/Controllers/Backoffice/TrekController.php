@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTrekRequest;
+use App\Http\Requests\UpdateTreksRequest;
 use App\Models\InterestingPlace;
 use App\Models\Trek;
 use App\Models\User;
@@ -90,26 +91,23 @@ class TrekController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Trek $trek)
+    public function update(UpdateTreksRequest $request, Trek $trek)
     {
         try {
             // Validación básica
-            $request->validate([
-                'regNumber' => 'required|string',
-                'name' => 'required|string',
-                'municipality_id' => 'required|exists:municipalities,id',
-            ]);
+            $validated = $request->validated(); 
+           
 
             // Actualizar Trek
             $trek->update([
-                'regNumber' => $request->regNumber,
-                'name' => $request->name,
-                'municipality_id' => $request->municipality_id
+                'regNumber' => $validated['regNumber'],
+                'name' => $validated['name'],
+                'municipality_id' => $validated['municipality_id']
             ]);
 
             // Sincronizar lugares interesantes
             if ($request->has('interesting_places')) {
-                $trek->interestingPlaces()->sync($request->interesting_places);
+                $trek->interestingPlaces()->sync($validated['interesting_places']);
             } else {
                 // Si no se envía nada, desasociar todos
                 $trek->interestingPlaces()->detach();
@@ -141,7 +139,7 @@ class TrekController extends Controller
             $trek->delete();
             
             return redirect()->route('backoffice.treks.index')
-                ->with('success', 'Trek eliminado correctamente');
+                ->with('danger', 'Trek eliminado correctamente');
         } catch (Exception $e) {
             return back()->with('error', 'Error eliminando trek: ' . $e->getMessage());
         }

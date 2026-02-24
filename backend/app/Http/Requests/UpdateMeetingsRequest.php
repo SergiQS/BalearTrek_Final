@@ -21,14 +21,13 @@ class UpdateMeetingsRequest extends FormRequest
      */
     public function rules(): array
     {
-        //$id = $this->route('meeting')->id;
-        
-         return [
+        return [
+            'trek_id' => 'required|exists:treks,id',
             'dateIni' => 'required|date',
             'dateEnd' => 'required|date|after_or_equal:dateIni',
             'day' => 'required|date',
-            'hour' => 'required',
-            
+            'hour' => 'required|',
+            'user_id' => 'required|exists:users,id',
         ];
     }
      public function messages(): array
@@ -41,6 +40,8 @@ class UpdateMeetingsRequest extends FormRequest
             'day.required' => 'El día es obligatorio.',
             'day.date' => 'El día debe ser una fecha válida.',
             'hour.required' => 'La hora es obligatoria.',
+            'hour.date_format' => 'La hora debe estar en formato válido ',
+            'user_id.required' => 'El guía responsable es obligatorio.',
         ];
     }
 }

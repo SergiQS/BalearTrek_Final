@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMeetingRequest;
+use App\Http\Requests\StoreMeetingsRequest;
+use App\Http\Requests\UpdateMeetingsRequest;
 use App\Models\Meeting;
 use App\Models\Trek;
 use App\Models\User;
@@ -38,20 +40,20 @@ class MeetingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMeetingRequest $request)
+    public function store(StoreMeetingsRequest $request)
     {
         // Validar datos
         $validated = $request->validated();
        
 
         // Crear el meeting
-        $meeting = Meeting::create([
+         Meeting::create([
             'trek_id' => $validated['trek_id'],
-            'dateIni' => $validated['start_date'],
-            'dateEnd' => $validated['end_date'],
+            'dateIni' => $validated['dateIni'],
+            'dateEnd' => $validated['dateEnd'],
             'day' => $validated['day'],
-            'hour' => $validated['time'],
-            'user_id' => $validated['guides'],
+            'hour' => $validated['hour'],
+            'user_id' => $validated['user_id'], // Asignar el guía responsable
         ]);
 
         return redirect()->route('backoffice.meetings.index')
@@ -82,38 +84,29 @@ class MeetingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Meeting $meeting)
+    public function update(UpdateMeetingsRequest $request, Meeting $meeting)
     {
-        // Validar datos del formulario
-        $request->validate([
-            'trek_id' => 'required|exists:treks,id',
-            'dateIni' => 'required|date',
-            'dateEnd' => 'nullable|date|after_or_equal:dateIni',
-            'user_id' => 'required|exists:users,id',
-            'guias_adicionales' => 'nullable|array',
-            'guias_adicionales.*' => 'exists:users,id',
-            'day' => 'required|string',
-            'hour' => 'required',
-        ]);
+        $validated = $request->validated();
 
         // Actualizar el meeting
         $meeting->update([
-            'trek_id' => $request->trek_id,
-            'dateIni' => $request->dateIni,
-            'dateEnd' => $request->dateEnd,
-            'user_id' => $request->user_id,
-            'day' => $request->day,
-            'hour' => $request->hour,
+            'trek_id' => $validated['trek_id'],
+            'dateIni' => $validated['dateIni']  ,
+            'dateEnd' => $validated['dateEnd'],
+            'user_id' => $validated['user_id'],
+            'day' => $validated['day'],
+            'hour' => $validated['hour'],
+
         ]);
 
         // Obtener los usuarios normales actuales (no guías) para mantenerlos
         $usuariosNormales = $meeting->getUsuariosNormales()->pluck('id')->toArray();
         
         // Preparar array de todas las guías (responsable + adicionales)
-        $guiasIds = [$request->user_id];
+        $guiasIds = [$validated['user_id']];
         
         if ($request->has('guias_adicionales') && is_array($request->guias_adicionales)) {
-            $guiasIds = array_merge($guiasIds, $request->guias_adicionales);
+            $guiasIds = array_merge($guiasIds, $validated['guias_adicionales']);
         }
         
         // Eliminar duplicados de guías
@@ -126,7 +119,7 @@ class MeetingController extends Controller
         $meeting->users()->sync($todosLosUsuarios);
 
         return redirect()->route('backoffice.meetings.index')
-            ->with('status', 'Meeting actualizado correctamente con ' . count($guiasIds) . ' guía(s) y ' . count($usuariosNormales) . ' participante(s)');
+            ->with('success', 'Meeting actualizado correctamente con ' . count($guiasIds) . ' guía(s) y ' . count($usuariosNormales) . ' participante(s)');
     }
 
     /**

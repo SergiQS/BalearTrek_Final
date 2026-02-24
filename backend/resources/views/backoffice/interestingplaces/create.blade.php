@@ -50,7 +50,7 @@
                         </select>
                         @error('place_type_id')
                             <div style="color: red;">{{ $message }}</div>
-                        @enderror>
+                        @enderror
                     </div>
 
 

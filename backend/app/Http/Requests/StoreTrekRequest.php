@@ -33,6 +33,7 @@ class StoreTrekRequest extends FormRequest
             'name.required' => 'El nombre es obligatorio.',
             'name.string' => 'El nombre debe ser una cadena de texto.',
             'name.max' => 'El nombre no puede tener más de 255 caracteres.',
+            'regNumber.required' => 'El número de registro es obligatorio.',
             'regNumber.string' => 'El número de registro debe ser una cadena de texto.',
             'regNumber.max' => 'El número de registro no puede tener más de 255 caracteres.',
             'regNumber.unique' => 'El número de registro ya está en uso.',

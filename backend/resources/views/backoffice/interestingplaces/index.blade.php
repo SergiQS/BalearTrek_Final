@@ -18,9 +18,16 @@
 
                     {{-- Paginación --}}
                     {{ $interestingplaces->links() }}
+
                     @if(session('success'))
                         <div style="color: green;">
                             {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if(session('danger'))
+                        <div style="color: red;">
+                            {{ session('danger') }}
                         </div>
                     @endif
 

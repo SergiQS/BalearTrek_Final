@@ -17,10 +17,11 @@
                         </div>
                     @endif
 
-                    {{-- Cards de usuarios --}}
-                    @each('components.card-users', $users, 'user')
-                    @if(session('success'))
-                        <div style="color: green;">
+                @if(session('danger'))
+                    <div style="color: red;">
+                        {{ session('danger') }}
+                    </div>
+                @endif
                             {{ session('success') }}
                         </div>
                     @endif

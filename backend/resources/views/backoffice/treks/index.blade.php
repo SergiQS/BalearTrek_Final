@@ -26,9 +26,10 @@
                         </div>
                     @endif
 
-                </div>
-            </div>
-        </div>
-    </div>
+                @if(session('danger'))
+                    <div style="color: red;">
+                        {{ session('danger') }}
+                    </div>
+                @endif
 
 </x-app-layout>

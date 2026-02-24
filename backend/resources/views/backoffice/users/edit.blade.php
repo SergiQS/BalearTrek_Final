@@ -1,14 +1,14 @@
 <x-app-layout>
     @extends('layouts.backoffice')
-      @if ($errors->any())
-                <div style="color: red;">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+    @if ($errors->any())
+        <div style="color: red;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     @section('content')
             <div class="max-w-3xl mx-auto bg-white shadow sm:rounded-lg p-6">
@@ -52,8 +52,7 @@
                     {{-- DNI --}}
                     <div class="mb-4">
                         <label for="dni">DNI</label>
-                        <input id="dni" name="dni" type="text" class="mt-1 block w-full"
-                            value="{{ old('dni', $user->dni) }}" />
+                        <input id="dni" name="dni" type="text" class="mt-1 block w-full" value="{{ old('dni', $user->dni) }}" />
                         @error('dni')
                             <div style="color: red;">{{ $message }}</div>
                         @enderror
@@ -70,14 +69,14 @@
                     </div>
 
                     {{-- Contraseña --}}
-                    <!-- <div class="mb-4">
-                                <x-input-label for="password" value="Contraseña (opcional)" />
-                                <x-text-input id="password" name="password" type="password" class="mt-1 block w-full"
-                                    placeholder="Déjalo vacío si no quieres cambiarla" />
-                                @error('password')
-                                    <div style="color: red;">{{ $message }}</div>
-                                @enderror
-                            </div> -->
+                    <div class="mb-4">
+                        <x-input-label for="password" value="Contraseña (opcional)" />
+                        <x-text-input id="password" name="password" type="password" class="mt-1 block w-full"
+                            placeholder="Déjalo vacío si no quieres cambiarla" />
+                        @error('password')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
+                    </div>
 
                     {{-- Rol --}}
                     <div class="mb-4">
@@ -90,7 +89,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        
+
                     </div>
 
                     {{-- Botones --}}

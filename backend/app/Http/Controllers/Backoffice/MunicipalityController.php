@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMunicipalityRequest;
+use App\Http\Requests\UpdateMunicipalitiesRequest;
 use App\Models\Island;
 use App\Models\Municipality;
 use App\Models\Zone;
@@ -74,17 +75,17 @@ class MunicipalityController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Municipality $municipality)
+    public function update(UpdateMunicipalitiesRequest $request, Municipality $municipality)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'island_id' => 'required|exists:islands,id',
-            'zone_id' => 'required|exists:zones,id',
+        $validated = $request->validated();
+        $municipality->update([
+            'name' => $validated['name'],
+            'island_id' => $validated['island_id'],
+            'zone_id' => $validated['zone_id'],
         ]);
 
-        $municipality->update($request->all());
-
-        return redirect()->route('backoffice.municipalities.index');
+        return redirect()->route('backoffice.municipalities.index')
+            ->with('success', 'Municipio actualizado correctamente');
     }
 
     /**
@@ -93,7 +94,7 @@ class MunicipalityController extends Controller
     public function destroy(Municipality $municipality)
     {
         $municipality->delete();
-        return redirect()->route('backoffice.municipalities.index');
-
+        return redirect()->route('backoffice.municipalities.index')
+            ->with('danger', 'Municipio eliminado correctamente');
     }
 }

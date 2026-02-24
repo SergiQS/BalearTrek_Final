@@ -4,21 +4,17 @@ use App\Http\Controllers\Api\TrekController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Models\Trek;
-use App\Models\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
 
-// FIX CSRF: Eliminada la ruta POST /login duplicada que existía aquí.
-// El frontend llama a /login (sin prefijo /api), así que usa la ruta de web.php,
-// que sí tiene middleware de sesión y CSRF. Tener una copia aquí en api.php
-// (que se monta como /api/login) no se usaba y creaba confusión.
+
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
-// Endpoint /api/login para aplicaciones móviles/SPA que usan Sanctum
+// Endpoint que usa Sanctum
 Route::post('/login', function (Request $request) {
     $credentials = $request->validate([
         'email' => ['required', 'email'],
@@ -38,7 +34,7 @@ Route::post('/login', function (Request $request) {
     ]);
 });
 
-// Protegida con Sanctum para el usuario autenticado
+// usuario autenticado
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     $user = $request->user()->load([
         'role',

@@ -28,6 +28,12 @@
                             {{ session('success') }}
                         </div>
                     @endif
+
+                    @if(session('danger'))
+                        <div style="color: red;">
+                            {{ session('danger') }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

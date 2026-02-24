@@ -22,8 +22,9 @@ class StorePlaceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:places|string|max:255',
-            'GPS' => 'required|string|max:255',
+            'name' => 'required|unique:interesting_places|string|max:255',
+            'gps' => 'required|string|max:255',
+            'place_type_id' => 'required|exists:place_types,id',
         ];
     }
     public function messages(): array
@@ -32,9 +33,10 @@ class StorePlaceRequest extends FormRequest
             'name.required' => 'El nombre del lugar es obligatorio.',
             'name.string' => 'El nombre del lugar debe ser una cadena de texto.',
             'name.max' => 'El nombre del lugar no puede tener más de 255 caracteres.',
-            'GPS.required' => 'Las coordenadas GPS son obligatorias.',
-            'GPS.string' => 'Las coordenadas GPS deben ser una cadena de texto.',
-            'GPS.max' => 'Las coordenadas GPS no pueden tener más de 255 caracteres.',
+            'gps.required' => 'Las coordenadas GPS son obligatorias.',
+            'gps.string' => 'Las coordenadas GPS deben ser una cadena de texto.',
+            'gps.max' => 'Las coordenadas GPS no pueden tener más de 255 caracteres.',
+            'place_type_id.required' => 'El tipo de lugar es obligatorio.', 
         ];
     }
 }

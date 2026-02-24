@@ -25,7 +25,7 @@ class UpdateIslandsRequest extends FormRequest
 
         return [
             //
-            'name' => "sometimes|string|max:255|unique:islands,name,$id",
+            'name' => "required|string|max:255|unique:islands,name,$id",
         ];
     }
 

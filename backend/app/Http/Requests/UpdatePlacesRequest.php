@@ -21,11 +21,11 @@ class UpdatePlacesRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('place')->id;
+        
 
         return [
-            'name' => "sometimes|string|max:255|unique:places,name,$id",
-            'GPS' => 'required|string|max:255',
+            'name' => "sometimes|string|max:255|unique:interesting_places,name",
+            'gps' => 'required|string|max:255',
         ];
     }
 
@@ -36,9 +36,9 @@ class UpdatePlacesRequest extends FormRequest
             'name.string' => 'El nombre del lugar debe ser una cadena de texto.',
             'name.max' => 'El nombre del lugar no puede tener más de 255 caracteres.',
             'name.unique' => 'El nombre del lugar ya está en uso.',
-            'GPS.required' => 'Las coordenadas GPS son obligatorias.',
-            'GPS.string' => 'Las coordenadas GPS deben ser una cadena de texto.',
-            'GPS.max' => 'Las coordenadas GPS no pueden tener más de 255 caracteres.',
+            'gps.required' => 'Las coordenadas GPS son obligatorias.',
+            'gps.string' => 'Las coordenadas GPS deben ser una cadena de texto.',
+            'gps.max' => 'Las coordenadas GPS no pueden tener más de 255 caracteres.',
         ];
     }
 }

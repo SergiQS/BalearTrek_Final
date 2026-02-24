@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreZoneRequest;
+use App\Http\Requests\UpdateZonesRequest;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 
@@ -28,7 +30,7 @@ class ZoneController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreZoneRequest $request)
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:zones,name',
@@ -62,17 +64,15 @@ class ZoneController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Zone $zone)
+    public function update(UpdateZonesRequest $request, Zone $zone)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:zones,name,' . $zone->id,
-        ]);
-
+        $validated = $request->validated();
         $zone->update([
-            'name' => $request->name,
+            'name' => $validated['name'],
         ]);
 
-        return redirect()->route('backoffice.zones.index');
+        return redirect()->route('backoffice.zones.index')
+            ->with('success', 'Zona actualizada correctamente');
     }
 
     /**
@@ -90,6 +90,6 @@ class ZoneController extends Controller
 
         return redirect()
             ->route('backoffice.zones.index')
-            ->with('success', 'Zona eliminada correctamente');
+            ->with('danger', 'Zona eliminada correctamente');
     }
 }
