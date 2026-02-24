@@ -3,6 +3,15 @@
 @extends('layouts.backoffice')
 
 @section('content')
+  @if ($errors->any())
+                <div style="color: red;">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 <div class="max-w-3xl mx-auto bg-white shadow sm:rounded-lg p-6">
 
     <h1 class="text-2xl font-semibold mb-6">Editar Trek</h1>
@@ -13,25 +22,29 @@
 
         {{-- Número de Registro --}}
         <div class="mb-4">
-            <x-input-label for="regNumber" value="Número de Registro" />
-            <x-text-input id="regNumber" name="regNumber" type="text"
+            <label for="regNumber">Número de Registro</label>
+            <input id="regNumber" name="regNumber" type="text"
                 class="mt-1 block w-full"
                 value="{{ old('regNumber', $trek->regNumber) }}" />
-            <x-input-error :messages="$errors->get('regNumber')" class="mt-2" />
+            @error('regNumber')
+                <div style="color: red;">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- Nombre --}}
         <div class="mb-4">
-            <x-input-label for="name" value="Nombre" />
-            <x-text-input id="name" name="name" type="text"
+            <label for="name">Nombre</label>
+            <input id="name" name="name" type="text"
                 class="mt-1 block w-full"
                 value="{{ old('name', $trek->name) }}" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            @error('name')
+                <div style="color: red;">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- Municipio --}}
         <div class="mb-4">
-            <x-input-label for="municipality_id" value="Municipio" />
+            <label for="municipality_id">Municipio</label>
             <select id="municipality_id" name="municipality_id"
                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
 
@@ -43,7 +56,7 @@
                 @endforeach
 
             </select>
-            <x-input-error :messages="$errors->get('municipality_id')" class="mt-2" />
+           
         </div>
 
         {{-- Lugares de interés --}}

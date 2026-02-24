@@ -56,6 +56,9 @@
                                     <input type="date" name="dateEnd"
                                            value="{{ $meeting->dateEnd }}"
                                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                      @error('dateEnd')
+                                <div style="color: red;">{{ $message }}</div>
+                            @enderror
                                 </div>
 
                                 {{-- Guía Responsable --}}
@@ -99,6 +102,9 @@
                                     <input type="text" name="day"
                                            value="{{ $meeting->day }}"
                                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                         @error('day')
+                                <div style="color: red;">{{ $message }}</div>
+                            @enderror
                                 </div>
 
                                 {{-- Hora --}}
@@ -109,6 +115,9 @@
                                     <input type="time" name="hour"
                                            value="{{ $meeting->hour }}"
                                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                         @error('hour')
+                                <div style="color: red;">{{ $message }}</div>
+                            @enderror
                                 </div>
 
                                 {{-- Botones --}}

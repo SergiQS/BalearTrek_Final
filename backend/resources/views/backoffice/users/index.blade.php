@@ -11,7 +11,11 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-
+                     @if(session('success'))
+                        <div style="color: green;">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
                     {{-- Cards de usuarios --}}
                     @each('components.card-users', $users, 'user')

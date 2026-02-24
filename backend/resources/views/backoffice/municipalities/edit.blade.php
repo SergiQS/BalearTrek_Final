@@ -1,5 +1,14 @@
 <x-app-layout>
     @extends('layouts.backoffice')
+      @if ($errors->any())
+                <div style="color: red;">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
 @section('content')
     <div class="max-w-3xl mx-auto bg-white shadow sm:rounded-lg p-6">
@@ -12,14 +21,16 @@
 
             {{-- Nombre --}}
             <div class="mb-4">
-                <x-input-label for="name" value="Nombre" />
-                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
+                <label for="name">Nombre</label>
+                <input id="name" name="name" type="text" class="mt-1 block w-full"
                     value="{{ old('name', $municipality->name) }}" />
-                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                @error('name')
+                    <div style="color: red;">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-4">
-                <x-input-label for="island_id" value="Isla" />
+                <label for="island_id">Isla</label>
                 <select id="island_id" name="island_id"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
 
@@ -30,12 +41,12 @@
                     @endforeach
 
                 </select>
-                <x-input-error :messages="$errors->get('island_id')" class="mt-2" />
+              
             </div>
 
 
             <div class="mb-4">
-                <x-input-label for="zone_id" value="Zona" />
+                <label for="zone_id">Zona</label>
                 <select id="zone_id" name="zone_id"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
 
@@ -46,6 +57,8 @@
                     @endforeach
 
                 </select>
+            
+            </div>
                 <div class="flex gap-3 mt-4">
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Actualizar

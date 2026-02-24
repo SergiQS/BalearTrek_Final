@@ -1,5 +1,14 @@
 <x-app-layout>
     @extends('layouts.backoffice')
+      @if ($errors->any())
+                <div style="color: red;">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
 @section('content')
     <div class="max-w-3xl mx-auto bg-white shadow sm:rounded-lg p-6">
@@ -11,10 +20,12 @@
             @method('PUT')
 
             <div class="mb-4">
-                <x-input-label for="name" value="Nombre" />
-                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
+                <label for="name">Nombre</label>
+                <input id="name" name="name" type="text" class="mt-1 block w-full"
                     value="{{ old('name', $island->name) }}" />
-                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                @error('name')
+                    <div style="color: red;">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="flex gap-3 mt-4">

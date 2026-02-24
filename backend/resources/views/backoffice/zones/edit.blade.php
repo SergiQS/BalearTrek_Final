@@ -20,8 +20,8 @@
                     @method('PUT')
 
                     <div class="mb-4">
-                        <x-input-label for="name" value="Nombre" />
-                        <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
+                        <label for="name">Nombre</label>
+                        <input id="name" name="name" type="text" class="mt-1 block w-full"
                             value="{{ old('name', $zone->name) }}" />
                         @error('name')
                             <div style="color: red;">{{ $message }}</div>

@@ -1,5 +1,14 @@
 <x-app-layout>
     @extends('layouts.backoffice')
+      @if ($errors->any())
+                <div style="color: red;">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
     @section('content')
             <div class="max-w-3xl mx-auto bg-white shadow sm:rounded-lg p-6">
@@ -12,23 +21,27 @@
 
                     {{-- Nombre --}}
                     <div class="mb-4">
-                        <x-input-label for="name" value="Nombre" />
-                        <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
+                        <label for="name">Nombre</label>
+                        <input id="name" name="name" type="text" class="mt-1 block w-full"
                             value="{{ old('name', $interestingplace->name) }}" />
-                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        @error('name')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     {{-- GPS --}}
                     <div class="mb-4">
-                        <x-input-label for="gps" value="GPS" />
-                        <x-text-input id="gps" name="gps" type="text" class="mt-1 block w-full"
+                        <label for="gps">GPS</label>
+                        <input id="gps" name="gps" type="text" class="mt-1 block w-full"
                             value="{{ old('gps', $interestingplace->gps) }}" />
-                        <x-input-error :messages="$errors->get('gps')" class="mt-2" />
+                        @error('gps')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     {{-- Tipo de Lugar --}}
                     <div class="mb-4">
-                        <x-input-label for="place_type_id" value="Tipo de Lugar" />
+                        <label for="place_type_id">Tipo de Lugar</label>
 
                         <select id="place_type_id" name="place_type_id"
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
@@ -40,9 +53,7 @@
                                     {{ $type->name }}
                                 </option>
                             @endforeach
-                        </select>
-
-                        <x-input-error :messages="$errors->get('place_type_id')" class="mt-2" />
+                        </select>  
                     </div>
 
                     {{-- Botones --}}

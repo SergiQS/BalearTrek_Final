@@ -12,7 +12,7 @@
 
                     {{-- EXCURSIÓN --}}
                     <div class="mb-4">
-                        <x-input-label for="trek_id" value="Excursión" />
+                        <label for="trek_id">Excursión</label>
                         <select id="trek_id" name="trek_id"
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
 
@@ -30,8 +30,8 @@
 
                     {{-- FECHA INICIAL --}}
                     <div class="mb-4">
-                        <x-input-label for="dateIni" value="Fecha inicial" />
-                        <x-text-input id="dateIni" name="dateIni" type="date" class="mt-1 block w-full"
+                        <label for="dateIni">Fecha inicial</label>
+                        <input id="dateIni" name="dateIni" type="date" class="mt-1 block w-full"
                             value="{{ old('dateIni') }}" />
                          @error('dateIni')
                             <div style="color: red;">{{ $message }}</div>
@@ -40,8 +40,8 @@
 
                     {{-- FECHA FINAL --}}
                     <div class="mb-4">
-                        <x-input-label for="dateEnd" value="Fecha final" />
-                        <x-text-input id="dateEnd" name="dateEnd" type="date" class="mt-1 block w-full"
+                        <label for="dateEnd">Fecha final</label>
+                        <input id="dateEnd" name="dateEnd" type="date" class="mt-1 block w-full"
                             value="{{ old('dateEnd  ') }}" />
                          @error('dateEnd')
                             <div style="color: red;">{{ $message }}</div>
@@ -50,8 +50,8 @@
 
                     {{-- DÍA --}}
                     <div class="mb-4">
-                        <x-input-label for="day" value="Día" />
-                        <x-text-input id="day" name="day" type="date" class="mt-1 block w-full" placeholder="Ej: 24/12/2024"
+                        <label for="day">Día</label>
+                        <input id="day" name="day" type="date" class="mt-1 block w-full" placeholder="Ej: 24/12/2024"
                             value="{{ old('day') }}" />
                          @error('day')
                             <div style="color: red;">{{ $message }}</div>   
@@ -60,8 +60,8 @@
 
                     {{-- HORA --}}
                     <div class="mb-4">
-                        <x-input-label for="time" value="Hora" />
-                        <x-text-input id="time" name="time" type="time" class="mt-1 block w-full" value="{{ old('time') }}" />
+                        <label for="time">Hora</label>
+                        <input id="time" name="time" type="time" class="mt-1 block w-full" value="{{ old('time') }}" />
                             @error('time')
                                 <div style="color: red;">{{ $message }}</div>
                             @enderror
@@ -69,7 +69,7 @@
 
                     {{-- GUÍAS --}}
                     <div class="mb-4">
-                        <x-input-label for="guides" value="Guías" />
+                        <label for="guides">Guías</label>
 
                         <select id="guides" name="guides"
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">

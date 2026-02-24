@@ -1,5 +1,14 @@
 <x-app-layout>
     @extends('layouts.backoffice')
+      @if ($errors->any())
+                <div style="color: red;">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
     @section('content')
             <div class="max-w-3xl mx-auto bg-white shadow sm:rounded-lg p-6">
@@ -12,8 +21,8 @@
 
                     {{-- Nombre --}}
                     <div class="mb-4">
-                        <x-input-label for="name" value="Nombre" />
-                        <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
+                        <label for="name">Nombre</label>
+                        <input id="name" name="name" type="text" class="mt-1 block w-full"
                             value="{{ old('name', $user->name) }}" />
                         @error('name')
                             <div style="color: red;">{{ $message }}</div>
@@ -22,8 +31,8 @@
 
                     {{-- Apellidos --}}
                     <div class="mb-4">
-                        <x-input-label for="lastName" value="Apellidos" />
-                        <x-text-input id="lastName" name="lastName" type="text" class="mt-1 block w-full"
+                        <label for="lastName">Apellidos</label>
+                        <input id="lastName" name="lastName" type="text" class="mt-1 block w-full"
                             value="{{ old('lastName', $user->lastName) }}" />
                         @error('lastName')
                             <div style="color: red;">{{ $message }}</div>
@@ -32,8 +41,8 @@
 
                     {{-- Email --}}
                     <div class="mb-4">
-                        <x-input-label for="email" value="Correo electrónico" />
-                        <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
+                        <label for="email">Correo electrónico</label>
+                        <input id="email" name="email" type="email" class="mt-1 block w-full"
                             value="{{ old('email', $user->email) }}" />
                         @error('email')
                             <div style="color: red;">{{ $message }}</div>
@@ -42,8 +51,8 @@
 
                     {{-- DNI --}}
                     <div class="mb-4">
-                        <x-input-label for="dni" value="DNI" />
-                        <x-text-input id="dni" name="dni" type="text" class="mt-1 block w-full"
+                        <label for="dni">DNI</label>
+                        <input id="dni" name="dni" type="text" class="mt-1 block w-full"
                             value="{{ old('dni', $user->dni) }}" />
                         @error('dni')
                             <div style="color: red;">{{ $message }}</div>
@@ -52,8 +61,8 @@
 
                     {{-- Teléfono --}}
                     <div class="mb-4">
-                        <x-input-label for="phone" value="Teléfono" />
-                        <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full"
+                        <label for="phone">Teléfono</label>
+                        <input id="phone" name="phone" type="text" class="mt-1 block w-full"
                             value="{{ old('phone', $user->phone) }}" />
                         @error('phone')
                             <div style="color: red;">{{ $message }}</div>
@@ -72,7 +81,7 @@
 
                     {{-- Rol --}}
                     <div class="mb-4">
-                        <x-input-label for="role_id" value="Rol" />
+                        <label for="role_id">Rol</label>
                         <select id="role_id" name="role_id"
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                             @foreach ($roles as $role)
@@ -81,9 +90,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        @error('role_id')
-                            <div style="color: red;">{{ $message }}</div>   
-                        @enderror
+                        
                     </div>
 
                     {{-- Botones --}}

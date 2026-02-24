@@ -1,5 +1,5 @@
 <x-app-layout>
-@extends('layouts.backoffice')
+    @extends('layouts.backoffice')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Listado de Encuentros') }}
@@ -19,6 +19,11 @@
                     <div class="mt-6">
                         {{ $meetings->links() }}
                     </div>
+                    @if(session('success'))
+                        <div style="color: green;">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
                 </div>
             </div>

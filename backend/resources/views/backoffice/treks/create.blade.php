@@ -11,8 +11,8 @@
         @csrf
 
         <div class="mb-4">
-            <x-input-label for="regNumber" value="Número de Registro" />
-            <x-text-input id="regNumber" name="regNumber" type="text"
+            <label for="regNumber">Número de Registro</label>
+            <input id="regNumber" name="regNumber" type="text"
                 class="mt-1 block w-full"
                 value="{{ old('regNumber') }}" />
                 @error('regNumber')
@@ -22,8 +22,8 @@
 
         {{-- Nombre --}}
         <div class="mb-4">
-            <x-input-label for="name" value="Nombre" />
-            <x-text-input id="name" name="name" type="text"
+            <label for="name">Nombre</label>
+            <input id="name" name="name" type="text"
                 class="mt-1 block w-full"
                 value="{{ old('name') }}" />
               @error('name')
@@ -33,7 +33,7 @@
 
          {{-- Municipio --}}
           <div class="mb-4">
-                <x-input-label for="municipality_id" value="Municipio" />
+                <label for="municipality_id">Municipio</label>
                 <select id="municipality_id" name="municipality_id"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                     <option value="">Selecciona un municipio</option>
@@ -48,7 +48,7 @@
 
         {{-- Lugares de interes --}}
             <div class="mb-4">
-                <x-input-label value="Lugares de Interés" />
+                <label>Lugares de Interés</label>
                 <div class="grid grid-cols-2 gap-2 mt-2">
                     @foreach ($interestingPlaces as $place)
                         <label class="flex items-center gap-2">
