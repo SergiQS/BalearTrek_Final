@@ -61,6 +61,15 @@
                         :active="request()->routeIs('backoffice.interestingplaces.create')">
                         {{ __('Nuevo Sitio de interés') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('backoffice.zones.index')"
+                        :active="request()->routeIs('backoffice.zones.index')">
+                        {{ __('Zonas') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('backoffice.zones.create')"
+                        :active="request()->routeIs('backoffice.zones.create')">
+                        {{ __('Nueva Zona') }}
+                    </x-nav-link>
 
 
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTrekRequest;
 use App\Models\InterestingPlace;
 use App\Models\Trek;
 use App\Models\User;
@@ -19,7 +20,7 @@ class TrekController extends Controller
     public function index(Request $request)
     {
         // $trek = Trek::all();
-        $treks = Trek::with(['meetings', 'interestingPlaces'])->paginate(10);
+        $treks = Trek::with(['meetings', 'interestingPlaces'])->orderBy('created_at', 'desc')->paginate(10);
         return view('backoffice.treks.index', compact('treks'));
         //
     }
@@ -37,20 +38,15 @@ class TrekController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTrekRequest $request)
     {
         // Validación básica
-        $request->validate([
-            'regNumber' => 'required|string',
-            'name' => 'required|string',
-            'municipality_id' => 'required|exists:municipalities,id',
-        ]);
-
+        $validated = $request->validated();
         // Crear el Trek
         $trek = Trek::create([
-            'regNumber' => $request->regNumber,
-            'name' => $request->name,
-            'municipality_id' => $request->municipality_id,
+            'regNumber' => $validated['regNumber'],
+            'name' => $validated['name'],
+            'municipality_id' => $validated['municipality_id'],
             'status' => 'y'
         ]);
 

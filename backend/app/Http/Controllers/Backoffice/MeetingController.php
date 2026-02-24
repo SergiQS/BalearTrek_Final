@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreMeetingRequest;
 use App\Models\Meeting;
 use App\Models\Trek;
 use App\Models\User;
@@ -15,7 +16,7 @@ class MeetingController extends Controller
      */
     public function index()
     {
-        $meetings = Meeting::with('trek', 'trek.municipality', 'user', 'users.role')->paginate(10);
+        $meetings = Meeting::with('trek', 'trek.municipality', 'user', 'users.role')->orderBy('created_at', 'desc')->paginate(10);
         // $treks = Trek::with(['meetings.user'])
         // ->orderBy('name')
         // ->get();
@@ -37,26 +38,20 @@ class MeetingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreMeetingRequest $request)
     {
         // Validar datos
-        $request->validate([
-            'trek_id' => 'required|exists:treks,id',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'day' => 'required|string',
-            'time' => 'required',
-            'guides' => 'required|exists:users,id',
-        ]);
+        $validated = $request->validated();
+       
 
         // Crear el meeting
         $meeting = Meeting::create([
-            'trek_id' => $request->trek_id,
-            'dateIni' => $request->start_date,
-            'dateEnd' => $request->end_date,
-            'day' => $request->day,
-            'hour' => $request->time,
-            'user_id' => $request->guides,
+            'trek_id' => $validated['trek_id'],
+            'dateIni' => $validated['start_date'],
+            'dateEnd' => $validated['end_date'],
+            'day' => $validated['day'],
+            'hour' => $validated['time'],
+            'user_id' => $validated['guides'],
         ]);
 
         return redirect()->route('backoffice.meetings.index')

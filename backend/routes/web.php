@@ -31,7 +31,9 @@ Route::middleware('auth')->prefix('backoffice')->name('backoffice.')->group(func
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('users', \App\Http\Controllers\Backoffice\UserController::class);
+    Route::resource('islands', \App\Http\Controllers\Backoffice\IslandController::class);
     Route::resource('municipalities', \App\Http\Controllers\Backoffice\MunicipalityController::class);
+    Route::resource('zones', \App\Http\Controllers\Backoffice\ZoneController::class);
     Route::resource('interestingplaces', \App\Http\Controllers\Backoffice\InterestingPlaceController::class);
     Route::resource('meetings', \App\Http\Controllers\Backoffice\MeetingController::class);
     Route::resource('treks', \App\Http\Controllers\Backoffice\TrekController::class);

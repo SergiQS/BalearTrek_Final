@@ -11,40 +11,52 @@
                     <div class="mb-4">
                         <x-input-label for="name" value="Nombre" />
                         <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" value="{{ old('name') }}" />
-                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        @error('name')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
                     </div>
                     {{-- Apellidos --}}
                     <div class="mb-4">
                         <x-input-label for="lastName" value="Apellidos" />
                         <x-text-input id="lastName" name="lastName" type="text" class="mt-1 block w-full"
                             value="{{ old('lastName') }}" />
-                        <x-input-error :messages="$errors->get('lastName')" class="mt-2" />
+                        @error('lastName')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
                     </div>
                     {{-- Email --}}
                     <div class="mb-4">
                         <x-input-label for="email" value="Correo electrónico" />
                         <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
                             value="{{ old('email') }}" />
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        @error('email')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
                     </div>
                     {{-- DNI --}}
                     <div class="mb-4">
                         <x-input-label for="dni" value="DNI" />
                         <x-text-input id="dni" name="dni" type="text" class="mt-1 block w-full" value="{{ old('dni') }}" />
-                        <x-input-error :messages="$errors->get('dni')" class="mt-2" />
+                        @error('dni')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
                     </div>
                     {{-- Teléfono --}}
                     <div class="mb-4">
                         <x-input-label for="phone" value="Teléfono" />
                         <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full"
                             value="{{ old('phone') }}" />
-                        <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                        @error('phone')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
                     </div>
                     {{-- Contraseña --}}
                     <div class="mb-4">
                         <x-input-label for="password" value="Contraseña" />
                         <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" />
-                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                        @error('password')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     {{-- Rol --}}
@@ -58,7 +70,9 @@
                                 </option>
                             @endforeach
                         </select>
-                        <x-input-error :messages="$errors->get('role_id')" class="mt-2" />
+                        @error('role_id')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
                     </div>
 
 

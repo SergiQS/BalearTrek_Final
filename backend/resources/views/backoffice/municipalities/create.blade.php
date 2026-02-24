@@ -12,7 +12,9 @@
                     <div class="mb-4">
                         <x-input-label for="name" value="Nombre" />
                         <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" value="{{ old('name') }}" />
-                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        @error('name')
+                            <div style="color: red;">{{ $message }}</div>   
+                        @enderror
                     </div>
 
                     {{-- Isla --}}
@@ -30,7 +32,7 @@
                             @endforeach
 
                         </select>
-                        <x-input-error :messages="$errors->get('island_id')" class="mt-2" />
+                     
                     </div>
 
                     {{-- Zona --}}
@@ -48,7 +50,7 @@
                             @endforeach
 
                         </select>
-                        <x-input-error :messages="$errors->get('zone_id')" class="mt-2" />
+                       
                     </div>
 
                     {{-- Botones --}}

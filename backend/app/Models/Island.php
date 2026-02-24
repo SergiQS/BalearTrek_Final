@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Island extends Model
 {
-    //
+    protected $fillable = [
+        'name',
+    ];
+
     public function municipalities() {
         return $this->hasMany(Municipality::class);//una isla puede tener muchos municipios
     }

@@ -25,23 +25,27 @@
                             @endforeach
 
                         </select>
-                        <x-input-error :messages="$errors->get('trek_id')" class="mt-2" />
+                       
                     </div>
 
                     {{-- FECHA INICIAL --}}
                     <div class="mb-4">
-                        <x-input-label for="start_date" value="Fecha inicial" />
-                        <x-text-input id="start_date" name="start_date" type="date" class="mt-1 block w-full"
-                            value="{{ old('start_date') }}" />
-                        <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
+                        <x-input-label for="dateIni" value="Fecha inicial" />
+                        <x-text-input id="dateIni" name="dateIni" type="date" class="mt-1 block w-full"
+                            value="{{ old('dateIni') }}" />
+                         @error('dateIni')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     {{-- FECHA FINAL --}}
                     <div class="mb-4">
-                        <x-input-label for="end_date" value="Fecha final" />
-                        <x-text-input id="end_date" name="end_date" type="date" class="mt-1 block w-full"
-                            value="{{ old('end_date') }}" />
-                        <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
+                        <x-input-label for="dateEnd" value="Fecha final" />
+                        <x-text-input id="dateEnd" name="dateEnd" type="date" class="mt-1 block w-full"
+                            value="{{ old('dateEnd  ') }}" />
+                         @error('dateEnd')
+                            <div style="color: red;">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     {{-- DÍA --}}
@@ -49,14 +53,18 @@
                         <x-input-label for="day" value="Día" />
                         <x-text-input id="day" name="day" type="date" class="mt-1 block w-full" placeholder="Ej: 24/12/2024"
                             value="{{ old('day') }}" />
-                        <x-input-error :messages="$errors->get('day')" class="mt-2" />
+                         @error('day')
+                            <div style="color: red;">{{ $message }}</div>   
+                        @enderror
                     </div>
 
                     {{-- HORA --}}
                     <div class="mb-4">
                         <x-input-label for="time" value="Hora" />
                         <x-text-input id="time" name="time" type="time" class="mt-1 block w-full" value="{{ old('time') }}" />
-                        <x-input-error :messages="$errors->get('time')" class="mt-2" />
+                            @error('time')
+                                <div style="color: red;">{{ $message }}</div>
+                            @enderror
                     </div>
 
                     {{-- GUÍAS --}}
@@ -74,14 +82,12 @@
 
                         </select>
 
-                        <x-input-error :messages="$errors->get('guides')" class="mt-2" />
                     </div>
-                    <x-input-error :messages="$errors->get('guides')" class="mt-2" />
+                  
                     {{-- BOTÓN --}}
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Crear
                     </button>
-
                 </form>
             </div>
 

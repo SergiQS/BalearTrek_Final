@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePlaceRequest;
 use App\Models\InterestingPlace;
 use App\Models\PlaceType;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class InterestingPlaceController extends Controller
      */
     public function index(Request $request)
     {
-        $interestingplaces = InterestingPlace::with('placeType')->paginate(10);
+        $interestingplaces = InterestingPlace::with('placeType')->orderBy('created_at', 'desc')->paginate(10);
 
 
         return view('backoffice.interestingplaces.index', compact('interestingplaces'));
@@ -33,15 +34,11 @@ class InterestingPlaceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePlaceRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'gps' => 'nullable|string|max:255',
-            'place_type_id' => 'nullable|exists:place_types,id',
-        ]);
+        $validated = $request->validated();
 
-        InterestingPlace::create($request->all());
+        InterestingPlace::create($validated);
 
         return redirect()->route('backoffice.interestingplaces.index');
     }

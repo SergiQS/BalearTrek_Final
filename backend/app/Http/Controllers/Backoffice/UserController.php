@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backoffice;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Meeting;
@@ -17,7 +18,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         //
-        $users = User::with('meetings')->paginate(10);
+        $users = User::with('meetings')->orderBy('created_at', 'desc')->paginate(10);
         $meetings = Meeting::with('users')->get();
 
         return view('backoffice.users.index', compact('meetings', 'users'));
@@ -28,18 +29,18 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $validated = $request->validated();
         $role = Role::where('name', 'visitant')->first();
 
         $user = User::create([
-            'name' => $request->name,
-            'lastName' => $request->lastName ?? $request->lastname,
-            'email' => $request->email,
-            'dni' => $request->dni,
-            'phone' => $request->phone,
-            'password' => bcrypt($request->password),
+            'name' => $validated['name'],
+            'lastName' => $validated['lastName'],
+            'email' => $validated['email'],
+            'dni' => $validated['dni'],
+            'phone' => $validated['phone'],
+            'password' => bcrypt($validated['password']),
             'role_id' => $role->id,
         ]);
 

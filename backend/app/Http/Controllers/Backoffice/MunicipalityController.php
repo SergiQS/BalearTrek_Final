@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreMunicipalityRequest;
 use App\Models\Island;
 use App\Models\Municipality;
 use App\Models\Zone;
@@ -15,7 +16,7 @@ class MunicipalityController extends Controller
      */
     public function index(Request $request)
     {
-        $municipalities = Municipality::paginate(10);
+        $municipalities = Municipality::orderBy('created_at', 'desc')->paginate(10);
         return view('backoffice.municipalities.index', compact('municipalities'));
     }
     /**
@@ -31,17 +32,15 @@ class MunicipalityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store( StoreMunicipalityRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'island_id' => 'required|exists:islands,id',
-            'zone_id' => 'required|exists:zones,id',
-        ]);
+        $validated = $request->validated();
+
+        
         Municipality::create([
-            'name' => $request->name,
-            'island_id' => $request->island_id,
-            'zone_id' => $request->zone_id,
+            'name' => $validated['name'],
+            'island_id' => $validated['island_id'],
+            'zone_id' => $validated['zone_id'],
         ]);
 
 

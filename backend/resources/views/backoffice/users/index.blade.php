@@ -1,5 +1,5 @@
 <x-app-layout>
-@extends('layouts.backoffice')
+    @extends('layouts.backoffice')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Listado de Usuarios') }}
@@ -11,11 +11,15 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-                  
+
 
                     {{-- Cards de usuarios --}}
                     @each('components.card-users', $users, 'user')
-
+                    @if(session('success'))
+                        <div style="color: green;">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     {{-- Paginación --}}
                     <div class="mt-6">
                         {{ $users->links() }}

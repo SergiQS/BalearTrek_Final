@@ -15,7 +15,9 @@
             <x-text-input id="regNumber" name="regNumber" type="text"
                 class="mt-1 block w-full"
                 value="{{ old('regNumber') }}" />
-            <x-input-error :messages="$errors->get('regNumber')" class="mt-2" />
+                @error('regNumber')
+                        <div style="color: red;">{{ $message }}</div>
+                @enderror
         </div>
 
         {{-- Nombre --}}
@@ -24,7 +26,9 @@
             <x-text-input id="name" name="name" type="text"
                 class="mt-1 block w-full"
                 value="{{ old('name') }}" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+              @error('name')
+                    <div style="color: red;">{{ $message }}</div>
+              @enderror
         </div>
 
          {{-- Municipio --}}
@@ -38,9 +42,8 @@
                             {{ $municipality->name }}
                         </option>
                     @endforeach
-
                 </select>
-                <x-input-error :messages="$errors->get('municipality_id')" class="mt-2" />
+               
             </div>
 
         {{-- Lugares de interes --}}
