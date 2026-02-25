@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreMeetingRequest;
+
 use App\Http\Requests\StoreMeetingsRequest;
 use App\Http\Requests\UpdateMeetingsRequest;
 use App\Models\Meeting;
@@ -31,8 +31,9 @@ class MeetingController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {   $meetings = Meeting::all();
-        $treks = Trek::orderBy('name','asc')->get();
+    {
+        $meetings = Meeting::all();
+        $treks = Trek::orderBy('name', 'asc')->get();
         $guias = User::whereHas('role', fn($q) => $q->where('name', 'guia'))->get();
         return view('backoffice.meetings.create', compact('treks', 'guias', 'meetings'));
     }
@@ -44,10 +45,10 @@ class MeetingController extends Controller
     {
         // Validar datos
         $validated = $request->validated();
-       
+
 
         // Crear el meeting
-         Meeting::create([
+        Meeting::create([
             'trek_id' => $validated['trek_id'],
             'dateIni' => $validated['dateIni'],
             'dateEnd' => $validated['dateEnd'],
@@ -91,7 +92,7 @@ class MeetingController extends Controller
         // Actualizar el meeting
         $meeting->update([
             'trek_id' => $validated['trek_id'],
-            'dateIni' => $validated['dateIni']  ,
+            'dateIni' => $validated['dateIni'],
             'dateEnd' => $validated['dateEnd'],
             'user_id' => $validated['user_id'],
             'day' => $validated['day'],
@@ -99,23 +100,25 @@ class MeetingController extends Controller
 
         ]);
 
-        // Obtener los usuarios normales actuales (no guías) para mantenerlos
+        // Obtener los usuarios normales actuales (no guias) para mantenerlos
         $usuariosNormales = $meeting->getUsuariosNormales()->pluck('id')->toArray();
-        
-        // Preparar array de todas las guías (responsable + adicionales)
+
+        // Preparar array de todas las guias (responsable + adicionales)
         $guiasIds = [$validated['user_id']];
-        
+
         if ($request->has('guias_adicionales') && is_array($request->guias_adicionales)) {
             $guiasIds = array_merge($guiasIds, $validated['guias_adicionales']);
         }
-        
-        // Eliminar duplicados de guías
+
+        // Eliminar duplicados de guias
         $guiasIds = array_unique($guiasIds);
-        
-        // Combinar guías + usuarios normales
+
+        // Combinar guias + usuarios normales
         $todosLosUsuarios = array_unique(array_merge($guiasIds, $usuariosNormales));
-        
-        // Sincronizar en la tabla pivot (guías + participantes)
+
+        // Sincronizar en la tabla pivot (guias + participantes) 
+        // El método sync() en Laravel se utiliza para sincronizar relaciones de muchos a muchos, asegurando que solo los registros especificados en el array proporcionado permanezcan en la tabla pivote.  A diferencia de attach(), que solo añade relaciones,
+        //  sync() elimina automáticamente las relaciones existentes que no están en el array proporcionado y añade solo las nuevas.
         $meeting->users()->sync($todosLosUsuarios);
 
         return redirect()->route('backoffice.meetings.index')
@@ -131,13 +134,13 @@ class MeetingController extends Controller
         foreach ($meeting->comments as $comment) {
             $comment->images()->delete();
         }
-        
+
         // Luego eliminar los comentarios
         $meeting->comments()->delete();
-        
+
         // Detach guías de la tabla pivot
         $meeting->users()->detach();
-        
+
         // Finalmente eliminar el meeting
         $meeting->delete();
 

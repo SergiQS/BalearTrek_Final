@@ -20,8 +20,6 @@ Route::get('/dashboard', function () {
 
 
 
-// Rutas de perfil Breeze
-
 // Rutas del BackOffice
 Route::middleware('auth')->prefix('backoffice')->name('backoffice.')->group(function () {
     Route::get('/dashboard', function () {

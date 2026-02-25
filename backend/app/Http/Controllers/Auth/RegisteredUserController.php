@@ -38,7 +38,24 @@ class RegisteredUserController extends Controller
             'dni' => ['required', 'string', 'max:20', 'unique:'.User::class],
             'phone' => ['required', 'string', 'max:50'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        ]/*, [
+            // Mensajes personalizados de validación
+            'name.required' => 'El nombre es obligatorio',
+            'name.max' => 'El nombre no debe exceder los 255 caracteres',
+            'lastname.required' => 'El apellido es obligatorio',
+            'lastname.max' => 'El apellido no debe exceder los 255 caracteres',
+            'email.required' => 'El correo electrónico es obligatorio',
+            'email.email' => 'Debe proporcionar un correo electrónico válido',
+            'email.unique' => 'Este correo electrónico ya está registrado',
+            'email.max' => 'El correo electrónico no debe exceder los 255 caracteres',
+            'dni.required' => 'El DNI es obligatorio',
+            'dni.unique' => 'Este DNI ya está registrado',
+            'dni.max' => 'El DNI no debe exceder los 20 caracteres',
+            'phone.required' => 'El teléfono es obligatorio',
+            'phone.max' => 'El teléfono no debe exceder los 50 caracteres',
+            'password.required' => 'La contraseña es obligatoria',
+            'password.confirmed' => 'La confirmación de contraseña no coincide',
+        ]*/);
 
         $role = Role::where('name', 'visitant')->first();
 
