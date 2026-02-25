@@ -98,7 +98,7 @@ class Meeting extends Model
     public function getGuiasAcompanantes()
     {
         return $this->users->filter(function($user) {
-            return $user->role && $user->role->name === 'guia' && $user->id !== $this->user_id;
+            return $user->role && $user->role->name === 'guia' && $user->id !== $this->user_id; // Excluir al guía responsable
         });
     }
     
@@ -108,7 +108,7 @@ class Meeting extends Model
     public function getUsuariosNormales()
     {
         return $this->users->filter(function($user) {
-            return !$user->role || $user->role->name !== 'guia';
+            return /*!$user->role ||*/ $user->role->name !== 'guia'; // Si el usuario no tiene rol o su rol no es 'guia', lo consideramos normal
         });
     }
     

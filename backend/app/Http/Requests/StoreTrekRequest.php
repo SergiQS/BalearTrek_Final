@@ -24,6 +24,7 @@ class StoreTrekRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'regNumber' => 'required|string|max:255|unique:treks',
+            'municipality_id' => 'required|exists:municipalities,id',
         ];
     }
 
@@ -37,6 +38,8 @@ class StoreTrekRequest extends FormRequest
             'regNumber.string' => 'El número de registro debe ser una cadena de texto.',
             'regNumber.max' => 'El número de registro no puede tener más de 255 caracteres.',
             'regNumber.unique' => 'El número de registro ya está en uso.',
+            'municipality_id.required' => 'El municipio es obligatorio.',
+            'municipality_id.exists' => 'El municipio seleccionado no es válido.',
         ];
     }
 }

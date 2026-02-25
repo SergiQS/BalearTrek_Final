@@ -26,7 +26,7 @@ class StoreUserRequest extends FormRequest
             'lastName' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email',
             'dni' => 'required|string|unique:users,dni',
-            'phone' => 'nullable|string',
+            'phone' => 'required|string',
             'password' => 'required|string|min:6',
             
 
@@ -49,6 +49,7 @@ class StoreUserRequest extends FormRequest
             'dni.string' => 'El DNI debe ser una cadena de texto.',
             'dni.unique' => 'El DNI ya está en uso.',
             'phone.string' => 'El teléfono debe ser una cadena de texto.',
+            'phone.required' => 'El teléfono es obligatorio.',
             'password.required' => 'La contraseña es obligatoria.',
             'password.string' => 'La contraseña debe ser una cadena de texto.',
             'password.min' => 'La contraseña debe tener al menos 6 caracteres.',

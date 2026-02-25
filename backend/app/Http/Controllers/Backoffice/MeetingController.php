@@ -106,7 +106,7 @@ class MeetingController extends Controller
         // Preparar array de todas las guias (responsable + adicionales)
         $guiasIds = [$validated['user_id']];
 
-        if ($request->has('guias_adicionales') && is_array($request->guias_adicionales)) {
+        if ($request->has('guias_adicionales') && is_array($request->guias_adicionales)) {   // Si hay guías adicionales seleccionados, los añadimos al array de guías
             $guiasIds = array_merge($guiasIds, $validated['guias_adicionales']);
         }
 

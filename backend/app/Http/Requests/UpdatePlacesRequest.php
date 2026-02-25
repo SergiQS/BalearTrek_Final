@@ -26,6 +26,7 @@ class UpdatePlacesRequest extends FormRequest
         return [
             'name' => "sometimes|string|max:255|unique:interesting_places,name",
             'gps' => 'required|string|max:255',
+            'place_type_id' => 'required|exists:place_types,id',
         ];
     }
 
@@ -39,6 +40,8 @@ class UpdatePlacesRequest extends FormRequest
             'gps.required' => 'Las coordenadas GPS son obligatorias.',
             'gps.string' => 'Las coordenadas GPS deben ser una cadena de texto.',
             'gps.max' => 'Las coordenadas GPS no pueden tener más de 255 caracteres.',
+            'place_type_id.required' => 'El tipo de lugar es obligatorio.',
+            'place_type_id.exists' => 'El tipo de lugar seleccionado no es válido.',
         ];
     }
 }

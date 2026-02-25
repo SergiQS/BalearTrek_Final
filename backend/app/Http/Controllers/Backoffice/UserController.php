@@ -83,7 +83,7 @@ class UserController extends Controller
         $validated = $request->validated();
       
 
-        //Update fields
+        //Update 
         $user->name = $validated['name'] ?? $user->name;
         $user->lastName = $validated['lastName'] ?? $validated['lastname'] ?? $user->lastName;
         $user->email = $validated['email'] ?? $user->email;
@@ -112,7 +112,7 @@ class UserController extends Controller
     //public function destroy(string $id)
     public function destroy(User $user)
     {
-        // Borrado en cascada
+       
         //Eliminar tokens de Sanctum
         if (method_exists($user, 'tokens')) {
             $user->tokens()->delete();

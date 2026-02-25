@@ -23,6 +23,8 @@ class StoreMunicipalityRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:municipalities|string|max:255',
+            'island_id' => 'required|exists:islands,id',
+            'zone_id' => 'required|exists:zones,id',
         ];
     }
 
@@ -32,6 +34,10 @@ class StoreMunicipalityRequest extends FormRequest
             'name.required' => 'El nombre del municipio es obligatorio.',
             'name.string' => 'El nombre del municipio debe ser una cadena de texto.',
             'name.max' => 'El nombre del municipio no puede tener más de 255 caracteres.',
+            'island_id.required' => 'La isla es obligatoria.',
+            'island_id.exists' => 'La isla seleccionada no es válida.',
+            'zone_id.required' => 'La zona es obligatoria.',
+            'zone_id.exists' => 'La zona seleccionada no es válida.',
         ];
     }
 }

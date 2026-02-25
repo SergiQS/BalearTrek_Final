@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Municipality;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateMunicipalitiesRequest extends FormRequest
@@ -21,10 +22,13 @@ class UpdateMunicipalitiesRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('municipality')->id;
+        $routeMunicipality = $this->route('municipality');
+        $id = $routeMunicipality instanceof Municipality ? $routeMunicipality->id : $routeMunicipality;
 
         return [
             'name' => "sometimes|string|max:255|unique:municipalities,name,$id",
+            'island_id' => 'required|exists:islands,id',
+            'zone_id' => 'required|exists:zones,id',
         ];
     }
 
@@ -35,6 +39,10 @@ class UpdateMunicipalitiesRequest extends FormRequest
             'name.string' => 'El nombre del municipio debe ser una cadena de texto.',
             'name.max' => 'El nombre del municipio no puede tener más de 255 caracteres.',
             'name.unique' => 'El nombre del municipio ya está en uso.',
+            'island_id.required' => 'La isla es obligatoria.',
+            'island_id.exists' => 'La isla seleccionada no es válida.',
+            'zone_id.required' => 'La zona es obligatoria.',
+            'zone_id.exists' => 'La zona seleccionada no es válida.',
         ];
     }
 }

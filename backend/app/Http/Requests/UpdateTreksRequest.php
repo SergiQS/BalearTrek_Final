@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateTreksRequest extends FormRequest
@@ -21,10 +22,12 @@ class UpdateTreksRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('trek')->id;
+       
         return [
-            'name' => "sometimes|string|max:255|unique:treks,name,$id",
-            'regNumber' => "required|string|max:255|unique:treks,regNumber,$id",
+            'name' => "sometimes|string|max:255|unique:treks,name,",
+            'regNumber' => "required|string|max:255|unique:treks,regNumber",
+            'municipality_id' => 'required|exists:municipalities,id',
+            
         ];
     }
 
@@ -39,6 +42,8 @@ class UpdateTreksRequest extends FormRequest
             'regNumber.string' => 'El número de registro del trek debe ser una cadena de texto.',
             'regNumber.max' => 'El número de registro del trek no puede tener más de 255 caracteres.',
             'regNumber.unique' => 'El número de registro del trek ya está en uso.',
+            'municipality_id.required' => 'El municipio es obligatorio.',
+            'municipality_id.exists' => 'El municipio seleccionado no es válido.',
         ];
     }
 }

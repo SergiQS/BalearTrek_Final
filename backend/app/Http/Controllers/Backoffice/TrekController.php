@@ -41,9 +41,9 @@ class TrekController extends Controller
      */
     public function store(StoreTrekRequest $request)
     {
-        // Validación básica
+        
         $validated = $request->validated();
-        // Crear el Trek
+      
         $trek = Trek::create([
             'regNumber' => $validated['regNumber'],
             'name' => $validated['name'],
@@ -94,11 +94,11 @@ class TrekController extends Controller
     public function update(UpdateTreksRequest $request, Trek $trek)
     {
         try {
-            // Validación básica
+            
             $validated = $request->validated(); 
            
 
-            // Actualizar Trek
+            
             $trek->update([
                 'regNumber' => $validated['regNumber'],
                 'name' => $validated['name'],

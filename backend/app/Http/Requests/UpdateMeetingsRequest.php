@@ -42,6 +42,7 @@ class UpdateMeetingsRequest extends FormRequest
             'hour.required' => 'La hora es obligatoria.',
             'hour.date_format' => 'La hora debe estar en formato válido ',
             'user_id.required' => 'El guía responsable es obligatorio.',
+            'user_id.exists' => 'El guía responsable no es válido.',
         ];
     }
 }
